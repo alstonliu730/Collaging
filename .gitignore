@@ -1,0 +1,10 @@
+# all iml files
+*.iml
+
+# temp files
+*.tmp
+
+# log files
+*.log
+
+
