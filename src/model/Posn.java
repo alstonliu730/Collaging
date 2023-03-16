@@ -3,21 +3,21 @@ package model;
 import java.util.Objects;
 
 /**
- * Represents a two-dimensional Posninate.
- * Rows extend downward; columns extend rightward.
+ * Represents a two-dimensional Position
+ * x-positions extend downward; y-positions extend rightward.
  */
 public final class Posn {
-  public final int row;
-  public final int col;
+  public final int x;
+  public final int y;
 
-  public Posn(int row, int col) {
-    this.row = row;
-    this.col = col;
+  public Posn(int x, int y) {
+    this.x = x;
+    this.y = y;
   }
 
   @Override
   public String toString() {
-    return String.format("(r%d,c%d)", row, col);
+    return String.format("%d %d", x, y);
   }
 
   @Override
@@ -29,11 +29,11 @@ public final class Posn {
       return false;
     }
     Posn Posn = (Posn) o;
-    return row == Posn.row && col == Posn.col;
+    return x == Posn.x && y == Posn.y;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(row, col);
+    return Objects.hash(x, y);
   }
 }
