@@ -75,4 +75,27 @@ public class Pixel {
     this.green = Math.round(this.green - luma) >= 0 ? Math.round(this.green - luma) : 0;
     this.blue = Math.round(this.blue - luma) >= 0 ? Math.round(this.blue - luma) : 0;
   }
+
+  public void applyFilter(String option) {
+    switch(option) {
+      case "r":
+        this.green = 0;
+        this.blue = 0;
+        break;
+      case "g":
+        this.red = 0;
+        this.blue = 0;
+        break;
+      case "b":
+        this.red = 0;
+        this.green = 0;
+        break;
+      case "normal":
+        //does nothing
+        break;
+      default:
+        //does nothing
+        break;
+    }
+  }
 }
