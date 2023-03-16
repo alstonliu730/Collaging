@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * A class that represents a Pixel that contains:
  *  - the color
@@ -20,7 +22,7 @@ public class Pixel {
    *                                    alpha value less than 0.
    */
   public Pixel(int r, int g, int b, int a, Posn p) throws IllegalArgumentException {
-    if ( r < 0|| g < 0|| b < 0 || pos != null || a < 0) {
+    if ( r < 0|| g < 0|| b < 0 ||  a < 0 || Objects.isNull(p)) {
       throw new IllegalArgumentException("Invalid input!");
     }
     this.red = r;
