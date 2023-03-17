@@ -5,6 +5,7 @@ import java.util.Scanner;
 //import java.util.regex.Pattern;
 
 public class ScriptController {
+
   public static void main(String[] args) {
     Scanner s = new Scanner(System.in);
     // Initialize model
@@ -19,6 +20,7 @@ public class ScriptController {
             int width = s.nextInt();
             // Create new project with h and w
             // Model should throw IllegalArgumentException for negative ints
+
           } catch (InputMismatchException ime) {
             System.out.println("Bad width and/or height");
           }
