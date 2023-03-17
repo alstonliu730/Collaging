@@ -7,17 +7,25 @@ import java.util.Objects;
  * x-positions extend downward; y-positions extend rightward.
  */
 public final class Posn {
-  public final int x;
-  public final int y;
+  private final int row;
+  private final int col;
 
-  public Posn(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public Posn(int row, int col) {
+    this.row = row;
+    this.col = col;
+  }
+
+  public int getRow() {
+    return this.row;
+  }
+
+  public int getCol() {
+    return this.col;
   }
 
   @Override
   public String toString() {
-    return String.format("%d %d", x, y);
+    return String.format("%d %d", this.row, this.col);
   }
 
   @Override
@@ -28,12 +36,12 @@ public final class Posn {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Posn Posn = (Posn) o;
-    return x == Posn.x && y == Posn.y;
+    Posn pos = (Posn) o;
+    return pos.row == this.row && pos.col == this.col;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(x, y);
+    return Objects.hash(row, col);
   }
 }

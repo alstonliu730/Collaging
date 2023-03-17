@@ -17,7 +17,7 @@ public class Filter implements Consumer<Pixel> {
    */
   public Filter(String option) throws IllegalArgumentException{
     if(Objects.isNull(option)) {
-      throw new IllegalArgumentException("Invalid option!");
+      throw new IllegalArgumentException("Invalid Filter option!");
     }
 
     this.option = option;

@@ -13,6 +13,7 @@ public class Pixel {
 
   /**
    * Creates a Pixel with the given Color and Position.
+   *
    * @param r - red component of the pixel
    * @param g - green component of the pixel
    * @param b - blue component of the pixel
@@ -23,7 +24,7 @@ public class Pixel {
    */
   public Pixel(int r, int g, int b, int a, Posn p) throws IllegalArgumentException {
     if ( r < 0|| g < 0|| b < 0 ||  a < 0 || Objects.isNull(p)) {
-      throw new IllegalArgumentException("Invalid input!");
+      throw new IllegalArgumentException("Invalid Pixel input!");
     }
     this.red = r;
     this.green = g;
@@ -32,7 +33,12 @@ public class Pixel {
     this.pos = p;
   }
 
-  public Pixel combine(Pixel prev) {
+  /**
+   *
+   * @param prev
+   * @return
+   */
+  public Pixel combine(Pixel prev) { // replace 255 as MAX_VALUE
     double percentAlpha = (this.alpha / 255) + ((prev.alpha/255) * (1- (this.alpha / 255)));
     int new_alpha = (int) Math.round(percentAlpha * 255);
     int new_red = (int) Math.round((convertCompWithAlpha(this.red, this.alpha)
@@ -76,6 +82,10 @@ public class Pixel {
     this.blue = Math.round(this.blue - luma) >= 0 ? Math.round(this.blue - luma) : 0;
   }
 
+  /**
+   *
+   * @param option
+   */
   public void applyFilter(String option) {
     switch(option) {
       case "r":
@@ -97,5 +107,17 @@ public class Pixel {
         //does nothing
         break;
     }
+  }
+
+  /**
+   * Ret
+   * @param p
+   */
+  public void changePos(Posn p) {
+    this.pos = p;
+  }
+
+  public Posn getPos() {
+    return this.pos;
   }
 }
