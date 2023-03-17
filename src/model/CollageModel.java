@@ -66,4 +66,10 @@ public interface CollageModel {
    * @return
    */
   public List<Layer> renderLayers();
+
+  /**
+   *
+   * @param layer
+   */
+  public void addGivenLayer(Layer layer);
 }

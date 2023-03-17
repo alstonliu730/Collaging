@@ -10,6 +10,7 @@ public class Layer implements IListOfPixel{
   private Pixel[][] matrix;
   private Filter filter;
   private List<Image> images;
+  private int maxValue;
 
   /**
    * Creates a layer of pixels with the given height and width.
@@ -19,17 +20,18 @@ public class Layer implements IListOfPixel{
    * @param width
    * @throws IllegalArgumentException
    */
-  public Layer(String name, int height, int width) throws IllegalArgumentException {
-    if(Objects.isNull(name) || height <= 0 || width <= 0) {
+  public Layer(String name, int height, int width, int maxValue) throws IllegalArgumentException {
+    if(Objects.isNull(name) || height <= 0 || width <= 0 || maxValue <= 0) {
       throw new IllegalArgumentException("Invalid Layer inputs!");
     }
-
     this.name = name;
     this.height = height; //row
     this.width = width; // column
     this.matrix = new Pixel[this.height][this.width];
     this.filter = new Filter("normal");
     this.images = new ArrayList<Image>();
+    this.maxValue = maxValue;
+
     // creates the translucent image and set it as the background
     for (int i = 0; i < this.height; ++i) {
       for (int j = 0; j < this.width; ++j) {
@@ -154,9 +156,12 @@ public class Layer implements IListOfPixel{
    * - Adds the image to the list of images.
    *
    * @param img
-   * @throws
+   * @throws IllegalArgumentException
    */
   public void addImage(Image img) throws IllegalArgumentException{
+    if(Objects.isNull(img)) {
+      throw new IllegalArgumentException("No input on img!");
+    }
     // Add image to the list
     this.images.add(img);
     // Gather information of the image
@@ -170,7 +175,7 @@ public class Layer implements IListOfPixel{
       endRowImg = img.getHeight();
       startRow = 0;
     } else if (position.getRow() > this.height) {
-      return;
+      throw new IllegalArgumentException("Image is not rendered on layer!");
     } else {
       startRowImg = 0;
       endRowImg = img.getHeight();
@@ -184,7 +189,7 @@ public class Layer implements IListOfPixel{
       startRow = 0;
       startCol = 0;
     } else if (position.getCol() > this.width) {
-      return; // the image will not render on the layer
+      throw new IllegalArgumentException("Image is not rendered on layer!");
     } else {
       startColImg = 0;
       endColImg = img.getWidth();
@@ -227,7 +232,7 @@ public class Layer implements IListOfPixel{
     List<Pixel> rendered2 = prev.render();
 
     // Combined layer
-    Layer combined = new Layer("Combined", this.height, this.width);
+    Layer combined = new Layer("Combined", this.height, this.width, this.maxValue);
     // Traverse the matrix of each layer
     List<Pixel> newLayer = new ArrayList<Pixel>();
     for(int i = 0; i < rendered1.size(); i++) {
@@ -255,5 +260,9 @@ public class Layer implements IListOfPixel{
    */
   public Filter getFilter() {
     return this.filter;
+  }
+
+  public int getMax() {
+    return this.maxValue;
   }
 }

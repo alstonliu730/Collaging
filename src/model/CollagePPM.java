@@ -35,12 +35,20 @@ public class CollagePPM implements CollageModel{
     }
 
     // create the layer object.
-    Layer backgroundLayer = new Layer("background", this.height, this.width);
+    Layer backgroundLayer = new Layer("background", this.height, this.width, this.MAX_VALUE);
     backgroundLayer.setMatrix(background);
     backgroundLayer.setFilter(new Filter("normal"));
 
     // add the layer object to the list.
     this.layers.add(backgroundLayer);
+  }
+
+  /**
+   *
+   * @param layer
+   */
+  public void addGivenLayer(Layer layer) {
+    this.layers.add(layer);
   }
 
   /**
@@ -89,10 +97,16 @@ public class CollagePPM implements CollageModel{
    * Adds a layer to this model given the name of the layer.
    *
    * @param layer - the name of the layer
+   * @throws IllegalArgumentException - when the given layer name already exists in this model
    */
   @Override
-  public void addLayer(String layer) {
-    this.layers.add(new Layer(layer,this.height,this.width));
+  public void addLayer(String layer) throws IllegalArgumentException {
+    for(Layer l : this.layers) {
+      if(l.getName().equalsIgnoreCase(layer)) {
+        throw new IllegalArgumentException("Layer name already exists!");
+      }
+    }
+    this.layers.add(new Layer(layer,this.height,this.width, this.MAX_VALUE));
   }
 
   /**
@@ -105,7 +119,7 @@ public class CollagePPM implements CollageModel{
    */
   @Override
   public void addImageToLayer(Layer layer, IListOfPixel img, int row, int col)
-          throws IllegalStateException {
+          throws IllegalArgumentException {
     layer.addImage(new Image(img.convertToMatrix(img.render()), new Posn(row,col)));
   }
 

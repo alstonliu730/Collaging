@@ -6,6 +6,9 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
+import model.CollageModel;
+import model.CollagePPM;
+import model.Layer;
 import model.Pixel;
 import model.Posn;
 
@@ -20,8 +23,9 @@ public class ImageUtil {
    *
    * @param filename the path of the file. 
    */
-  public static List<Pixel> readPPM(String filename) throws FileNotFoundException {
+  public static Layer readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
+
     List<Pixel> pixelList = new ArrayList<Pixel>();
 
     try {
@@ -56,7 +60,6 @@ public class ImageUtil {
     int maxValue = sc.nextInt();
     System.out.println("Maximum value of a color in this file (usually 255): " + maxValue);
 
-
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             int r = sc.nextInt();
@@ -66,7 +69,12 @@ public class ImageUtil {
         }
     }
 
-    return pixelList;
+    // Create this new layer
+    Layer new_layer = new Layer(token, height, width, maxValue);
+    new_layer.setMatrix(new_layer.convertToMatrix(pixelList));
+
+    // return the new model
+    return new_layer;
   }
 }
 
