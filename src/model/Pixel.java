@@ -117,7 +117,15 @@ public class Pixel {
     this.pos = p;
   }
 
+  /**
+   *
+   * @return
+   */
   public Posn getPos() {
     return this.pos;
+  }
+
+  public String ppmFormat() {
+    return String.format("%o %o %o", this.red, this.green, this.blue);
   }
 }

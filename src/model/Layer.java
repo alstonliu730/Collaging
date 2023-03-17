@@ -62,8 +62,18 @@ public class Layer implements IListOfPixel{
    * @return
    * @throws IllegalStateException
    */
-  public Pixel[][] convertToMatrix(List<Pixel> pixels) throws IllegalStateException {
-    return new Pixel[0][];
+  public Pixel[][] convertToMatrix(List<Pixel> pixels) throws IllegalArgumentException {
+    if (Objects.isNull(pixels) || (this.height * this.width) != pixels.size()) {
+      throw new IllegalArgumentException("Invalid matrix input!");
+    }
+
+    Pixel[][] new_matrix = new Pixel[this.height][this.width];
+    for(Pixel p : pixels) {
+      Posn position = p.getPos();
+      new_matrix[position.getRow()][position.getCol()] = p;
+    }
+
+    return new_matrix;
   }
 
   /**
@@ -228,5 +238,22 @@ public class Layer implements IListOfPixel{
     combined.setMatrix(this.convertToMatrix(newLayer));
 
     return combined;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public Layer applyFilter() {
+    this.setMatrix(this.convertToMatrix(this.render()));
+    return this;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public Filter getFilter() {
+    return this.filter;
   }
 }

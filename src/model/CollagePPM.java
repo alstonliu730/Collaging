@@ -7,6 +7,7 @@ import java.util.Objects;
 public class CollagePPM implements CollageModel{
   private final int height;
   private final int width;
+  private final int MAX_VALUE;
   private List<Layer> layers;
 
   /**
@@ -15,19 +16,21 @@ public class CollagePPM implements CollageModel{
    * @param width
    * @throws IllegalArgumentException
    */
-  public CollagePPM(int height, int width) throws IllegalArgumentException{
-    if (height <= 0 || width <= 0) {
+  public CollagePPM(int height, int width, int MAX_VALUE) throws IllegalArgumentException{
+    if (height <= 0 || width <= 0 || MAX_VALUE <= 0) {
       throw new IllegalArgumentException("Invalid PPM dimension!");
     }
     this.height = height;
     this.width = width;
+    this.MAX_VALUE = MAX_VALUE;
     this.layers = new ArrayList<Layer>();
 
     //create a white background layer.
     Pixel[][] background = new Pixel[this.height][this.width];
     for(int i = 0; i < this.height; i++) {
       for(int j = 0; j < this.width; j++) {
-        background[i][j] = new Pixel(255,255,255, 255, new Posn(i,j));
+        background[i][j] = new Pixel(this.MAX_VALUE,this.MAX_VALUE,
+                this.MAX_VALUE, this.MAX_VALUE, new Posn(i,j));
       }
     }
 
@@ -40,6 +43,14 @@ public class CollagePPM implements CollageModel{
     this.layers.add(backgroundLayer);
   }
 
+  /**
+   * Returns the max value of this model.
+   *
+   * @return - the max value of the model.
+   */
+  public int getMax() {
+    return this.MAX_VALUE;
+  }
   /**
    * Returns the width of this model.
    *
@@ -109,7 +120,8 @@ public class CollagePPM implements CollageModel{
   }
 
   /**
-   * Save the image
+   * Save all the layers as one List of Pixels
+   * @return - the combined layers of pixels
    */
   @Override
   public List<Pixel> saveImage() {
@@ -125,4 +137,16 @@ public class CollagePPM implements CollageModel{
     return combined.render();
   }
 
+  /**
+   * Return the list of Layers with the applied filter.
+   * @return
+   */
+  public List<Layer> renderLayers() {
+    List<Layer> pixelLayers = new ArrayList<Layer>();
+    for(Layer l: this.layers) {
+      pixelLayers.add(l.applyFilter());
+    }
+
+    return pixelLayers;
+  }
 }

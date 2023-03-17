@@ -5,6 +5,12 @@ import java.util.List;
 public interface CollageModel {
 
   /**
+   * Returns the max value of this model.
+   *
+   * @return - the max value of the model.
+   */
+  public int getMax();
+  /**
    * Returns the width of this model.
    *
    * @return - the width of the model
@@ -54,4 +60,10 @@ public interface CollageModel {
    * Save the image
    */
   public List<Pixel> saveImage();
+
+  /**
+   *
+   * @return
+   */
+  public List<Layer> renderLayers();
 }

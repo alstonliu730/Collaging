@@ -7,7 +7,6 @@ import java.util.function.Consumer;
  * A class that represents a Filter that changes pixels
  */
 public class Filter implements Consumer<Pixel> {
-
   String option;
 
   /**
@@ -22,6 +21,7 @@ public class Filter implements Consumer<Pixel> {
 
     this.option = option;
   }
+
   /**
    * Performs this operation on the given argument.
    *
@@ -50,5 +50,14 @@ public class Filter implements Consumer<Pixel> {
         // does nothing
         break;
     }
+  }
+
+  /**
+   * Returns this filter's option.
+   *
+   * @return - the option of the filter
+   */
+  public String getOption() {
+    return this.option;
   }
 }

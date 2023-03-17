@@ -11,7 +11,7 @@ public interface IListOfPixel {
   public List<Pixel> render();
 
   /**
-   * 
+   *
    * @param pixels
    * @return
    * @throws IllegalStateException

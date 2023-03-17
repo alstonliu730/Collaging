@@ -86,9 +86,11 @@ public class Image implements IListOfPixel{
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  @Override
   public Pixel getPixel(Posn pos) {
-    return null;
+    int row = pos.getRow();
+    int col = pos.getCol();
+
+    return this.image[row][col];
   }
 
   /**
