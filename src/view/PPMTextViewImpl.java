@@ -6,11 +6,11 @@ import model.CollageModel;
 import model.Layer;
 import model.Pixel;
 
-public class TextViewImpl implements TextView {
+public class PPMTextViewImpl implements TextView {
   Appendable out;
   CollageModel model;
 
-  public TextViewImpl(Appendable out, CollageModel model) throws IllegalArgumentException {
+  public PPMTextViewImpl(Appendable out, CollageModel model) throws IllegalArgumentException {
     if(Objects.isNull(out) || Objects.isNull(model)) {
       throw new IllegalArgumentException("Invalid TextView input!");
     }
@@ -49,22 +49,6 @@ public class TextViewImpl implements TextView {
    * @return - representation of the current Project state
    */
   public String toString() {
-    String project = "";
-
-    // Adds project information
-    project += (this.model.getWidth() + " " + this.model.getHeight() + "\n");
-    project += (this.model.getMax() + "\n");
-
-    // Adds layer information
-    for(Layer l : this.model.renderLayers()) {
-      project += (l.getName() + " " + l.getFilter().getOption() + "\n");
-      for(Pixel p: l.render()) {
-        project += (p.ppmFormat() + " ");
-      }
-      project += "\n";
-    }
-
-    // return the string of the project
-    return project;
+    return this.model.ppmFormat();
   }
 }
