@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A class that represents a Layer.
+ */
 public class Layer implements IListOfPixel{
   private String name;
   private int height, width;
@@ -15,10 +18,12 @@ public class Layer implements IListOfPixel{
   /**
    * Creates a layer of pixels with the given height and width.
    *
-   * @param name
-   * @param height
-   * @param width
-   * @throws IllegalArgumentException
+   * @param name - the name of this layer
+   * @param height - the height of the layer
+   * @param width - the width of the layer
+   * @param maxValue - the max value of the channels
+   * @throws IllegalArgumentException - when the dimensions are less than or equal to zero OR
+   *                                    when the name is null
    */
   public Layer(String name, int height, int width, int maxValue) throws IllegalArgumentException {
     if(Objects.isNull(name) || height <= 0 || width <= 0 || maxValue <= 0) {
@@ -35,16 +40,16 @@ public class Layer implements IListOfPixel{
     // creates the translucent image and set it as the background
     for (int i = 0; i < this.height; ++i) {
       for (int j = 0; j < this.width; ++j) {
-        matrix[i][j] = new Pixel(255,255,255,0, new Posn(i,j)); // put max value in
+        matrix[i][j] = new Pixel(this.maxValue,this.maxValue,this.maxValue,0, this.maxValue,
+                new Posn(i,j));
       }
     }
   }
 
   /**
-   * Converts the 2D Pixel matrix into a 1D List of Pixels.
-   * Additionally, applies the current filter.
+   * Returns the current Pixels in the matrix as a 1D array.
    *
-   * @return
+   * @return - a list of the current Pixels
    */
   public List<Pixel> render() {
     List<Pixel> image = new ArrayList<Pixel>();
@@ -60,9 +65,11 @@ public class Layer implements IListOfPixel{
   }
 
   /**
-   * @param pixels
-   * @return
-   * @throws IllegalStateException
+   * Converts the given list of Pixel into a matrix of Pixels.
+   *
+   * @param pixels - the List of Pixels to be converted
+   * @return - converted matrix of Pixels
+   * @throws IllegalStateException - When the size is not the same
    */
   public Pixel[][] convertToMatrix(List<Pixel> pixels) throws IllegalArgumentException {
     if (Objects.isNull(pixels) || (this.height * this.width) != pixels.size()) {
@@ -80,6 +87,7 @@ public class Layer implements IListOfPixel{
 
   /**
    * Returns the name of this layer.
+   *
    * @return - the name of this layer
    */
   public String getName() {
@@ -155,8 +163,8 @@ public class Layer implements IListOfPixel{
    * - If image crosses the boundaries, then the image is cut off at the boundary.
    * - Adds the image to the list of images.
    *
-   * @param img
-   * @throws IllegalArgumentException
+   * @param img - the image to be added into the layer
+   * @throws IllegalArgumentException - when the given image is null
    */
   public void addImage(Image img) throws IllegalArgumentException{
     if(Objects.isNull(img)) {
@@ -217,10 +225,11 @@ public class Layer implements IListOfPixel{
   }
 
   /**
+   * Combines the given layer with this layer.
    *
-   * @param prev
-   * @return
-   * @throws IllegalArgumentException
+   * @param prev - the previous layer
+   * @return - the combined layer
+   * @throws IllegalArgumentException - when the previous layer has different dimensions
    */
   public Layer combine(Layer prev) throws IllegalArgumentException{
     if(this.height != prev.getHeight() || this.width != prev.getWidth()) {
@@ -246,8 +255,9 @@ public class Layer implements IListOfPixel{
   }
 
   /**
+   * Applies the filter to this layer and returns it.
    *
-   * @return
+   * @return - the Layer with the applied filter
    */
   public Layer applyFilter() {
     this.setMatrix(this.convertToMatrix(this.render()));
@@ -255,13 +265,19 @@ public class Layer implements IListOfPixel{
   }
 
   /**
+   * Returns the filter of this layer.
    *
-   * @return
+   * @return - the filter object
    */
   public Filter getFilter() {
     return this.filter;
   }
 
+  /**
+   * Returns the maximum value of the channels in this layer.
+   *
+   * @return - the max value of the channels
+   */
   public int getMax() {
     return this.maxValue;
   }
