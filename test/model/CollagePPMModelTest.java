@@ -1,3 +1,5 @@
+package model;
+
 import org.junit.Test;
 
 import model.CollageModel;
@@ -97,7 +99,7 @@ public class CollagePPMModelTest {
     }
 
     this.model1.addLayer("table-layer");
-    assertEquals("table-layer", this.model1.getLayer("first-layer").getName());
+    assertEquals("table-layer", this.model1.getLayer("table-layer").getName());
   }
 
   @Test
