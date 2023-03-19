@@ -174,53 +174,19 @@ public class Layer implements IListOfPixel{
     this.images.add(img);
     // Gather information of the image
     Posn position = img.getPos();
-    int startRow, startRowImg, endRowImg;
-    int startCol, startColImg, endColImg;
 
-    // Determine boundaries of image array in the row (height)
-    if (position.getRow() < 0) {
-      startRowImg = Math.abs(position.getRow());
-      endRowImg = img.getHeight();
-      startRow = 0;
-    } else if (position.getRow() > this.height) {
-      throw new IllegalArgumentException("Image is not rendered on layer!");
-    } else {
-      startRowImg = 0;
-      endRowImg = img.getHeight();
-      startRow = position.getRow();
-    }
+    for(int i = 0; i < img.getHeight(); ++i) {
+      colLoop:
+      for(int j = 0; j < img.getWidth(); ++j) {
+        int row = (position.getRow() + i) <= this.height ? (position.getRow() + i) : -1;
+        int col = (position.getCol() + i) <= this.width ? (position.getCol() + i) : -1;
 
-    // Determine boundaries of image array in the col (width)
-    if (position.getCol() < 0) {
-      startColImg = Math.abs(position.getCol());
-      endColImg = img.getWidth();
-      startRow = 0;
-      startCol = 0;
-    } else if (position.getCol() > this.width) {
-      throw new IllegalArgumentException("Image is not rendered on layer!");
-    } else {
-      startColImg = 0;
-      endColImg = img.getWidth();
-      startCol = position.getCol();
-    }
-
-    // Go through the given image
-    for(int i = startRowImg; i < endRowImg; ++i) {
-      for (int j = startColImg; j < endColImg; ++j) {
-        // when the current column goes pass the width boundary
-        if (startCol >= this.width) {
-          break;
+        if(row < 0 || col < 0) {
+          break colLoop;
         }
-        // when the current row goes pass the height boundary
-        if (startRow >= this.height) {
-          break;
-        }
-        Pixel curr = matrix[startRow][startCol];
-        matrix[startRow][startCol] = img.getPixel(new Posn(i, j)).combine(curr);
-        matrix[startRow][startCol].changePos(new Posn(startRow, startCol));
-        startCol++;
+        this.matrix[row][col] = img.getPixel(new Posn(i,j));
+        this.matrix[row][col].changePos(new Posn(row,col));
       }
-      startRow++;
     }
   }
 

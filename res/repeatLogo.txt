@@ -1,0 +1,12 @@
+# make a new project
+new-project 400 400
+# add a layer
+add-layer first-layer
+# add the image to the layer
+add-image-to-layer first-layer res/logo.ppm 0 0
+# save image as sameLogo.ppm
+save-image res/sameLogo.ppm
+# save the project
+save-project res/sameLogo.collage
+# quit
+quit

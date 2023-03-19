@@ -43,6 +43,11 @@ public class CollageControllerImplTest {
     init(400, 400);
     this.controller = new CollageControllerImpl(this.model, this.in, this.view);
     this.controller.runCollage();
+
+    this.in = ImageUtil.removeComments("res/repeatLogo.txt");
+    init(400, 400);
+    this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+    this.controller.runCollage();
   }
 
   @Test

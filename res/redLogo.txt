@@ -1,16 +1,16 @@
-#make a new project
+# make a new project
 new-project 400 400
-#add a layer
+# add a layer
 add-layer first-layer
-#add the image to the layer
+# add the image to the layer
 add-image-to-layer first-layer res/logo.ppm 20 20
-#set the filter as red-component
+# set the filter as red-component
 set-filter first-layer red-component
-#save image as redLogo.ppm
+# save image as redLogo.ppm
 save-image res/redLogo.ppm
-#save the project
+# save the project
 save-project res/redLogo.collage
-#quit
+# quit
 quit
 
 
