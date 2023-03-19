@@ -2,6 +2,8 @@ package model;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class LayerTest {
@@ -38,4 +40,14 @@ public class LayerTest {
       assertEquals("Invalid Layer inputs!", e.getMessage());
     }
   }
+
+  @Test
+  public void testRender() {
+    this.l1 = new Layer("first", 1,1,255);
+    List<Pixel> pixels = this.l1.render();
+
+    assertEquals("255 255 255", pixels.get(0).ppmFormat());
+  }
+
+
 }

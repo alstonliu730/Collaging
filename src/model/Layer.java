@@ -208,11 +208,11 @@ public class Layer implements IListOfPixel{
     for(int i = startRowImg; i < endRowImg; ++i) {
       for (int j = startColImg; j < endColImg; ++j) {
         // when the current column goes pass the width boundary
-        if (startCol > this.width) {
+        if (startCol >= this.width) {
           break;
         }
         // when the current row goes pass the height boundary
-        if (startRow > this.height) {
+        if (startRow >= this.height) {
           break;
         }
         Pixel curr = matrix[startRow][startCol];

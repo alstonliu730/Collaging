@@ -1,9 +1,14 @@
 package util;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -22,7 +27,39 @@ import model.Posn;
  *  as required.
  */
 public class ImageUtil {
+  /**
+   * Removes the comment lines from a file. Comments start with a '#'.
+   *
+   * @param filename path of the file
+   * @return a Readable object with the contents of the file without comments
+   * @throws IllegalArgumentException if the file doesn't exist or null arg is passed
+   */
+  public static Readable removeComments(String filename) throws IllegalArgumentException {
+    if (filename == null) {
+      throw new IllegalArgumentException("Cannot have null argument.");
+    }
 
+    Scanner sc;
+
+    try {
+      sc = new Scanner(new FileInputStream(filename));
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("File " + filename + " not found!");
+    }
+    StringBuilder builder = new StringBuilder();
+
+    while (sc.hasNextLine()) {
+      String s = sc.nextLine();
+      if (!s.isEmpty() && s.charAt(0) != '#') {
+        builder.append(s + System.lineSeparator());
+      }
+    }
+
+    //Set up a stream of input to export the readable
+    InputStream stream = new ByteArrayInputStream(
+            builder.toString().getBytes(StandardCharsets.UTF_8));
+    return new InputStreamReader(stream);
+  }
   /**
    * Read an image file in the PPM format and return the layer.
    *
