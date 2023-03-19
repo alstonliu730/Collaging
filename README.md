@@ -55,14 +55,16 @@ This means the first layer in the list would be the bottom-most layer in the mod
 #### `ppmFormat()`
 This function returns a string format that resembles a PPM file. However, it also includes all the layer's information including name and filter name and the content.
 The format should look like this:
-`C1
-width height
-max-value
-layer-name filter-name
-LAYER-CONTENT-FORMAT
-...
-layer-name filter-name
-LAYER-CONTENT-FORMAT
-...`
+
+    C1
+    width height
+    max-value
+    layer-name filter-name
+    LAYER-CONTENT-FORMAT
+    ...
+    layer-name filter-name
+    LAYER-CONTENT-FORMAT
+    ...
 
 #### Getters
+The getters and setters are only for the fields. These are important for parsing information into other classes. This can help with the height, width, and max value of a layer so that there wouldn't be any errors on out of bounds errors.
