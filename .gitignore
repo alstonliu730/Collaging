@@ -7,5 +7,6 @@
 # Intellij Files
 *.iml
 .idea/
-/out
-/resy
+out/
+res/
+*.ppm
