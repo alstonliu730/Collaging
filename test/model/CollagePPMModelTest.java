@@ -2,6 +2,9 @@ package model;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.CollageModel;
 import model.CollagePPM;
 import model.Layer;
@@ -115,5 +118,50 @@ public class CollagePPMModelTest {
 
     this.model1.addLayer("first-layer");
     assertEquals("first-layer", this.model1.getLayer("first-layer").getName());
+  }
+
+  @Test
+  public void testSetFilter() {
+    this.model1 = new CollagePPM(3,4,6);
+    this.model1.addLayer("first-layer");
+    this.model1.setFilter("first-layer",new Filter("red-component"));
+    assertEquals("red-component",
+            this.model1.getLayer("first-layer").getFilter().getOption());
+  }
+
+  @Test
+  public void testAddImageToLayer() {
+    this.model1 = new CollagePPM(4,4,255);
+    List<Pixel> img = new ArrayList<Pixel>();
+    // red square
+    for(int i = 0; i < 2; i++) {
+      for(int j = 0; j < 2; j++) {
+        img.add(new Pixel(255,0,0,255,255, new Posn(i,j)));
+      }
+    }
+    Image redSquare = new Image(2,2,new Posn(0,0));
+    Pixel[][] pixels = redSquare.convertToMatrix(img);
+    redSquare = new Image(pixels, new Posn(0,0));
+
+    this.model1.addLayer("first-layer");
+    this.model1.addImageToLayer(this.model1.getLayer("first-layer"),
+            redSquare, 0,0);
+    assertEquals("255 0 0",
+            this.model1.getLayer("first-layer").getPixel(new Posn(0,0)).ppmFormat());
+  }
+
+  @Test
+  public void testPPMFormat() {
+    this.model1 = new CollagePPM(2,2,255);
+    assertEquals("2 2\n255\nbackground normal\n255 255 255 255 255 255 255 "
+                    + "255 255 255 255 255 \n", this.model1.ppmFormat());
+  }
+
+  @Test
+  public void testSaveImage() {
+    this.model1 = new CollagePPM(1,1,255);
+    Layer l1 = this.model1.saveImage();
+
+    assertEquals("background", l1.getName());
   }
 }

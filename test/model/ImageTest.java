@@ -1,11 +1,15 @@
 package model;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class ImageTest  {
   Image img1;
   Image img2;
 
+  @Test
   public void testValidConstruction() {
     // test valid inputs
     this.img1 = new Image(10,10,new Posn(0,0));
@@ -25,5 +29,35 @@ public class ImageTest  {
       }
     }
     this.img1 = new Image(matrix, new Posn(0,0));
+    assertEquals(255, this.img1.getMax());
+  }
+
+  @Test
+  public void testInvalidConstruction() {
+    try {
+      this.img1 = new Image(-10, 10, new Posn(0,0));
+      fail("Should not be able to input a negative number for the width or height!");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid Image input!", e.getMessage());
+    }
+
+    try {
+      this.img1 = new Image(10,10, null);
+      fail("Should not be able to input a null in the position!");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid Image input!", e.getMessage());
+    }
+
+    try {
+      this.img1 = new Image(10,10,-23, new Posn(0,0));
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid max value input!", e.getMessage());
+    }
+
+    try {
+      this.img1 = new Image(null, new Posn(0,0));
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid input!", e.getMessage());
+    }
   }
 }

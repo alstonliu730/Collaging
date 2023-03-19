@@ -62,20 +62,24 @@ public class Pixel {
    * @param prev - the previous Pixel to be combined
    * @return - the converted Pixel
    */
-  public Pixel combine(Pixel prev) { // replace 255 as MAX_VALUE
+  public Pixel combine(Pixel prev) {
     double percentAlpha = (this.alpha / this.maxValue) +
             ((prev.alpha/this.maxValue) * (1- (this.alpha / this.maxValue)));
     int new_alpha = (int) Math.round(percentAlpha * this.maxValue);
     int new_red = (int) Math.round((convertCompWithAlpha(this.red, this.alpha)
-            + (convertCompWithAlpha(prev.red, prev.alpha)
-            * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
+            + (convertCompWithAlpha(prev.red, prev.alpha) * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
     int new_green = (int) Math.round((convertCompWithAlpha(this.green, this.alpha)
             + (convertCompWithAlpha(prev.green, prev.alpha)
             * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
     int new_blue = (int) Math.round((convertCompWithAlpha(this.blue, this.alpha)
             + (convertCompWithAlpha(prev.blue, prev.alpha)
             * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
+    // if any of the values go over the maxValue then set it to the max value
+    new_red = Math.min(new_red, this.maxValue);
+    new_green = Math.min(new_green, this.maxValue);
+    new_blue = Math.min(new_blue, this.maxValue);
 
+    // return the new Pixel
     return new Pixel(new_red, new_green, new_blue, new_alpha, this.pos);
   }
 
@@ -90,9 +94,12 @@ public class Pixel {
    */
   public void brighten() {
     float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
-    this.red = Math.round(this.red + luma) <= 255 ? Math.round(this.red + luma) : 255;
-    this.green = Math.round(this.green + luma) <= 255 ? Math.round(this.green + luma) : 255;
-    this.blue = Math.round(this.blue + luma) <= 255 ? Math.round(this.blue + luma) : 255;
+    this.red = Math.round(this.red + luma) <= this.maxValue ?
+            Math.round(this.red + luma) : this.maxValue;
+    this.green = Math.round(this.green + luma) <= this.maxValue ?
+            Math.round(this.green + luma) : this.maxValue;
+    this.blue = Math.round(this.blue + luma) <= this.maxValue ?
+            Math.round(this.blue + luma) : this.maxValue;
   }
 
   /**
@@ -159,7 +166,7 @@ public class Pixel {
    * @return - the string format in rgb values
    */
   public String ppmFormat() {
-    return String.format("%o %o %o", this.red, this.green, this.blue);
+    return String.format("%d %d %d", this.red, this.green, this.blue);
   }
 
   /**

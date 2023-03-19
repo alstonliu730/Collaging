@@ -58,10 +58,10 @@ public interface CollageModel {
   /**
    * Sets the Filter of the given layer.
    *
-   * @param layer - the given layer
+   * @param layer - the name of the given layer
    * @param option - the filter type
    */
-  public void setFilter(Layer layer, Filter option);
+  public void setFilter(String layer, Filter option);
 
   /**
    * Save the layers as one layer

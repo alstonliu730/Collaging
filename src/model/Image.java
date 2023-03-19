@@ -77,8 +77,7 @@ public class Image implements IListOfPixel{
    */
   public List<Pixel> render() {
     List<Pixel> pixels = new ArrayList<Pixel>();
-
-    // fill the list o
+    // fill the list of pixels
     for(Pixel[] row: this.image) {
       for(Pixel pixel: row) {
         pixels.add(pixel);

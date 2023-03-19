@@ -132,11 +132,11 @@ public class CollagePPM implements CollageModel{
   /**
    * Sets the Filter of the given layer.
    *
-   * @param layer  - the given layer
+   * @param layer  - the name of the given layer
    * @param option - the filter type
    */
-  public void setFilter(Layer layer, Filter option) {
-    layer.setFilter(option);
+  public void setFilter(String layer, Filter option) {
+    this.getLayer(layer).setFilter(option);
   }
 
   /**
