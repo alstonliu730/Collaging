@@ -12,7 +12,8 @@ public enum Filter {
   GREEN("green-component"),
   BLUE("blue-component"),
   DARKEN("darken"),
-  BRIGHTEN("brighten");
+  BRIGHTEN("brighten"),
+  INVERT("invert");
   String option;
 
   /**
@@ -38,6 +39,7 @@ public enum Filter {
    */
   public IPixel apply(IPixel... pixels) throws NullPointerException{
     Objects.requireNonNull(pixels);
+
     switch(this.option) {
       case "red-component":
         return pixels[0].applyFilter("r");
@@ -49,9 +51,32 @@ public enum Filter {
         return pixels[0].darken(pixels[1]);
       case "brighten":
         return pixels[0].brighten(pixels[1]);
+      case "invert":
+        return pixels[0].invert(pixels[1]);
       default:
         return pixels[0];
     }
+  }
+
+  /**
+   * Find the filter object with the given option.
+   *
+   * @param option - the given option
+   * @return - the Filter object associated with that option
+   * @throws IllegalArgumentException - when the given option is null
+   *                                    OR when the given option is not associated with a value
+   */
+  public static Filter findByValue(String option)
+    throws IllegalArgumentException {
+    if(Objects.isNull(option)) {
+      throw new IllegalArgumentException("Given option is null!");
+    }
+    for(Filter f : values()) {
+      if(f.getOption().equalsIgnoreCase(option)) {
+        return f;
+      }
+    }
+    throw new IllegalArgumentException("No Filter associated with this option!");
   }
 
   /**

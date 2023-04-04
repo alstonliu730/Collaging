@@ -93,7 +93,8 @@ public class CollageControllerImpl implements CollageController {
           int height = Integer.parseInt(args[1]);
           // Create new project with h and w
           // Model should throw IllegalArgumentException for negative ints
-          this.model = new CollagePPM(height, width, this.model.getMax());
+          this.model = new CollagePPM();
+          this.model.startModel(height, width, this.model.getMax());
         } catch (IllegalArgumentException e) {
           this.printMessage("Invalid input on creating new projects!");
           e.printStackTrace();
@@ -152,7 +153,7 @@ public class CollageControllerImpl implements CollageController {
         String filterOption = args[1];
 
         // change the filter of the given layer name
-        this.model.getLayer(layerName).setFilter(Filter.valueOf(filterOption));
+        this.model.setFilter(layerName, Filter.findByValue(filterOption));
         break;
       default:
         printMessage("Unknown command. Try again.");

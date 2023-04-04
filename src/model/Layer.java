@@ -202,7 +202,6 @@ public class Layer implements IListOfPixel{
 
   /**
    * Compresses the given previous layer with this layer.
-   * Applies the filter to the current layer.
    *
    * @param prev - the previous layer
    * @return - the combined layer
@@ -214,7 +213,7 @@ public class Layer implements IListOfPixel{
     }
 
     // Combined layer with the filter on it
-    Layer combined = this.applyFilter(prev);
+    Layer combined = new Layer("combined", this.height, this.width, this.maxValue);
 
     // Traverse the matrix of each layer
     for(int i = 0; i < this.height; i++) {
@@ -237,7 +236,7 @@ public class Layer implements IListOfPixel{
    */
   public Layer applyFilter(Layer prev) {
     if(Objects.isNull(prev)) {
-      return this.applyFilterOnly();
+      return this.applyBackgroundFilter();
     }
     Layer filtered = new Layer(this.name, this.height, this.width, this.maxValue);
 
@@ -258,7 +257,7 @@ public class Layer implements IListOfPixel{
    *
    * @return - the modified layer with the filter
    */
-  private Layer applyFilterOnly() {
+  private Layer applyBackgroundFilter() {
     // apply the filter to this Layer
     for(IPixel p: this.render()) {
       this.setPixel(p.getPos(), this.filter.apply(p));

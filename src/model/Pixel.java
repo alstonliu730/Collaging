@@ -128,12 +128,15 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel brighten(IPixel prev) {
+    if(Objects.isNull(prev)) {
+      return this;
+    }
     assert(this.pos.equals(prev.getPos()));
+
     // get HSL representation of the pixel
-    double[] currHSL = RepresentationConverter.convertRGBtoHSL(this.red, this.green, this.blue);
-    int[] prevRGBA = prev.getValues();
-    double[] prevHSL = RepresentationConverter.convertRGBtoHSL(prevRGBA[0],
-            prevRGBA[1], prevRGBA[2]);
+    double[] currHSL = this.getHSL(this);
+    double[] prevHSL = this.getHSL(prev);
+
     // use only the lightness value of the hsl representation
     double l = currHSL[2];
     double dl = prevHSL[2];
@@ -153,12 +156,14 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel darken(IPixel prev) {
+    if(Objects.isNull(prev)) {
+      return this;
+    }
     assert(this.pos.equals(prev.getPos()));
     // get HSL representation of the pixel
-    double[] currHSL = RepresentationConverter.convertRGBtoHSL(this.red, this.green, this.blue);
-    int[] prevRGBA = prev.getValues();
-    double[] prevHSL = RepresentationConverter.convertRGBtoHSL(prevRGBA[0],
-            prevRGBA[1], prevRGBA[2]);
+    double[] currHSL = this.getHSL(this);
+    double[] prevHSL = this.getHSL(prev);
+
     // use only the lightness value of the hsl representation
     double l = currHSL[2];
     double dl = prevHSL[2];
@@ -171,6 +176,16 @@ public class Pixel implements IPixel{
     return new Pixel(newRGB[0], newRGB[1], newRGB[2], this.alpha, this.maxValue, this.pos);
   }
 
+  /*
+   * Helper function that gets the HSL values for the given IPixel.
+   *
+   */
+  private double[] getHSL(IPixel p) {
+    int[] pRGBA = p.getValues();
+    return RepresentationConverter.convertRGBtoHSL((double) pRGBA[0]/p.getMax(),
+            (double) pRGBA[1]/p.getMax(), (double) pRGBA[2]/p.getMax());
+  }
+
   /**
    * Inverts the color using the previous pixel.
    *
@@ -178,6 +193,9 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel invert(IPixel prev) {
+    if(Objects.isNull(prev)) {
+      return this;
+    }
     assert(this.pos.equals(prev.getPos()));
     int[] currRGBA = this.getValues();
     int[] prevRGBA = prev.getValues();

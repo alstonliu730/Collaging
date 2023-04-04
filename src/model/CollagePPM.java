@@ -9,30 +9,38 @@ import util.PixelArrayUtil;
  * A class that represents a CollageModel with a PPM format.
  */
 public class CollagePPM implements CollageModel{
-  private final int height;
-  private final int width;
-  private final int maxValue;
+  private int height;
+  private int width;
+  private int maxValue;
   private List<Layer> layers;
 
   /**
-   * Creates a CollagePPM model with the given height, width, and maxValue.
+   * Creates a CollagePPM model and instantiates necessary items.
+   */
+  public CollagePPM()  {
+    this.layers = new ArrayList<Layer>();
+    this.maxValue = 255;
+  }
+
+  /**
+   * Load model with given height, width, and max value.
    *
    * @param height - the height of the model (rows)
    * @param width - the width of the model (columns)
    * @param maxValue - the max value of the channel (max value of rgba values)
    * @throws IllegalArgumentException - when the given inputs are zero or negative.
    */
-  public CollagePPM(int height, int width, int maxValue) throws IllegalArgumentException{
+  @Override
+  public void startModel(int height, int width, int maxValue) throws IllegalArgumentException {
     if (height <= 0 || width <= 0 || maxValue <= 0) {
       throw new IllegalArgumentException("Invalid PPM dimension!");
     }
     this.height = height;
     this.width = width;
     this.maxValue = maxValue;
-    this.layers = new ArrayList<Layer>();
 
     //create a white background layer.
-    Pixel[][] background = new Pixel[this.height][this.width];
+    IPixel[][] background = new Pixel[this.height][this.width];
     for(int i = 0; i < this.height; i++) {
       for(int j = 0; j < this.width; j++) {
         background[i][j] = new Pixel(this.maxValue, this.maxValue,
@@ -151,7 +159,7 @@ public class CollagePPM implements CollageModel{
     Layer combined = filteredLayers.get(0);
 
     // go through the list of layers
-    for(int i = 1; i < filteredLayers.size(); i ++) {
+    for(int i = 1; i < filteredLayers.size(); i++) {
       combined = filteredLayers.get(i).combine(combined);
     }
 
@@ -170,7 +178,7 @@ public class CollagePPM implements CollageModel{
     Layer prev = this.layers.get(0); // get the background as the first layer
     pixelLayers.add(prev.applyFilter(null)); // add the background
 
-    //
+    // apply the filter to each layer
     if (this.layers.size() > 1) {
       for (int i = 1; i < this.layers.size(); i++) {
         Layer curr = this.layers.get(i);

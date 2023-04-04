@@ -140,6 +140,22 @@ public class LayerTest {
     assertEquals("150 0 0", this.l1.getPixel(new Posn(0,0)).toString());
     assertEquals("230 0 0", this.l1.getPixel(new Posn(1,1)).toString());
 
+    // test For Darken Filter
+    this.l1 = new Layer("first", 2, 2, 255);
+    this.l1.setFilter(Filter.DARKEN);
+
+    // The grid with specific pixels
+    this.l1.setPixel(new Posn(0,0), new Pixel(150,50,89, 255, new Posn(0,0)));
+    this.l1.setPixel(new Posn(1,1), new Pixel(230,40,100, 255, new Posn(1,1)));
+    assertEquals("150 50 89", this.l1.getPixel(new Posn(0,0)).toString());
+    assertEquals("230 40 100", this.l1.getPixel(new Posn(1,1)).toString());
+
+    // Apply the filter: darken
+    this.l1.applyFilter(this.l2);
+
+    // Make sure the filter is unchanged since the background is white
+    assertEquals("150 50 89", this.l1.getPixel(new Posn(0,0)).toString());
+    assertEquals("230 40 100", this.l1.getPixel(new Posn(1,1)).toString());
   }
 
   @Test

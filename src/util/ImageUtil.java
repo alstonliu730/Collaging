@@ -29,6 +29,7 @@ import model.Posn;
 public class ImageUtil {
   /**
    * Removes the comment lines from a file. Comments start with a '#'.
+   * Returns the file without the comments.
    *
    * @param filename path of the file
    * @return a Readable object with the contents of the file without comments
@@ -112,7 +113,7 @@ public class ImageUtil {
 
     //now set up the scanner to read from the string we just built
     sc = new Scanner(ImageUtil.removeComments(filename));
-
+    CollageModel model = new CollagePPM();
     String token = sc.next();
     if (!token.equals("C1")) {
       System.out.println("Invalid Collage File: plain txt file should start with C1");
@@ -121,7 +122,7 @@ public class ImageUtil {
     int width = sc.nextInt();
     int height = sc.nextInt();
     int maxValue = sc.nextInt();
-    CollageModel model = new CollagePPM(height, width, maxValue);
+    model.startModel(height, width, maxValue);
 
     // Gather layer information
     while (sc.hasNext()) {
@@ -132,7 +133,7 @@ public class ImageUtil {
 
       // Create a new layer
       new_layer = new Layer(layer_name, height, width, maxValue);
-      new_layer.setFilter(Filter.valueOf(filter_name));
+      new_layer.setFilter(Filter.findByValue(filter_name));
       List<IPixel> pixelList = new ArrayList<IPixel>();
 
       // extract pixels to the list

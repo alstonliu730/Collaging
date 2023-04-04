@@ -3,13 +3,21 @@ package view;
 import java.io.IOException;
 import java.util.Objects;
 import model.CollageModel;
-import model.Layer;
-import model.Pixel;
 
+/**
+ * A class that represents the PPM text view of the controller.
+ */
 public class PPMTextViewImpl implements TextView {
   private Appendable out;
   private CollageModel model;
 
+  /**
+   * Creates an object view in the PPM format.
+   *
+   * @param out - the Appendable object to output
+   * @param model - the model to base the view on
+   * @throws IllegalArgumentException - when the given objects are null
+   */
   public PPMTextViewImpl(Appendable out, CollageModel model) throws IllegalArgumentException {
     if(Objects.isNull(out) || Objects.isNull(model)) {
       throw new IllegalArgumentException("Invalid TextView input!");
@@ -18,7 +26,6 @@ public class PPMTextViewImpl implements TextView {
     this.out = out;
     this.model = model;
   }
-
 
   /**
    * Renders the given message into the data output of the implementation.

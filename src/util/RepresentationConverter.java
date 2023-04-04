@@ -50,6 +50,8 @@ public class RepresentationConverter {
 
       hue = hue * 60;
     }
+    /*System.out.print("R: " + r + " G: " + g + " B: " + b);
+    System.out.println(" --> H: " + hue + " S: " + saturation + " L: " + lightness);*/
     // create hsl array
     double[] hsl = {hue, saturation, lightness};
 
@@ -75,6 +77,9 @@ public class RepresentationConverter {
     double r = convertFn(hue, saturation, lightness, 0) * 255;
     double g = convertFn(hue, saturation, lightness, 8) * 255;
     double b = convertFn(hue, saturation, lightness, 4) * 255;
+    /*System.out.print("Red: " + r);
+    System.out.print("Green: " + g);
+    System.out.println("Blue: " + b);*/
 
     // create rgb array representation
     int[] rgb = {(int) Math.round(r), (int) Math.round(g), (int) Math.round(b)};
