@@ -12,16 +12,7 @@ public interface IListOfPixel {
    *
    * @return - a list of the current Pixels
    */
-  public List<Pixel> render();
-
-  /**
-   * Converts the given list of Pixel into a matrix of Pixels.
-   *
-   * @param pixels - the List of Pixels to be converted
-   * @return - converted matrix of Pixels
-   * @throws IllegalStateException - When the size is not the same
-   */
-  public Pixel[][] convertToMatrix(List<Pixel> pixels) throws IllegalStateException;
+  public List<IPixel> render();
 
   /**
    * Returns the Pixel at the given coordinate.
@@ -29,7 +20,7 @@ public interface IListOfPixel {
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  public Pixel getPixel(Posn pos);
+  public IPixel getPixel(Posn pos);
 
   /**
    * Returns the height of this IListOfPixel.

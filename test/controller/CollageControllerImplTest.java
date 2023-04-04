@@ -2,11 +2,7 @@ package controller;
 
 import org.junit.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.StringReader;
-import java.util.Scanner;
 
 import model.CollageModel;
 import model.CollagePPM;
@@ -27,36 +23,43 @@ public class CollageControllerImplTest {
     this.model = new CollagePPM(height,width,255);
     this.view = new PPMTextViewImpl(this.out, this.model);
   }
+  
   @Test
   public void runCollage() {
-    this.in = ImageUtil.removeComments("res/redLogo.txt");
-    init(400, 400);
-    this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-    this.controller.runCollage();
+    try {
+      this.in = ImageUtil.removeComments("res/redLogo.txt");
+      init(400, 400);
+      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+      this.controller.runCollage();
 
-    this.in = ImageUtil.removeComments("res/greenLogo.txt");
-    init(400, 400);
-    this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-    this.controller.runCollage();
+      this.in = ImageUtil.removeComments("res/greenLogo.txt");
+      init(400, 400);
+      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+      this.controller.runCollage();
 
-    this.in = ImageUtil.removeComments("res/blueLogo.txt");
-    init(400, 400);
-    this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-    this.controller.runCollage();
+      this.in = ImageUtil.removeComments("res/blueLogo.txt");
+      init(400, 400);
+      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+      this.controller.runCollage();
 
-    this.in = ImageUtil.removeComments("res/repeatLogo.txt");
-    init(400, 400);
-    this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-    this.controller.runCollage();
+      this.in = ImageUtil.removeComments("res/repeatLogo.txt");
+      init(400, 400);
+      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+      this.controller.runCollage();
+
+    } catch (FileNotFoundException e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    }
   }
 
   @Test
-  public void runCommands() {
+  public void testRunCommands() {
 
   }
 
   @Test
-  public void printMessage() {
+  public void testPrintMessage() {
     
   }
 }

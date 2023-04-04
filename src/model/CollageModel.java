@@ -82,5 +82,5 @@ public interface CollageModel {
    *
    * @return - the format of the PPM model as a String
    */
-  public String ppmFormat();
+  public String toString();
 }

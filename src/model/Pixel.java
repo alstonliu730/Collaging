@@ -2,13 +2,16 @@ package model;
 
 import java.util.Objects;
 
+import util.PixelArrayUtil;
+import util.RepresentationConverter;
+
 /**
  * A class that represents a Pixel that contains:
  *  - (r, g, b, a) channels
  *  - max value of channels
  *  - the position
  */
-public class Pixel {
+public class Pixel implements IPixel{
   private int red, green, blue, alpha;
   private int maxValue;
   private Posn pos;
@@ -57,89 +60,13 @@ public class Pixel {
   }
 
   /**
-   * Combine the given previous pixel and this pixel with the given formula.
+   * Return the values of the color and transparency in an array.
    *
-   * @param prev - the previous Pixel to be combined
-   * @return - the converted Pixel
+   * @return - the values of his color
    */
-  public Pixel combine(Pixel prev) {
-    double percentAlpha = (this.alpha / this.maxValue) +
-            ((prev.alpha/this.maxValue) * (1- (this.alpha / this.maxValue)));
-    int new_alpha = (int) Math.round(percentAlpha * this.maxValue);
-    int new_red = (int) Math.round((convertCompWithAlpha(this.red, this.alpha)
-            + (convertCompWithAlpha(prev.red, prev.alpha) * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
-    int new_green = (int) Math.round((convertCompWithAlpha(this.green, this.alpha)
-            + (convertCompWithAlpha(prev.green, prev.alpha)
-            * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
-    int new_blue = (int) Math.round((convertCompWithAlpha(this.blue, this.alpha)
-            + (convertCompWithAlpha(prev.blue, prev.alpha)
-            * (1 - (this.alpha/this.maxValue)))) * (1 / percentAlpha));
-    // if any of the values go over the maxValue then set it to the max value
-    new_red = Math.min(new_red, this.maxValue);
-    new_green = Math.min(new_green, this.maxValue);
-    new_blue = Math.min(new_blue, this.maxValue);
-
-    // return the new Pixel
-    return new Pixel(new_red, new_green, new_blue, new_alpha, this.pos);
-  }
-
-  private double convertCompWithAlpha(int channel, int alpha) {
-    return ((alpha / this.maxValue) * channel);
-  }
-
-  /**
-   * Brightens the color by a factor of luma.
-   * - The luma formula is: luma = 0.2126r + 0.7512g + 0.0722b
-   * - Then modify the values of this color
-   */
-  public void brighten() {
-    float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
-    this.red = Math.round(this.red + luma) <= this.maxValue ?
-            Math.round(this.red + luma) : this.maxValue;
-    this.green = Math.round(this.green + luma) <= this.maxValue ?
-            Math.round(this.green + luma) : this.maxValue;
-    this.blue = Math.round(this.blue + luma) <= this.maxValue ?
-            Math.round(this.blue + luma) : this.maxValue;
-  }
-
-  /**
-   * Darkens the color by a factor of luma.
-   * - The luma formula is: luma = 0.2126r + 0.7512g + 0.0722b
-   * - Then modify the values of this color
-   */
-  public void darken() {
-    float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
-    this.red = Math.round(this.red - luma) >= 0 ? Math.round(this.red - luma) : 0;
-    this.green = Math.round(this.green - luma) >= 0 ? Math.round(this.green - luma) : 0;
-    this.blue = Math.round(this.blue - luma) >= 0 ? Math.round(this.blue - luma) : 0;
-  }
-
-  /**
-   * Applies the filter given an option.
-   *
-   * @param option - the option of the filter
-   */
-  public void applyFilter(String option) {
-    switch(option) {
-      case "r":
-        this.green = 0;
-        this.blue = 0;
-        break;
-      case "g":
-        this.red = 0;
-        this.blue = 0;
-        break;
-      case "b":
-        this.red = 0;
-        this.green = 0;
-        break;
-      case "normal":
-        //does nothing
-        break;
-      default:
-        //does nothing
-        break;
-    }
+  @Override
+  public int[] getValues() {
+    return new int[]{this.red, this.green, this.blue, this.alpha};
   }
 
   /**
@@ -165,7 +92,7 @@ public class Pixel {
    *
    * @return - the string format in rgb values
    */
-  public String ppmFormat() {
+  public String toString() {
     return String.format("%d %d %d", this.red, this.green, this.blue);
   }
 
@@ -177,4 +104,143 @@ public class Pixel {
   public int getMax() {
     return this.maxValue;
   }
+
+  /**
+   * Combine the given previous pixel and this pixel with the given formula.
+   *
+   * @param prev - the previous Pixel to be combined
+   * @return - the converted Pixel
+   */
+  public Pixel combine(IPixel prev) {
+    int[] rgba = this.getValues();
+    int[] drgba = prev.getValues();
+    int[] new_rgba = PixelArrayUtil.combinePixel(rgba, drgba, this.maxValue);
+
+    // return the new Pixel
+    return new Pixel(new_rgba[0], new_rgba[1], new_rgba[2], new_rgba[3], this.pos);
+  }
+
+  /**
+   * Brightens the color by Screen method using the HSL representation.
+   *
+   * @param prev - the previous Pixel
+   * @return - the pixel with the brightened pixel values
+   */
+  @Override
+  public IPixel brighten(IPixel prev) {
+    assert(this.pos.equals(prev.getPos()));
+    // get HSL representation of the pixel
+    double[] currHSL = RepresentationConverter.convertRGBtoHSL(this.red, this.green, this.blue);
+    int[] prevRGBA = prev.getValues();
+    double[] prevHSL = RepresentationConverter.convertRGBtoHSL(prevRGBA[0],
+            prevRGBA[1], prevRGBA[2]);
+    // use only the lightness value of the hsl representation
+    double l = currHSL[2];
+    double dl = prevHSL[2];
+
+    // Use screen method to brighten a pixel
+    double newL = (1 - ((1 - l) * (1 - dl)));
+    int[] newRGB = RepresentationConverter.convertHSLtoRGB(currHSL[0], currHSL[1], newL);
+
+    // return the new pixel
+    return new Pixel(newRGB[0], newRGB[1], newRGB[2], this.alpha, this.maxValue, this.pos);
+  }
+
+  /**
+   * Darkens the color by the Multiply method using the HSL representation.
+   *
+   * @param prev - the previous Pixel
+   */
+  @Override
+  public IPixel darken(IPixel prev) {
+    assert(this.pos.equals(prev.getPos()));
+    // get HSL representation of the pixel
+    double[] currHSL = RepresentationConverter.convertRGBtoHSL(this.red, this.green, this.blue);
+    int[] prevRGBA = prev.getValues();
+    double[] prevHSL = RepresentationConverter.convertRGBtoHSL(prevRGBA[0],
+            prevRGBA[1], prevRGBA[2]);
+    // use only the lightness value of the hsl representation
+    double l = currHSL[2];
+    double dl = prevHSL[2];
+
+    // Use multiply method to brighten a pixel
+    double newL = l * dl;
+    int[] newRGB = RepresentationConverter.convertHSLtoRGB(currHSL[0], currHSL[1], newL);
+
+    // return the new pixel
+    return new Pixel(newRGB[0], newRGB[1], newRGB[2], this.alpha, this.maxValue, this.pos);
+  }
+
+  /**
+   * Inverts the color using the previous pixel.
+   *
+   * @param prev - the previous Pixel
+   */
+  @Override
+  public IPixel invert(IPixel prev) {
+    assert(this.pos.equals(prev.getPos()));
+    int[] currRGBA = this.getValues();
+    int[] prevRGBA = prev.getValues();
+
+    int newR = Math.abs(currRGBA[0] - prevRGBA[0]);
+    int newG = Math.abs(currRGBA[1] - prevRGBA[1]);
+    int newB = Math.abs(currRGBA[2] - prevRGBA[2]);
+
+    return new Pixel(newR, newG, newB, this.alpha, this.maxValue, this.pos);
+  }
+
+  /**
+   * Applies the filter given an option.
+   *
+   * @param option - the option of the filter
+   */
+  @Override
+  public IPixel applyFilter(String option) {
+    switch(option) {
+      case "r":
+        this.green = 0;
+        this.blue = 0;
+        break;
+      case "g":
+        this.red = 0;
+        this.blue = 0;
+        break;
+      case "b":
+        this.red = 0;
+        this.green = 0;
+        break;
+      default:
+        break;
+    }
+
+    return this;
+  }
+
 }
+
+/* OLD BRIGHTEN CODE
+   * Brightens the color by a factor of luma.
+   * - The luma formula is: luma = 0.2126r + 0.7512g + 0.0722b
+   * - Then modify the values of this color
+   *
+  public void brighten() {
+    float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
+    this.red = Math.round(this.red + luma) <= this.maxValue ?
+            Math.round(this.red + luma) : this.maxValue;
+    this.green = Math.round(this.green + luma) <= this.maxValue ?
+            Math.round(this.green + luma) : this.maxValue;
+    this.blue = Math.round(this.blue + luma) <= this.maxValue ?
+            Math.round(this.blue + luma) : this.maxValue;
+  } */
+
+  /*
+   * Darkens the color by a factor of luma.
+   * - The luma formula is: luma = 0.2126r + 0.7512g + 0.0722b
+   * - Then modify the values of this color
+  public void darken() {
+    float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
+    this.red = Math.round(this.red - luma) >= 0 ? Math.round(this.red - luma) : 0;
+    this.green = Math.round(this.green - luma) >= 0 ? Math.round(this.green - luma) : 0;
+    this.blue = Math.round(this.blue - luma) >= 0 ? Math.round(this.blue - luma) : 0;
+  }
+  */

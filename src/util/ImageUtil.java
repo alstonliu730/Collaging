@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -17,6 +16,7 @@ import model.CollageModel;
 import model.CollagePPM;
 import model.Filter;
 import model.IListOfPixel;
+import model.IPixel;
 import model.Image;
 import model.Layer;
 import model.Pixel;
@@ -32,9 +32,11 @@ public class ImageUtil {
    *
    * @param filename path of the file
    * @return a Readable object with the contents of the file without comments
-   * @throws IllegalArgumentException if the file doesn't exist or null arg is passed
+   * @throws IllegalArgumentException - if a null arg is passed
+   * @throws FileNotFoundException - if the file is not found
    */
-  public static Readable removeComments(String filename) throws IllegalArgumentException {
+  public static Readable removeComments(String filename)
+          throws IllegalArgumentException, FileNotFoundException {
     if (filename == null) {
       throw new IllegalArgumentException("Cannot have null argument.");
     }
@@ -44,13 +46,13 @@ public class ImageUtil {
     try {
       sc = new Scanner(new FileInputStream(filename));
     } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("File " + filename + " not found!");
+      throw new FileNotFoundException("File " + filename + " not found!");
     }
     StringBuilder builder = new StringBuilder();
 
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
-      if (!s.isEmpty() && s.charAt(0) != '#') {
+      if (!s.isEmpty() && !s.isBlank() && s.charAt(0)!='#') {
         builder.append(s + System.lineSeparator());
       }
     }
@@ -60,6 +62,7 @@ public class ImageUtil {
             builder.toString().getBytes(StandardCharsets.UTF_8));
     return new InputStreamReader(stream);
   }
+
   /**
    * Read an image file in the PPM format and return the layer.
    *
@@ -70,28 +73,10 @@ public class ImageUtil {
   public static IListOfPixel readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
 
-    try {
-        sc = new Scanner(new FileInputStream(filename));
-    }
-    catch (FileNotFoundException e) {
-        throw new FileNotFoundException("File "+filename+ " not found!");
-    }
-
-    StringBuilder builder = new StringBuilder();
-    //read the file line by line, and populate a string. This will throw away any comment lines
-    while (sc.hasNextLine()) {
-        String s = sc.nextLine();
-        if (s.charAt(0)!='#') {
-            builder.append(s+System.lineSeparator());
-        }
-    }
-    
     //now set up the scanner to read from the string we just built
-    sc = new Scanner(builder.toString());
+    sc = new Scanner(ImageUtil.removeComments(filename));
 
-    String token; 
-
-    token = sc.next();
+    String token = sc.next();
     if (!token.equals("P3")) {
         System.out.println("Invalid PPM file: plain RAW file should begin with P3");
     }
@@ -119,29 +104,14 @@ public class ImageUtil {
    * Reads a Collage project file to be loaded in.
    *
    * @param filename - the location of the file
-   * @return - the model from the given project file.
+   * @return - the model from the given project file
    * @throws FileNotFoundException - could not find the file given the file path
    */
   public static CollageModel readProject(String filename) throws FileNotFoundException {
     Scanner sc;
-    try {
-      sc = new Scanner(new FileInputStream(filename));
-    }
-    catch (FileNotFoundException e) {
-      throw new FileNotFoundException("File " + filename + " not found!");
-    }
-
-    StringBuilder builder = new StringBuilder();
-    //read the file line by line, and populate a string. This will throw away any comment lines
-    while (sc.hasNextLine()) {
-      String s = sc.nextLine();
-      if (s.charAt(0)!='#') {
-        builder.append(s + System.lineSeparator());
-      }
-    }
 
     //now set up the scanner to read from the string we just built
-    sc = new Scanner(builder.toString());
+    sc = new Scanner(ImageUtil.removeComments(filename));
 
     String token = sc.next();
     if (!token.equals("C1")) {
@@ -162,8 +132,8 @@ public class ImageUtil {
 
       // Create a new layer
       new_layer = new Layer(layer_name, height, width, maxValue);
-      new_layer.setFilter(new Filter(filter_name));
-      List<Pixel> pixelList = new ArrayList<Pixel>();
+      new_layer.setFilter(Filter.valueOf(filter_name));
+      List<IPixel> pixelList = new ArrayList<IPixel>();
 
       // extract pixels to the list
       for (int i = 0; i < height; i++) {
@@ -175,7 +145,8 @@ public class ImageUtil {
         }
       }
       // set the matrix of the layer
-      new_layer.setMatrix(new_layer.convertToMatrix(pixelList));
+      new_layer.setMatrix(PixelArrayUtil.convertToMatrix(pixelList,
+              new_layer.getHeight(), new_layer.getWidth()));
       model.addGivenLayer(new_layer);
     }
 
@@ -193,9 +164,10 @@ public class ImageUtil {
       fw.write("P3\n");
       fw.write(img.getWidth() + " " + img.getHeight() + "\n");
       fw.write(img.getMax() + "\n");
+
       for(int i = 0; i < img.getHeight(); i++) {
         for(int j = 0; j < img.getWidth(); j++) {
-          fw.write(img.getPixel(new Posn(i,j)).ppmFormat() + " ");
+          fw.write(img.getPixel(new Posn(i,j)).toString() + " ");
         }
         fw.write("\n");
       }
@@ -224,7 +196,7 @@ public class ImageUtil {
         fw.write(l.getName() + " " + l.getFilter().getOption() + "\n");
         for (int i = 0; i < l.getHeight(); i++) {
           for (int j = 0; j < l.getWidth(); j++) {
-            fw.write(l.getPixel(new Posn(i,j)).ppmFormat() + " ");
+            fw.write(l.getPixel(new Posn(i,j)).toString() + " ");
           }
           fw.write("\n");
         }

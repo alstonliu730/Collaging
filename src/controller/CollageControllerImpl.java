@@ -152,7 +152,7 @@ public class CollageControllerImpl implements CollageController {
         String filterOption = args[1];
 
         // change the filter of the given layer name
-        this.model.getLayer(layerName).setFilter(new Filter(filterOption));
+        this.model.getLayer(layerName).setFilter(Filter.valueOf(filterOption));
         break;
       default:
         printMessage("Unknown command. Try again.");

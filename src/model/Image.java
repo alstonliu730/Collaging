@@ -12,7 +12,7 @@ import util.PixelArrayUtil;
  */
 public class Image implements IListOfPixel{
   private int height, width;
-  private Pixel[][] image;
+  private IPixel[][] image;
   private Posn pos;
   private int maxValue;
 
@@ -59,7 +59,7 @@ public class Image implements IListOfPixel{
    * @param pos - the position of the image in the layer
    * @throws IllegalArgumentException - when the input is less than or equal to zero
    */
-  public Image(Pixel[][] img, Posn pos) throws IllegalArgumentException {
+  public Image(IPixel[][] img, Posn pos) throws IllegalArgumentException {
     if(Objects.isNull(img) || Objects.isNull(pos) || Arrays.asList(img).isEmpty()) {
       throw new IllegalArgumentException("Invalid input!");
     }
@@ -75,11 +75,11 @@ public class Image implements IListOfPixel{
    *
    * @return - a list of the current Pixels
    */
-  public List<Pixel> render() {
-    List<Pixel> pixels = new ArrayList<Pixel>();
-    // fill the list of pixels
-    for(Pixel[] row: this.image) {
-      for(Pixel pixel: row) {
+  public List<IPixel> render() {
+    List<IPixel> pixels = new ArrayList<IPixel>();
+    // fill the list with pixels
+    for(IPixel[] row: this.image) {
+      for(IPixel pixel: row) {
         pixels.add(pixel);
       }
     }
@@ -88,34 +88,12 @@ public class Image implements IListOfPixel{
   }
 
   /**
-   * Converts the given list of Pixel into a matrix of Pixels
-   *
-   * @param pixels - the List of Pixels to be converted
-   * @return - converted matrix of Pixels
-   * @throws IllegalStateException - When the size is not the same
-   */
-  public Pixel[][] convertToMatrix(List<Pixel> pixels) throws IllegalStateException{
-    if(pixels.size() != (this.height * this.width)) {
-      throw new IllegalStateException("Size of image is not the same as the list!");
-    }
-    Pixel[][] matrix = new Pixel[this.height][this.width];
-    for(Pixel pixel : pixels) {
-      int row = pixel.getPos().getRow();
-      int col = pixel.getPos().getCol();
-
-      matrix[row][col] = pixel;
-    }
-
-    return matrix;
-  }
-
-  /**
    * Returns the Pixel at the given coordinate.
    *
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  public Pixel getPixel(Posn pos) throws IllegalArgumentException{
+  public IPixel getPixel(Posn pos) throws IllegalArgumentException{
     int row = pos.getRow();
     int col = pos.getCol();
 
@@ -134,6 +112,12 @@ public class Image implements IListOfPixel{
     return this.pos;
   }
 
+  /**
+   * Change the current position of this image.
+   */
+  public void changePos(Posn p) {
+    this.pos = p;
+  }
   /**
    * Returns the height of this image
    *

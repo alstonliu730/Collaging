@@ -2,7 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import util.PixelArrayUtil;
 
 /**
  * A class that represents a CollageModel with a PPM format.
@@ -34,7 +35,7 @@ public class CollagePPM implements CollageModel{
     Pixel[][] background = new Pixel[this.height][this.width];
     for(int i = 0; i < this.height; i++) {
       for(int j = 0; j < this.width; j++) {
-        background[i][j] = new Pixel(this.maxValue,this.maxValue,
+        background[i][j] = new Pixel(this.maxValue, this.maxValue,
                 this.maxValue, this.maxValue, new Posn(i,j));
       }
     }
@@ -42,7 +43,7 @@ public class CollagePPM implements CollageModel{
     // create the layer object.
     Layer backgroundLayer = new Layer("background", this.height, this.width, this.maxValue);
     backgroundLayer.setMatrix(background);
-    backgroundLayer.setFilter(new Filter("normal"));
+    backgroundLayer.setFilter(Filter.NORMAL);
 
     // add the layer object to the list.
     this.layers.add(backgroundLayer);
@@ -123,10 +124,10 @@ public class CollagePPM implements CollageModel{
    * @param row     - the x-coordinate of the image
    * @param col     - the y-coordinate of the image
    */
-  @Override
   public void addImageToLayer(Layer layer, IListOfPixel img, int row, int col)
           throws IllegalArgumentException {
-    layer.addImage(new Image(img.convertToMatrix(img.render()), new Posn(row,col)));
+    layer.addImage(new Image(PixelArrayUtil.convertToMatrix(img.render(),
+            img.getHeight(), img.getWidth()), new Posn(row,col)));
   }
 
   /**
@@ -146,11 +147,12 @@ public class CollagePPM implements CollageModel{
    */
   public Layer saveImage() {
     // set the background as the first since it's the lowest
-    Layer combined = this.layers.get(0);
+    List<Layer> filteredLayers = this.renderLayers();
+    Layer combined = filteredLayers.get(0);
 
     // go through the list of layers
-    for(int i = 1; i < this.layers.size(); i ++) {
-      combined = this.layers.get(i).combine(combined);
+    for(int i = 1; i < filteredLayers.size(); i ++) {
+      combined = filteredLayers.get(i).combine(combined);
     }
 
     // returns the rendered combined layer
@@ -158,16 +160,24 @@ public class CollagePPM implements CollageModel{
   }
 
   /**
-   * Return the list of Layers with the applied filter.
+   * Return the current list of Layers with the applied filter.
    *
    * @return - the list of Layers
    */
   public List<Layer> renderLayers() {
+    // create a copy of the current layers
     List<Layer> pixelLayers = new ArrayList<Layer>();
-    for(Layer l: this.layers) {
-      pixelLayers.add(l.applyFilter());
-    }
+    Layer prev = this.layers.get(0); // get the background as the first layer
+    pixelLayers.add(prev.applyFilter(null)); // add the background
 
+    //
+    if (this.layers.size() > 1) {
+      for (int i = 1; i < this.layers.size(); i++) {
+        Layer curr = this.layers.get(i);
+        pixelLayers.add(curr.applyFilter(prev));
+        prev = pixelLayers.get(i);
+      }
+    }
     return pixelLayers;
   }
 
@@ -176,7 +186,7 @@ public class CollagePPM implements CollageModel{
    *
    * @return - the format of the PPM model as a String
    */
-  public String ppmFormat() {
+  public String toString() {
     String project = "";
 
     // Adds project information
@@ -186,8 +196,8 @@ public class CollagePPM implements CollageModel{
     // Adds layer information
     for(Layer l : this.renderLayers()) {
       project += (l.getName() + " " + l.getFilter().getOption() + "\n");
-      for(Pixel p: l.render()) {
-        project += (p.ppmFormat() + " ");
+      for(IPixel p: l.render()) {
+        project += (p.toString() + " ");
       }
       project += "\n";
     }

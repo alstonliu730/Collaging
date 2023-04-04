@@ -6,9 +6,9 @@ add-layer first-layer
 add-image-to-layer first-layer res/logo.ppm 20 20
 # set the filter as green-component
 set-filter first-layer green-component
-# save image as greenLogo.ppm
-save-image res/greenLogo.ppm
 # save the project
 save-project res/greenLogo.collage
+# save image as greenLogo.ppm
+save-image res/greenLogo.ppm
 # quit
 quit

@@ -7,8 +7,8 @@ import model.Layer;
 import model.Pixel;
 
 public class PPMTextViewImpl implements TextView {
-  Appendable out;
-  CollageModel model;
+  private Appendable out;
+  private CollageModel model;
 
   public PPMTextViewImpl(Appendable out, CollageModel model) throws IllegalArgumentException {
     if(Objects.isNull(out) || Objects.isNull(model)) {
@@ -49,6 +49,6 @@ public class PPMTextViewImpl implements TextView {
    * @return - representation of the current Project state
    */
   public String toString() {
-    return this.model.ppmFormat();
+    return this.model.toString();
   }
 }

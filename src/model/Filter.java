@@ -6,15 +6,22 @@ import java.util.function.Consumer;
 /**
  * A class that represents a Filter that changes pixels
  */
-public class Filter implements Consumer<Pixel> {
+public enum Filter {
+  NORMAL("normal"),
+  RED("red-component"),
+  GREEN("green-component"),
+  BLUE("blue-component"),
+  DARKEN("darken"),
+  BRIGHTEN("brighten");
   String option;
 
   /**
-   * Creates a filter object that is given a filter option
+   * Creates a filter object that is given a filter option.
+   *
    * @param option - the type of filter
    * @throws IllegalArgumentException - When given no option
    */
-  public Filter(String option) throws IllegalArgumentException{
+  Filter(String option) throws IllegalArgumentException{
     if(Objects.isNull(option)) {
       throw new IllegalArgumentException("Invalid Filter option!");
     }
@@ -23,32 +30,27 @@ public class Filter implements Consumer<Pixel> {
   }
 
   /**
-   * Performs this operation on the given argument.
+   * Apply this filter to the given pixels.
    *
-   * @param pixel the input argument
+   * @param pixels - the pixels the filter will need to apply the filter
+   * @return - the pixel with the filter applied
+   * @throws NullPointerException - When the given pixels were not given
    */
-  @Override
-  public void accept(Pixel pixel) {
-    switch(option) {
-      case "brighten":
-        pixel.brighten();
-        break;
-      case "darken":
-        pixel.darken();
-        break;
+  public IPixel apply(IPixel... pixels) throws NullPointerException{
+    Objects.requireNonNull(pixels);
+    switch(this.option) {
       case "red-component":
-        pixel.applyFilter("r");
-        break;
+        return pixels[0].applyFilter("r");
       case "green-component":
-        pixel.applyFilter("g");
-        break;
+        return pixels[0].applyFilter("g");
       case "blue-component":
-        pixel.applyFilter("b");
-        break;
+        return pixels[0].applyFilter("b");
+      case "darken":
+        return pixels[0].darken(pixels[1]);
+      case "brighten":
+        return pixels[0].brighten(pixels[1]);
       default:
-        // decide how to handle this
-        // does nothing
-        break;
+        return pixels[0];
     }
   }
 

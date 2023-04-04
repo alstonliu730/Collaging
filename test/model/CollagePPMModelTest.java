@@ -5,9 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.CollageModel;
-import model.CollagePPM;
-import model.Layer;
+import util.PixelArrayUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -124,7 +122,7 @@ public class CollagePPMModelTest {
   public void testSetFilter() {
     this.model1 = new CollagePPM(3,4,6);
     this.model1.addLayer("first-layer");
-    this.model1.setFilter("first-layer",new Filter("red-component"));
+    this.model1.setFilter("first-layer", Filter.RED);
     assertEquals("red-component",
             this.model1.getLayer("first-layer").getFilter().getOption());
   }
@@ -132,7 +130,7 @@ public class CollagePPMModelTest {
   @Test
   public void testAddImageToLayer() {
     this.model1 = new CollagePPM(4,4,255);
-    List<Pixel> img = new ArrayList<Pixel>();
+    List<IPixel> img = new ArrayList<IPixel>();
     // red square
     for(int i = 0; i < 2; i++) {
       for(int j = 0; j < 2; j++) {
@@ -140,21 +138,22 @@ public class CollagePPMModelTest {
       }
     }
     Image redSquare = new Image(2,2,new Posn(0,0));
-    Pixel[][] pixels = redSquare.convertToMatrix(img);
+    IPixel[][] pixels = PixelArrayUtil.convertToMatrix(img,
+            redSquare.getHeight(), redSquare.getWidth());
     redSquare = new Image(pixels, new Posn(0,0));
 
     this.model1.addLayer("first-layer");
     this.model1.addImageToLayer(this.model1.getLayer("first-layer"),
             redSquare, 0,0);
     assertEquals("255 0 0",
-            this.model1.getLayer("first-layer").getPixel(new Posn(0,0)).ppmFormat());
+            this.model1.getLayer("first-layer").getPixel(new Posn(0,0)).toString());
   }
 
   @Test
   public void testPPMFormat() {
     this.model1 = new CollagePPM(2,2,255);
     assertEquals("2 2\n255\nbackground normal\n255 255 255 255 255 255 255 "
-                    + "255 255 255 255 255 \n", this.model1.ppmFormat());
+                    + "255 255 255 255 255 \n", this.model1.toString());
   }
 
   @Test

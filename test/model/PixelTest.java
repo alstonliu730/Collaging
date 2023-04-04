@@ -13,7 +13,7 @@ public class PixelTest {
   public void testValidConstruction() {
     this.p1 = new Pixel(255,255,255,255, new Posn(0,0));
     assertEquals(new Posn(0,0), this.p1.getPos());
-    assertEquals("255 255 255", this.p1.ppmFormat());
+    assertEquals("255 255 255", this.p1.toString());
   }
 
   @Test
@@ -42,9 +42,10 @@ public class PixelTest {
     this.p1 = new Pixel(200,200,200, 255, 255, new Posn(0,0));
     this.p2 = new Pixel(50,200,150, 255, 255, new Posn(0,0));
 
-    assertEquals("200 200 200", this.p1.combine(this.p2).ppmFormat());
+    assertEquals("200 200 200", this.p1.combine(this.p2).toString());
   }
 
+  /* OLD tests
   @Test
   public void testBrighten() {
     this.p1 = new Pixel(100, 100, 100, 255, new Posn(0, 0));
@@ -57,21 +58,21 @@ public class PixelTest {
     this.p1 = new Pixel(100, 100, 100, 255, new Posn(0, 0));
     this.p1.darken();
     assertEquals("0 0 0", this.p1.ppmFormat());
-  }
+  }*/
 
   @Test
   public void testApplyFilter() {
     this.p1 = new Pixel(100,100,100,255,255, new Posn(0,0));
     this.p1.applyFilter("r");
-    assertEquals("100 0 0", this.p1.ppmFormat());
+    assertEquals("100 0 0", this.p1.toString());
 
     this.p2 = new Pixel(100, 100, 100, 255, 255, new Posn(0,0));
     this.p2.applyFilter("g");
-    assertEquals("0 100 0", this.p2.ppmFormat());
+    assertEquals("0 100 0", this.p2.toString());
 
     this.p3 = new Pixel(100, 100, 100, 255, 255, new Posn(0,0));
     this.p3.applyFilter("b");
-    assertEquals("0 0 100", this.p3.ppmFormat());
+    assertEquals("0 0 100", this.p3.toString());
   }
 
   @Test
@@ -90,7 +91,7 @@ public class PixelTest {
   @Test
   public void testPPMFormat() {
     this.p1 = new Pixel(100,100,100, 255, 255, new Posn(1,1));
-    assertEquals("100 100 100", this.p1.ppmFormat());
+    assertEquals("100 100 100", this.p1.toString());
   }
 
   @Test
