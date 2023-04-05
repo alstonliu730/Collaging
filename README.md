@@ -99,7 +99,7 @@ be any errors on out-of-bounds errors.
 
 ## Design Changes and New Additions
 
-PLEASE REFER TO THE NEW CLASS DIAGRAM PROVIDED.
+PLEASE REFER TO THE NEW CLASS DIAGRAM PROVIDED IN THE RES FOLDER.
 
 ### Controller Package
 
@@ -154,8 +154,8 @@ our GUI, allowing users to initially either create a new project or to load an e
 
 ### Images and examples
 
-All example images (including a screenshot of the GUI with a loaded image) can be found in the 
-res/ folder.
+All example images (including a screenshot of the GUI with a loaded image) and the class diagram
+can be found in the res/ folder.
 
 #### Image Citations
 https://www.neighbourly.co.nz/public/auckland/point-chevalier/message/58623691
