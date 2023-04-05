@@ -120,7 +120,7 @@ public class CollagePPMModelTest {
 
   @Test
   public void testSetFilter() {
-    this.model1.startModel(3,4,6);
+    this.model1.startModel(3, 4, 6);
     this.model1.addLayer("first-layer");
     this.model1.setFilter("first-layer", Filter.RED);
     assertEquals("red-component",
@@ -129,36 +129,36 @@ public class CollagePPMModelTest {
 
   @Test
   public void testAddImageToLayer() {
-    this.model1.startModel(4,4,255);
+    this.model1.startModel(4, 4, 255);
     List<IPixel> img = new ArrayList<IPixel>();
     // red square
-    for(int i = 0; i < 2; i++) {
-      for(int j = 0; j < 2; j++) {
-        img.add(new Pixel(255,0,0,255,255, new Posn(i,j)));
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < 2; j++) {
+        img.add(new Pixel(255, 0, 0, 255, 255, new Posn(i, j)));
       }
     }
-    Image redSquare = new Image(2,2,new Posn(0,0));
+    Image redSquare = new Image(2, 2, new Posn(0, 0));
     IPixel[][] pixels = PixelArrayUtil.convertToMatrix(img,
             redSquare.getHeight(), redSquare.getWidth());
-    redSquare = new Image(pixels, new Posn(0,0));
+    redSquare = new Image(pixels, new Posn(0, 0));
 
     this.model1.addLayer("first-layer");
     this.model1.addImageToLayer(this.model1.getLayer("first-layer"),
-            redSquare, 0,0);
+            redSquare, 0, 0);
     assertEquals("255 0 0",
-            this.model1.getLayer("first-layer").getPixel(new Posn(0,0)).toString());
+            this.model1.getLayer("first-layer").getPixel(new Posn(0, 0)).toString());
   }
 
   @Test
   public void testPPMFormat() {
-    this.model1.startModel(2,2,255);
+    this.model1.startModel(2, 2, 255);
     assertEquals("2 2\n255\nbackground normal\n255 255 255 255 255 255 255 "
-                    + "255 255 255 255 255 \n", this.model1.toString());
+            + "255 255 255 255 255 \n", this.model1.toString());
   }
 
   @Test
   public void testSaveImage() {
-    this.model1.startModel(1,1,255);
+    this.model1.startModel(1, 1, 255);
     Layer l1 = this.model1.saveImage();
 
     assertEquals("background", l1.getName());

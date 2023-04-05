@@ -18,12 +18,13 @@ public class CollageControllerImplTest {
   Readable in;
   Appendable out;
   CollageController controller;
+
   public void init() {
     this.out = System.out;
     this.model = new CollagePPM();
     this.view = new PPMTextViewImpl(this.out, this.model);
   }
-  
+
   @Test
   public void runCollage() {
     try {
@@ -80,6 +81,6 @@ public class CollageControllerImplTest {
 
   @Test
   public void testPrintMessage() {
-    
+
   }
 }

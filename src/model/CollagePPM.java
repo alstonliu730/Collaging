@@ -9,7 +9,7 @@ import util.PixelArrayUtil;
 /**
  * A class that represents a CollageModel with a PPM format.
  */
-public class CollagePPM implements CollageModel{
+public class CollagePPM implements CollageModel {
   private int height;
   private int width;
   private int maxValue;
@@ -18,7 +18,7 @@ public class CollagePPM implements CollageModel{
   /**
    * Creates a CollagePPM model and instantiates necessary items.
    */
-  public CollagePPM()  {
+  public CollagePPM() {
     this.layers = new ArrayList<Layer>();
     this.maxValue = 255;
   }
@@ -26,8 +26,8 @@ public class CollagePPM implements CollageModel{
   /**
    * Load model with given height, width, and max value.
    *
-   * @param height - the height of the model (rows)
-   * @param width - the width of the model (columns)
+   * @param height   - the height of the model (rows)
+   * @param width    - the width of the model (columns)
    * @param maxValue - the max value of the channel (max value of rgba values)
    * @throws IllegalArgumentException - when the given inputs are zero or negative.
    */
@@ -42,10 +42,10 @@ public class CollagePPM implements CollageModel{
 
     //create a white background layer.
     IPixel[][] background = new Pixel[this.height][this.width];
-    for(int i = 0; i < this.height; i++) {
-      for(int j = 0; j < this.width; j++) {
+    for (int i = 0; i < this.height; i++) {
+      for (int j = 0; j < this.width; j++) {
         background[i][j] = new Pixel(this.maxValue, this.maxValue,
-                this.maxValue, this.maxValue, new Posn(i,j));
+                this.maxValue, this.maxValue, new Posn(i, j));
       }
     }
 
@@ -74,9 +74,9 @@ public class CollagePPM implements CollageModel{
    * @param name - the name of the layer
    */
   public void removeLayer(String name) {
-    for(Iterator<Layer> iter = this.layers.iterator(); iter.hasNext();) {
+    for (Iterator<Layer> iter = this.layers.iterator(); iter.hasNext(); ) {
       Layer l = iter.next();
-      if(l.getName().equals(name)) {
+      if (l.getName().equals(name)) {
         iter.remove();
       }
     }
@@ -115,9 +115,9 @@ public class CollagePPM implements CollageModel{
    * @param name - the name of the layer
    * @return - the Layer object
    */
-  public Layer getLayer(String name) throws IllegalStateException{
-    for(Layer l: this.layers) {
-      if(l.getName().equalsIgnoreCase(name)) {
+  public Layer getLayer(String name) throws IllegalStateException {
+    for (Layer l : this.layers) {
+      if (l.getName().equalsIgnoreCase(name)) {
         return l;
       }
     }
@@ -132,12 +132,12 @@ public class CollagePPM implements CollageModel{
    * @throws IllegalArgumentException - when the given layer name already exists in this model
    */
   public void addLayer(String layer) throws IllegalArgumentException {
-    for(Layer l : this.layers) {
-      if(l.getName().equalsIgnoreCase(layer)) {
+    for (Layer l : this.layers) {
+      if (l.getName().equalsIgnoreCase(layer)) {
         throw new IllegalArgumentException("Layer name already exists!");
       }
     }
-    this.layers.add(new Layer(layer,this.height,this.width, this.maxValue));
+    this.layers.add(new Layer(layer, this.height, this.width, this.maxValue));
   }
 
   /**
@@ -145,13 +145,13 @@ public class CollagePPM implements CollageModel{
    *
    * @param layer - the given layer
    * @param img   - the image to be added
-   * @param row     - the x-coordinate of the image
-   * @param col     - the y-coordinate of the image
+   * @param row   - the x-coordinate of the image
+   * @param col   - the y-coordinate of the image
    */
   public void addImageToLayer(Layer layer, IListOfPixel img, int row, int col)
           throws IllegalArgumentException {
     layer.addImage(new Image(PixelArrayUtil.convertToMatrix(img.render(),
-            img.getHeight(), img.getWidth()), new Posn(row,col)));
+            img.getHeight(), img.getWidth()), new Posn(row, col)));
   }
 
   /**
@@ -160,9 +160,9 @@ public class CollagePPM implements CollageModel{
    * @param layer  - the name of the given layer
    * @param option - the filter type
    */
-  public void setFilter(String layer, Filter option){
-    for(Layer l: this.layers) {
-      if(l.getName().equalsIgnoreCase(layer)) {
+  public void setFilter(String layer, Filter option) {
+    for (Layer l : this.layers) {
+      if (l.getName().equalsIgnoreCase(layer)) {
         l.setFilter(option);
         return;
       }
@@ -182,7 +182,7 @@ public class CollagePPM implements CollageModel{
     Layer combined = filteredLayers.get(0);
 
     // go through the list of layers
-    for(int i = 1; i < filteredLayers.size(); i++) {
+    for (int i = 1; i < filteredLayers.size(); i++) {
       combined = filteredLayers.get(i).combine(combined);
     }
 
@@ -225,9 +225,9 @@ public class CollagePPM implements CollageModel{
     project += (this.maxValue + "\n");
 
     // Adds layer information
-    for(Layer l : this.renderLayers()) {
+    for (Layer l : this.renderLayers()) {
       project += (l.getName() + " " + l.getFilter().getOption() + "\n");
-      for(IPixel p: l.render()) {
+      for (IPixel p : l.render()) {
         project += (p.rgbaString() + " ");
       }
       project += "\n";
