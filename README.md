@@ -151,3 +151,12 @@ of the image in the GUI throughout the collaging process.
 
 - `WelcomeDialog` class: a new class that extends `JDialog` and displays the welcome message for
 our GUI, allowing users to initially either create a new project or to load an existing one.
+
+### Images and examples
+
+All example images (including a screenshot of the GUI with a loaded image) can be found in the 
+res/ folder.
+
+#### Image Citations
+https://www.neighbourly.co.nz/public/auckland/point-chevalier/message/58623691
+https://secure.gravatar.com/avatar/d67e563d5e66ccd7170ba9f631bb5757?s=256&d=mm&r=g
