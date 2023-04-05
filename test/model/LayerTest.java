@@ -163,6 +163,11 @@ public class LayerTest {
   }
 
   @Test
+  public void testGetImages() {
+    this.l1 = new Layer("first", 3, 3, 255);
+    assertEquals(0, this.l1.getImages().size());
+  }
+  @Test
   public void testAddImage() {
     // Create the image matrix
     Pixel[][] input = new Pixel[2][2];
