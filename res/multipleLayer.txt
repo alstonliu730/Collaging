@@ -1,0 +1,41 @@
+# create a new project
+new-project 800 800
+
+# add a layer
+add-layer first-layer
+
+# add the image to the layer
+add-image-to-layer first-layer res/sunset.ppm 25 25
+
+# add filter to the layer
+set-filter first-layer red-component
+
+# add a second layer
+add-layer second-layer
+
+# add the inverted image next to it
+add-image-to-layer second-layer res/invertSunset.ppm 25 300
+
+# save the image
+save-image res/multipleLayer1.ppm
+
+# save the project
+save-project res/multipleLayer1.collage
+
+# add a third layer
+add-layer third-layer
+
+# add a different picture but overlap
+add-image-to-layer third-layer res/doggo.ppm 150 150
+
+# add a filter to this layer
+set-filter third-layer invert
+
+# save the image
+save-image res/multipleLayer2.ppm
+
+# save the project
+save-project res/multipleLayer2.collage
+
+# quit the program
+quit

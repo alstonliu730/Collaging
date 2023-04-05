@@ -1,0 +1,14 @@
+# load project
+load-project res/multipleLayer1.collage
+
+# set a different filter in the first layer
+set-filter first-layer invert
+
+# save the image to a different name
+save-image res/changedLoaded.ppm
+
+# save project as a different name
+save-project res/changedLoaded.collage
+
+# quit the program
+quit

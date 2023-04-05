@@ -1,0 +1,23 @@
+# make a new project
+new-project 300 300
+
+# add a layer
+add-layer first-layer
+
+# add the image to the layer
+add-image-to-layer first-layer res/sunset.ppm 25 25
+
+# add filter to the background
+set-filter background red-component
+
+# add filter as brighten
+set-filter first-layer brighten
+
+# save image as brightSunset.ppm
+save-image res/brightSunset.ppm
+
+# save the project
+save-project res/brightSunset.collage
+
+# quit
+quit

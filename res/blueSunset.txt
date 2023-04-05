@@ -1,0 +1,20 @@
+# make a new project
+new-project 300 300
+
+# add a layer
+add-layer first-layer
+
+# add the image to the layer
+add-image-to-layer first-layer res/sunset.ppm 25 25
+
+# add filter to the layer
+set-filter first-layer blue-component
+
+# save image as blueSunset.ppm
+save-image res/blueSunset.ppm
+
+# save the project
+save-project res/blueSunset.collage
+
+# quit
+quit
