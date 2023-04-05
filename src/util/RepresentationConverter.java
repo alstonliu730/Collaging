@@ -8,7 +8,7 @@ package util;
 public class RepresentationConverter {
 
   /**
-   * Convers an RGB representation in the range 0-1 into an HSL
+   * Converts an RGB representation in the range 0-1 into an HSL
    * representation where
    * <ul>
    * <li> 0 &lt;= H &lt; 360</li>

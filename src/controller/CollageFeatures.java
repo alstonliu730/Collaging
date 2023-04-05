@@ -1,8 +1,10 @@
 package controller;
 
 import model.CollageModel;
-import model.IListOfPixel;
 
+/**
+ * An interface that contains the features of the GUI.
+ */
 public interface CollageFeatures {
   /**
    * Saves an Image or Collage file based on the file path extensions.

@@ -1,5 +1,3 @@
-package view;
-
 import controller.CollageController;
 import controller.CollageGUI;
 import model.CollageModel;

@@ -1,16 +1,27 @@
 package view.gui;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import model.CollageModel;
 
+/**
+ * A class that represents the panel of command buttons.
+ */
 public class CommandListPanel extends JPanel {
   private ArrayList<JButton> commandButtons;
   private GridLayout layout;
   private CollageModel model;
+
+  /**
+   * Creates a JPanel object with the given model.
+   *
+   * @param model - the model to base off of
+   */
   public CommandListPanel(CollageModel model) {
     super();
     this.model = model;
@@ -52,7 +63,7 @@ public class CommandListPanel extends JPanel {
   }
 
   /**
-   * Helper method that sets the size of each button
+   * Helper method that sets the size of each button.
    */
   private void setSizeForButtons() {
     this.commandButtons.forEach((button) -> button.setPreferredSize(
@@ -69,7 +80,8 @@ public class CommandListPanel extends JPanel {
 
   /**
    * Returns the list of the command buttons.
-   * @return
+   *
+   * @return - array of buttons
    */
   public ArrayList<JButton> getCommandButtons() {
     return this.commandButtons;

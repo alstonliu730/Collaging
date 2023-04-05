@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * A class that represents a Layer.
  */
@@ -230,7 +229,7 @@ public class Layer implements IListOfPixel {
   }
 
   /**
-   * Applies the filter to this layer
+   * Applies the filter to this layer.
    *
    * @param prev - the filtered previous layer
    * @return - the Layer with the applied filter

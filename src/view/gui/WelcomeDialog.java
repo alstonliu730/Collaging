@@ -21,6 +21,9 @@ import model.CollageModel;
 import model.CollagePPM;
 import util.ImageUtil;
 
+/**
+ * A class that represents the welcoming window.
+ */
 public class WelcomeDialog extends JDialog {
   private CollageModel model;
   private JFrame prevFrame;
@@ -28,6 +31,12 @@ public class WelcomeDialog extends JDialog {
   private JButton loadButton;
   private JLabel welcomeLabel;
 
+  /**
+   * Creates the structure of the window.
+   *
+   * @param model - the model to be based on
+   * @param frame - the main view
+   */
   public WelcomeDialog(CollageModel model, JFrame frame) {
     super(frame, true);
     this.model = model;
@@ -57,6 +66,9 @@ public class WelcomeDialog extends JDialog {
     this.setVisible(true);
   }
 
+  /**
+   * A helper function to gather information about the new project.
+   */
   private void updateNewModel() {
     int height = Integer.parseInt(this.getModelHeight());
     int width = Integer.parseInt(this.getModelWidth());
@@ -67,25 +79,48 @@ public class WelcomeDialog extends JDialog {
     this.dispose();
   }
 
+  /**
+   * Returns the model of this window.
+   *
+   * @return - the model
+   */
   public CollageModel getModel() {
     return this.model;
   }
 
+  /**
+   * Gets the height of the new project.
+   *
+   * @return - String input of the height
+   */
   private String getModelHeight() {
     return JOptionPane.showInputDialog(this, "Enter a valid height:",
             "New Project", JOptionPane.INFORMATION_MESSAGE);
   }
 
+  /**
+   * Gets the width of the new project.
+   *
+   * @return - String input of the width
+   */
   private String getModelWidth() {
     return JOptionPane.showInputDialog(this, "Enter a valid width:",
             "New Project", JOptionPane.INFORMATION_MESSAGE);
   }
 
+  /**
+   * Gets the max of the new project.
+   *
+   * @return - String input of the max
+   */
   private String getModelMax() {
     return JOptionPane.showInputDialog(this, "Enter a max value:",
             "New Project", JOptionPane.INFORMATION_MESSAGE);
   }
 
+  /**
+   * Creates a file chooser for the user to find their existing project.
+   */
   private void chooseFile() {
     String filePath = null;
     final JFileChooser fchooser = new JFileChooser(".");

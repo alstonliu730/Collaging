@@ -2,15 +2,18 @@ package model;
 
 import java.util.List;
 
+/**
+ * An interface that represents the model of the Collage.
+ */
 public interface CollageModel {
 
   /**
-   * Load model with given height, width, and max value
+   * Load model with given height, width, and max value.
    *
-   * @param height
-   * @param width
-   * @param maxValue
-   * @throws IllegalArgumentException
+   * @param height   - the height of the model (rows)
+   * @param width    - the width of the model (columns)
+   * @param maxValue - the max value of the channel (max value of rgba values)
+   * @throws IllegalArgumentException - when the given inputs are zero or negative.
    */
   void startModel(int height, int width, int maxValue) throws IllegalArgumentException;
 

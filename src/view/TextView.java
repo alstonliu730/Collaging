@@ -3,7 +3,7 @@ package view;
 import java.io.IOException;
 
 /**
- *
+ * An interface that represents the view in text
  */
 public interface TextView {
   /**

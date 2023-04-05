@@ -1,10 +1,9 @@
 package model;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
- * A class that represents a Filter that changes pixels
+ * A class that represents a Filter that changes pixels.
  */
 public enum Filter {
   NORMAL("normal"),

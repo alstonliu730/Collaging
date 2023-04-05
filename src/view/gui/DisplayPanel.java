@@ -2,12 +2,11 @@ package view.gui;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 import model.CollageModel;
 import model.IListOfPixel;
@@ -20,12 +19,20 @@ import model.Posn;
 public class DisplayPanel extends JPanel {
   // Components of DisplayPanel
   private JLabel imageDisplay;
-  private JScrollPane scroll;
   private ImageIcon img;
   private CollageModel model;
 
-  public DisplayPanel(CollageModel model) throws IllegalArgumentException{
+  /**
+   * Creates a JPanel that displays the image.
+   *
+   * @param model - the model to get the image from
+   * @throws IllegalArgumentException - when the given model is null
+   */
+  public DisplayPanel(CollageModel model) throws IllegalArgumentException {
     super();
+    if(Objects.isNull(model)) {
+      throw new IllegalArgumentException("Given model is null");
+    }
     this.model = model;
 
     // set this panels properties
@@ -88,7 +95,9 @@ public class DisplayPanel extends JPanel {
   }
 
   /**
-   * Refreshes the GUI and renders it again.
+   * Refreshes the Image panel and renders it again.
+   *
+   * @param model - refreshes the image panel with the given model
    */
   public void refresh(CollageModel model) {
     this.model = model;

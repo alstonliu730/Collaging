@@ -263,30 +263,3 @@ public class Pixel implements IPixel {
   }
 
 }
-
-/* OLD BRIGHTEN CODE
-   * Brightens the color by a factor of luma.
-   * - The luma formula is: luma = 0.2126r + 0.7512g + 0.0722b
-   * - Then modify the values of this color
-   *
-  public void brighten() {
-    float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
-    this.red = Math.round(this.red + luma) <= this.maxValue ?
-            Math.round(this.red + luma) : this.maxValue;
-    this.green = Math.round(this.green + luma) <= this.maxValue ?
-            Math.round(this.green + luma) : this.maxValue;
-    this.blue = Math.round(this.blue + luma) <= this.maxValue ?
-            Math.round(this.blue + luma) : this.maxValue;
-  } */
-
-  /*
-   * Darkens the color by a factor of luma.
-   * - The luma formula is: luma = 0.2126r + 0.7512g + 0.0722b
-   * - Then modify the values of this color
-  public void darken() {
-    float luma = (float) (0.2126 * this.red + 0.7512 * this.green + 0.0722 * this.blue);
-    this.red = Math.round(this.red - luma) >= 0 ? Math.round(this.red - luma) : 0;
-    this.green = Math.round(this.green - luma) >= 0 ? Math.round(this.green - luma) : 0;
-    this.blue = Math.round(this.blue - luma) >= 0 ? Math.round(this.blue - luma) : 0;
-  }
-  */

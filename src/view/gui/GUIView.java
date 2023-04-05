@@ -2,9 +2,10 @@ package view.gui;
 
 import controller.CollageFeatures;
 import model.CollageModel;
-import model.IListOfPixel;
-import view.TextView;
 
+/**
+ * An interface that represents a view GUI
+ */
 public interface GUIView {
   /**
    * Refreshes the GUI and renders it again with the given model.
@@ -30,8 +31,9 @@ public interface GUIView {
   void echoMessage(String message, String title, int type);
 
   /**
-   * Provides the view with all the callbacks
-   * @param features -
+   * Provides the view with all the callbacks to the controller.
+   *
+   * @param features - the controller used to callback functions
    */
   void addFeatures(CollageFeatures features);
 

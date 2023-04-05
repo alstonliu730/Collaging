@@ -2,7 +2,9 @@ package controller;
 
 import java.io.FileNotFoundException;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import model.CollageModel;
 import model.CollagePPM;
@@ -10,14 +12,18 @@ import model.Filter;
 import util.ImageUtil;
 import view.gui.GUIView;
 
+/**
+ * A class that represents a controller for the GUI.
+ */
 public class CollageGUI implements CollageFeatures, CollageController {
   CollageModel model;
   GUIView view;
 
   /**
+   * Creates a GUI controller with the given model and view.
    *
-   * @param m
-   * @param v
+   * @param m - the model of the collage
+   * @param v - the view of the colage
    */
   public CollageGUI(CollageModel m, GUIView v) {
     this.model = m;
@@ -49,10 +55,92 @@ public class CollageGUI implements CollageFeatures, CollageController {
    * Runs the given command based on the option
    *
    * @param command - the command to execute
-   * @param args
+   * @param args - arguments to input
    */
   @Override
-  public void runCommands(String command, String... args) {}
+  /**
+   * Runs the given command based on the option
+   *
+   * @param command - the command to execute
+   */
+  public void runCommands(String command, String... args) {
+    switch (command) {
+      case "quit":
+        this.exitProgram();
+        break;
+      case "new-project":
+        try {
+          int width = Integer.parseInt(args[0]);
+          int height = Integer.parseInt(args[1]);
+          // Create new project with h and w
+          // Model should throw IllegalArgumentException for negative ints
+          this.model = new CollagePPM();
+          this.model.startModel(height, width, this.model.getMax());
+        } catch (IllegalArgumentException e) {
+          this.warn("Invalid input on creating new projects!", "Invalid input");
+          e.printStackTrace();
+        }
+        break;
+      case "load-project":
+        try {
+          String filePath = args[0];
+          // Open PPM file and pass it to model
+          this.model = ImageUtil.readProject(filePath);
+        } catch (FileNotFoundException ime) {
+          System.out.println("Invalid path or file not found");
+        }
+        break;
+      case "save-project":
+        String filePath = args[0];
+        // Save the entire model as a project text file
+        ImageUtil.writeProject(this.model, filePath);
+        break;
+      case "add-layer":
+        String layer_name = args[0];
+        // Add layer to project
+        try {
+          this.model.addLayer(layer_name);
+        } catch (IllegalArgumentException e) {
+          this.warn("Layer already exists! Try again.", "Existing layer");
+        }
+        break;
+      case "add-image-to-layer":
+        // get image and layer information
+        String layer = args[0];
+        String image = args[1];
+        int row = Integer.parseInt(args[2]);
+        int col = Integer.parseInt(args[3]);
+
+        // Check if layer name exists in project
+        try {
+          this.model.addImageToLayer(this.model.getLayer(layer),
+                  ImageUtil.readPPM(image), row, col);
+        } catch (FileNotFoundException e) {
+          this.warn("Image not found!", "File Not Found");
+        } catch (IllegalArgumentException iae) {
+          this.warn(iae.getMessage(), "Unknown input");
+        }
+        break;
+      case "save-image":
+        // get file path to image
+        filePath = args[0];
+
+        // write a PPM file with the given file path
+        ImageUtil.writePPM(this.model.saveImage(), filePath);
+        break;
+      case "set-filter":
+        // get layer name and filter option from user
+        String layerName = args[0];
+        String filterOption = args[1];
+
+        // change the filter of the given layer name
+        this.model.setFilter(layerName, Filter.findByValue(filterOption));
+        break;
+      default:
+        this.errorMsg("Unknown command. Try again.", "Unknown command!");
+        break;
+    }
+  }
 
   /**
    * Saves an Image or Collage file based on the file path extensions.

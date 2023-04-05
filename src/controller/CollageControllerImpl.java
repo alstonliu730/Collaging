@@ -13,7 +13,7 @@ import util.ImageUtil;
 import view.TextView;
 
 /**
- * A class that represents the controller
+ * A class that represents the controller.
  */
 public class CollageControllerImpl implements CollageController {
   private final Readable in;
