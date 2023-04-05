@@ -141,7 +141,7 @@ with the HSL pixel representation, implemented the `invert(IPixel prev)` method.
 
 ### View Package
 
-- `GUIVIEW` interface: a new interface that defines the behavior of our GUI for collaging.
+- `GUIView` interface: a new interface that defines the behavior of our GUI for collaging.
 
 - `CommandListPanel` class: a new class that extends `JPanel` and implements the command buttons
 for our GUI.
