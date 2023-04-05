@@ -1,10 +1,20 @@
 package view.gui;
 
-import java.awt.*;;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.swing.*;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import controller.CollageFeatures;
 import model.CollageModel;

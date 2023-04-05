@@ -52,14 +52,13 @@ public class CollageGUI implements CollageFeatures, CollageController {
     }
   }
 
-
-  @Override
   /**
    * Runs the given command based on the option.
    *
    * @param command - the command to execute
    * @param args - arguments to input
    */
+  @Override
   public void runCommands(String command, String... args) {
     switch (command) {
       case "quit":

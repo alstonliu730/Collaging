@@ -162,7 +162,7 @@ public class CollagePPM implements CollageModel {
    * @param option - the filter type
    * @throws IllegalStateException - when the given layer is not found
    */
-  public void setFilter(String layer, Filter option) throws IllegalStateException{
+  public void setFilter(String layer, Filter option) throws IllegalStateException {
     for (Layer l: this.layers) {
       if (l.getName().equalsIgnoreCase(layer)) {
         l.setFilter(option);
