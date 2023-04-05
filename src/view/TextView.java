@@ -24,10 +24,10 @@ public interface TextView {
   public void renderMessage(String message) throws IOException;
 
   /**
-   * Renders the project into the data output of the implementation
+   * Renders the current state of the program onto the view
    *
    * @throws IOException - if the transmission of the project to the data output fails
    */
-  public void renderProject() throws IOException;
+  public void render() throws IOException;
 
 }

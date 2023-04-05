@@ -44,7 +44,7 @@ public class PPMTextViewImpl implements TextView {
    * @throws IOException - if the transmission of the project to the data output fails
    */
   @Override
-  public void renderProject() throws IOException {
+  public void render() throws IOException {
     this.out.append(this.toString());
   }
 

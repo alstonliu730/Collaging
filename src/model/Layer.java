@@ -28,6 +28,10 @@ public class Layer implements IListOfPixel{
    */
   public Layer(String name, int height, int width, int maxValue) throws IllegalArgumentException {
     if(Objects.isNull(name) || height <= 0 || width <= 0 || maxValue <= 0) {
+      System.out.println("Height: " + height);
+      System.out.println("Width: " + width);
+      System.out.println("Max: " + maxValue);
+      System.out.println("Name " + name);
       throw new IllegalArgumentException("Invalid Layer inputs!");
     }
     this.name = name;
