@@ -1,6 +1,18 @@
 package model;
 
+/**
+ * An interface that represents IPixel.
+ */
 public interface IPixel {
+  /**
+   * Sets this pixels color given rgba values.
+   *
+   * @param values - rgba array
+   * @throws IllegalArgumentException - when the given array is null or
+   *                                    does not have enough values
+   */
+  void setColor(int[] values) throws IllegalArgumentException;
+
   /**
    * Return the values of the color and transparency in an array.
    *
@@ -59,11 +71,18 @@ public interface IPixel {
   Posn getPos();
 
   /**
-   * Return the representation of this Pixel.
+   * Return the representation of this Pixel in PPM Format.
    *
    * @return - the format of this pixel
    */
   String toString();
+
+  /**
+   * Return the representation of this Pixel in (R,G,B,A) format.
+   *
+   * @return - the format of this pixel
+   */
+  String rgbaString();
 
   /**
    * Return the maximum value of this Pixel.

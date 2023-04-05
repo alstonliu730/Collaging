@@ -56,11 +56,10 @@ public class PixelArrayUtil {
   /**
    * Combines the rgb array values of the current pixel and previous pixel
    *
-   * @param curr
-   * @param prev
-   * @param maxValue
-   *
-   * @return
+   * @param curr - the current pixel's rgba array values
+   * @param prev - the previous pixel's rgba array values
+   * @param maxValue - the max value of the rgba values
+   * @return - the combined values of the rgba values
    */
   public static int[] combinePixel(int[] curr, int[] prev, int maxValue) throws IllegalArgumentException{
     if (Objects.isNull(curr) || Objects.isNull(prev)) {

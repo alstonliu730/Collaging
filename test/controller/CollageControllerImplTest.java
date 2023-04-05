@@ -57,8 +57,18 @@ public class CollageControllerImplTest {
       this.controller = new CollageControllerImpl(this.model, this.in, this.view);
       this.controller.runCollage();
 
+      this.in = ImageUtil.removeComments("res/multipleLayer.txt");
+      init();
+      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+      this.controller.runCollage();
+
+      this.in = ImageUtil.removeComments("res/changeLoaded.txt");
+      init();
+      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
+      this.controller.runCollage();
+
     } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage());
+      System.out.println(e.getMessage() + "\n");
       e.printStackTrace();
     }
   }

@@ -42,7 +42,7 @@ public class Layer implements IListOfPixel{
     for (int i = 0; i < this.height; ++i) {
       for (int j = 0; j < this.width; ++j) {
         matrix[i][j] = new Pixel(this.maxValue,this.maxValue, this.maxValue,
-                this.maxValue, this.maxValue, new Posn(i,j));
+                0, this.maxValue, new Posn(i,j));
       }
     }
   }
@@ -213,19 +213,19 @@ public class Layer implements IListOfPixel{
     }
 
     // Combined layer with the filter on it
-    Layer combined = new Layer("combined", this.height, this.width, this.maxValue);
+    Layer compressed = new Layer("combined", this.height, this.width, this.maxValue);
 
     // Traverse the matrix of each layer
     for(int i = 0; i < this.height; i++) {
       for(int j = 0; j < this.width; j++) {
         IPixel p1 = this.getPixel(new Posn(i,j));
         IPixel p2 = prev.getPixel(new Posn(i,j));
-        combined.setPixel(new Posn(i,j), p1.combine(p2));
+        compressed.setPixel(new Posn(i,j), p1.combine(p2));
       }
     }
 
     // Return the new combined layer
-    return combined;
+    return compressed;
   }
 
   /**
@@ -239,6 +239,7 @@ public class Layer implements IListOfPixel{
       return this.applyBackgroundFilter();
     }
     Layer filtered = new Layer(this.name, this.height, this.width, this.maxValue);
+    filtered.setFilter(this.filter);
 
     // apply the filter to each pixel
     for(int i = 0; i < this.height; i++) {

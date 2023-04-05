@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Objects;
-
 import util.PixelArrayUtil;
 import util.RepresentationConverter;
 
@@ -60,6 +59,20 @@ public class Pixel implements IPixel{
   }
 
   /**
+   * Sets this pixels color given rgba values.
+   *
+   * @param values - rgba array
+   */
+  public void setColor(int[] values) throws IllegalArgumentException {
+    if(Objects.isNull(values) || values.length != 4) {
+      throw new IllegalArgumentException("Invalid color input!");
+    }
+    this.red = values[0];
+    this.green = values[1];
+    this.blue = values[2];
+    this.alpha = values[3];
+  }
+  /**
    * Return the values of the color and transparency in an array.
    *
    * @return - the values of his color
@@ -92,8 +105,19 @@ public class Pixel implements IPixel{
    *
    * @return - the string format in rgb values
    */
+  @Override
   public String toString() {
     return String.format("%d %d %d", this.red, this.green, this.blue);
+  }
+
+  /**
+   * Return the representation of this Pixel in (R,G,B,A) format.
+   *
+   * @return - the format of this pixel
+   */
+  @Override
+  public String rgbaString() {
+    return String.format("%d %d %d %d", this.red, this.green, this.blue, this.alpha);
   }
 
   /**
@@ -214,24 +238,26 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel applyFilter(String option) {
+    IPixel pixel = new Pixel(this.red, this.green, this.blue, this.alpha, this.pos);
+    int[] rgba;
     switch(option) {
       case "r":
-        this.green = 0;
-        this.blue = 0;
+        rgba = pixel.getValues();
+        pixel.setColor(new int[]{rgba[0], 0, 0, rgba[3]});
         break;
       case "g":
-        this.red = 0;
-        this.blue = 0;
+        rgba = pixel.getValues();
+        pixel.setColor(new int[]{0, rgba[1], 0, rgba[3]});
         break;
       case "b":
-        this.red = 0;
-        this.green = 0;
+        rgba = pixel.getValues();
+        pixel.setColor(new int[]{0, 0, rgba[2], rgba[3]});
         break;
       default:
         break;
     }
 
-    return this;
+    return pixel;
   }
 
 }

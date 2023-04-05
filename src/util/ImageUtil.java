@@ -113,16 +113,20 @@ public class ImageUtil {
 
     //now set up the scanner to read from the string we just built
     sc = new Scanner(ImageUtil.removeComments(filename));
-    CollageModel model = new CollagePPM();
+
     String token = sc.next();
     if (!token.equals("C1")) {
       System.out.println("Invalid Collage File: plain txt file should start with C1");
     }
     // Gather Collage information
+    CollageModel model = new CollagePPM();
     int width = sc.nextInt();
     int height = sc.nextInt();
     int maxValue = sc.nextInt();
     model.startModel(height, width, maxValue);
+
+    // need to get rid of the default background layer for this collage's background
+    model.removeLayer("background");
 
     // Gather layer information
     while (sc.hasNext()) {
@@ -142,7 +146,8 @@ public class ImageUtil {
           int r = sc.nextInt();
           int g = sc.nextInt();
           int b = sc.nextInt();
-          pixelList.add(new Pixel(r, g, b, maxValue, new Posn(i, j)));
+          int a = sc.nextInt();
+          pixelList.add(new Pixel(r, g, b, a, new Posn(i, j)));
         }
       }
       // set the matrix of the layer
@@ -197,7 +202,7 @@ public class ImageUtil {
         fw.write(l.getName() + " " + l.getFilter().getOption() + "\n");
         for (int i = 0; i < l.getHeight(); i++) {
           for (int j = 0; j < l.getWidth(); j++) {
-            fw.write(l.getPixel(new Posn(i,j)).toString() + " ");
+            fw.write(l.getPixel(new Posn(i,j)).rgbaString() + " ");
           }
           fw.write("\n");
         }

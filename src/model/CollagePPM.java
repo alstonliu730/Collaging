@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import util.PixelArrayUtil;
@@ -48,7 +49,7 @@ public class CollagePPM implements CollageModel{
       }
     }
 
-    // create the layer object.
+    // create the background layer object with a white background.
     Layer backgroundLayer = new Layer("background", this.height, this.width, this.maxValue);
     backgroundLayer.setMatrix(background);
     backgroundLayer.setFilter(Filter.NORMAL);
@@ -64,6 +65,21 @@ public class CollagePPM implements CollageModel{
    */
   public void addGivenLayer(Layer layer) {
     this.layers.add(layer);
+  }
+
+  /**
+   * Removes the layer with the given name associated.
+   * If it doesn't exist, it does nothing.
+   *
+   * @param name - the name of the layer
+   */
+  public void removeLayer(String name) {
+    for(Iterator<Layer> iter = this.layers.iterator(); iter.hasNext();) {
+      Layer l = iter.next();
+      if(l.getName().equals(name)) {
+        iter.remove();
+      }
+    }
   }
 
   /**
@@ -106,7 +122,7 @@ public class CollagePPM implements CollageModel{
       }
     }
 
-    throw new IllegalStateException("Invalid Layer name!");
+    throw new IllegalStateException("Invalid Layer name! Name: " + name);
   }
 
   /**
@@ -144,8 +160,15 @@ public class CollagePPM implements CollageModel{
    * @param layer  - the name of the given layer
    * @param option - the filter type
    */
-  public void setFilter(String layer, Filter option) {
-    this.getLayer(layer).setFilter(option);
+  public void setFilter(String layer, Filter option){
+    for(Layer l: this.layers) {
+      if(l.getName().equalsIgnoreCase(layer)) {
+        l.setFilter(option);
+        return;
+      }
+    }
+
+    throw new IllegalStateException("Invalid Layer name! Name: " + layer);
   }
 
   /**
@@ -174,19 +197,19 @@ public class CollagePPM implements CollageModel{
    */
   public List<Layer> renderLayers() {
     // create a copy of the current layers
-    List<Layer> pixelLayers = new ArrayList<Layer>();
+    List<Layer> renderedLayers = new ArrayList<Layer>();
     Layer prev = this.layers.get(0); // get the background as the first layer
-    pixelLayers.add(prev.applyFilter(null)); // add the background
+    renderedLayers.add(prev.applyFilter(null)); // add the background
 
     // apply the filter to each layer
     if (this.layers.size() > 1) {
       for (int i = 1; i < this.layers.size(); i++) {
         Layer curr = this.layers.get(i);
-        pixelLayers.add(curr.applyFilter(prev));
-        prev = pixelLayers.get(i);
+        renderedLayers.add(curr.applyFilter(prev));
+        prev = renderedLayers.get(i);
       }
     }
-    return pixelLayers;
+    return renderedLayers;
   }
 
   /**
@@ -205,7 +228,7 @@ public class CollagePPM implements CollageModel{
     for(Layer l : this.renderLayers()) {
       project += (l.getName() + " " + l.getFilter().getOption() + "\n");
       for(IPixel p: l.render()) {
-        project += (p.toString() + " ");
+        project += (p.rgbaString() + " ");
       }
       project += "\n";
     }

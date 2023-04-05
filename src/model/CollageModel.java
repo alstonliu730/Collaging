@@ -22,6 +22,14 @@ public interface CollageModel {
   void addGivenLayer(Layer layer);
 
   /**
+   * Removes the layer with the given name associated.
+   * If it doesn't exist, it does nothing.
+   *
+   * @param name - the name of the layer
+   */
+  void removeLayer(String name);
+
+  /**
    * Returns the max value of this model.
    *
    * @return - the max value of the model.

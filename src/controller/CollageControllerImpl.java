@@ -48,10 +48,10 @@ public class CollageControllerImpl implements CollageController {
     Scanner s = new Scanner(this.in);
     // Print welcome messages
     this.printMessage("Welcome to Collaging!\n");
-    this.printMessage("Please input a command:\n");
 
     // Loop until the user quits
     while(!quit && s.hasNext()) {
+      this.printMessage("Please input a command:\n");
       // gather arguments from user
       String[] args = s.nextLine().split("[ \n]+");
 
@@ -68,9 +68,9 @@ public class CollageControllerImpl implements CollageController {
             this.runCommands(args[0]);
           }
         } catch (IllegalArgumentException e) {
-          this.printMessage(e.getMessage());
+          this.printMessage(e.getMessage() + "\n");
         } catch (IllegalStateException ise) {
-          this.printMessage(ise.getMessage());
+          this.printMessage(ise.getMessage() + "\n");
         }
       }
     }
@@ -104,7 +104,7 @@ public class CollageControllerImpl implements CollageController {
         try {
           String filePath = args[0];
           // Open PPM file and pass it to model
-         this.model = ImageUtil.readProject(filePath);
+          this.model = ImageUtil.readProject(filePath);
         } catch (FileNotFoundException ime) {
           System.out.println("Invalid path or file not found");
         }
@@ -135,7 +135,7 @@ public class CollageControllerImpl implements CollageController {
           this.model.addImageToLayer(this.model.getLayer(layer),
                   ImageUtil.readPPM(image), row, col);
         } catch (FileNotFoundException e) {
-          this.printMessage("Image not found!");
+          this.printMessage("Image not found!\n");
         } catch (IllegalArgumentException iae) {
           this.printMessage(iae.getMessage());
         }
@@ -144,7 +144,7 @@ public class CollageControllerImpl implements CollageController {
         // get file path to image
         filePath = args[0];
 
-        // write a PPM file with to the given file path
+        // write a PPM file with the given file path
         ImageUtil.writePPM(this.model.saveImage(), filePath);
         break;
       case "set-filter":
