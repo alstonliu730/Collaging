@@ -40,7 +40,7 @@ public class PPMTextViewImpl implements TextView {
   }
 
   /**
-   * Renders the project into the data output of the implementation
+   * Renders the project into the data output of the implementation.
    *
    * @throws IOException - if the transmission of the project to the data output fails
    */

@@ -4,8 +4,11 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * A test class to test the Layer class.
+ */
 public class LayerTest {
   Layer l1;
   Layer l2;
@@ -171,5 +174,7 @@ public class LayerTest {
     Image img = new Image(input, new Posn(0, 0));
     this.l1 = new Layer("first", 3, 3, 255);
 
+    this.l1.addImage(img);
+    assertEquals(1, this.l1.getImages().size());
   }
 }

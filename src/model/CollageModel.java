@@ -54,7 +54,7 @@ public interface CollageModel {
   int getHeight();
 
   /**
-   * Returns the layer from the given name
+   * Returns the layer from the given name.
    *
    * @param name - the name of the layer
    * @return - the Layer object
@@ -88,7 +88,7 @@ public interface CollageModel {
   void setFilter(String layer, Filter option);
 
   /**
-   * Save the layers as one layer
+   * Save the layers as one layer.
    *
    * @return - the combined layers
    */

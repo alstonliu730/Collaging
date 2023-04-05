@@ -9,10 +9,13 @@ import util.RepresentationConverter;
  * A class that represents a Pixel that contains:
  * - (r, g, b, a) channels
  * - max value of channels
- * - the position
+ * - the position.
  */
 public class Pixel implements IPixel {
-  private int red, green, blue, alpha;
+  private int red;
+  private int green;
+  private int blue;
+  private int alpha;
   private int maxValue;
   private Posn pos;
 

@@ -1,7 +1,5 @@
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
-
 import controller.CollageController;
 import controller.CollageControllerImpl;
 import controller.CollageGUI;
@@ -17,10 +15,14 @@ import view.gui.GUIView;
  * Main function to run collage app.
  */
 public class CollageApp {
+  /**
+   * Main method to execute the collaging application and launch the GUI.
+   * @param args command line arguments as an array of Strings
+   */
   public static void main(String[] args) {
     CollageModel model = new CollagePPM();
-    if(args.length > 0) {
-      if(args[0].equals("-text")) {
+    if (args.length > 0) {
+      if (args[0].equals("-text")) {
         TextView view = new PPMTextViewImpl(System.out, model);
         CollageController control = new CollageControllerImpl(model,
                 new InputStreamReader(System.in), view);

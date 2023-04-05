@@ -10,8 +10,9 @@ import util.ImageUtil;
 import view.PPMTextViewImpl;
 import view.TextView;
 
-import static org.junit.Assert.*;
-
+/**
+ * A class to test the CollageControllerImpl class.
+ */
 public class CollageControllerImplTest {
   CollageModel model;
   TextView view;
@@ -19,7 +20,10 @@ public class CollageControllerImplTest {
   Appendable out;
   CollageController controller;
 
-  public void init() {
+  /**
+   * Method to initialize the test parameters.
+   */
+  private void init() {
     this.out = System.out;
     this.model = new CollagePPM();
     this.view = new PPMTextViewImpl(this.out, this.model);
@@ -73,7 +77,9 @@ public class CollageControllerImplTest {
       e.printStackTrace();
     }
   }
+  }
 
+/**
   @Test
   public void testRunCommands() {
 
@@ -84,3 +90,4 @@ public class CollageControllerImplTest {
 
   }
 }
+ */

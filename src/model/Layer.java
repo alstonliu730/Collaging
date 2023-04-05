@@ -9,7 +9,8 @@ import java.util.Objects;
  */
 public class Layer implements IListOfPixel {
   private String name;
-  private int height, width;
+  private int height;
+  private int width;
   private IPixel[][] matrix;
   private Filter filter;
   private List<Image> images;
@@ -26,7 +27,7 @@ public class Layer implements IListOfPixel {
    *                                  when the name is null
    */
   public Layer(String name, int height, int width, int maxValue) throws IllegalArgumentException {
-    if(Objects.isNull(name) || height <= 0 || width <= 0 || maxValue <= 0) {
+    if (Objects.isNull(name) || height <= 0 || width <= 0 || maxValue <= 0) {
       throw new IllegalArgumentException("Invalid Layer inputs!");
     }
     this.name = name;
@@ -56,7 +57,7 @@ public class Layer implements IListOfPixel {
   }
 
   /**
-   * Returns the height of this IListOfPixel
+   * Returns the height of this IListOfPixel.
    *
    * @return - the height of this object
    */
@@ -65,7 +66,7 @@ public class Layer implements IListOfPixel {
   }
 
   /**
-   * Returns the width of this IListOfPixel
+   * Returns the width of this IListOfPixel.
    *
    * @return - the width of this object
    */
@@ -115,7 +116,6 @@ public class Layer implements IListOfPixel {
    * Returns the Pixel at the given coordinate.
    *
    * @param pos - the x and y position of the pixel
-   * @return - the Pixel at the coordinate
    */
   public void setPixel(Posn pos, IPixel p) {
     int row = pos.getRow();
@@ -125,7 +125,7 @@ public class Layer implements IListOfPixel {
   }
 
   /**
-   * Returns the Pixels in the matrix as a 1D array
+   * Returns the Pixels in the matrix as a 1D array.
    *
    * @return - a list of the current Pixels
    */
@@ -264,5 +264,14 @@ public class Layer implements IListOfPixel {
       this.setPixel(p.getPos(), this.filter.apply(p));
     }
     return this;
+  }
+
+  /**
+   * Gets the images in this layer.
+   *
+   * @return - the list of images in this layer.
+   */
+  public List<Image> getImages() {
+    return this.images;
   }
 }

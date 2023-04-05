@@ -4,7 +4,7 @@ import controller.CollageFeatures;
 import model.CollageModel;
 
 /**
- * An interface that represents a view GUI
+ * An interface that represents a view GUI.
  */
 public interface GUIView {
   /**

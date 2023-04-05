@@ -23,8 +23,7 @@ import model.Pixel;
 import model.Posn;
 
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method
- * as required.
+ * This class contains utility methods to read a PPM image from file and simply print its contents.
  */
 public class ImageUtil {
   /**
@@ -69,7 +68,7 @@ public class ImageUtil {
    *
    * @param filename the path of the file.
    * @return - the Layer
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException if the given file is not found
    */
   public static IListOfPixel readPPM(String filename) throws FileNotFoundException {
     Scanner sc;

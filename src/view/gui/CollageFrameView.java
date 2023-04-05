@@ -1,38 +1,28 @@
 package view.gui;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.*;;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import controller.CollageController;
 import controller.CollageFeatures;
 import model.CollageModel;
-import model.IListOfPixel;
-import model.IPixel;
-import model.Layer;
-import model.Pixel;
-import model.Posn;
-import util.ImageUtil;
-import view.TextView;
 
+/**
+ * A class to represent the collaging GUI.
+ * Displays the image.
+ * Keeps track of the list of layers in the project.
+ * Displays the commands a user can execute via the GUI.
+ */
 public class CollageFrameView extends JFrame implements GUIView {
   // Components as fields
   private DisplayPanel imagePanel;
-  private JPanel layerList;
-  private JPanel infoLists;
   private JList<String> listOfLayers;
   private DefaultListModel<String> dataLayerList;
   private CommandListPanel commandList;
   private CollageModel model;
+
   /**
    * Creates the frame components of the CollageView.
    */
@@ -60,16 +50,16 @@ public class CollageFrameView extends JFrame implements GUIView {
     this.add(this.imagePanel, BorderLayout.CENTER);
 
     // A section that displays list
-    this.infoLists = new JPanel();
-    this.infoLists.setLayout(new BoxLayout(this.infoLists, BoxLayout.Y_AXIS));
+    JPanel infoLists = new JPanel();
+    infoLists.setLayout(new BoxLayout(infoLists, BoxLayout.Y_AXIS));
 
     // Create a section that displays a list of layers
-    this.layerList = new JPanel();
-    this.layerList.setBorder(BorderFactory.createTitledBorder("Layer List"));
-    this.layerList.setLayout(new BoxLayout(this.layerList, BoxLayout.X_AXIS));
-    this.layerList.setMinimumSize(new Dimension(200,100));
-    this.layerList.setPreferredSize(new Dimension(300,200));
-    this.infoLists.add(this.layerList);
+    JPanel layerList = new JPanel();
+    layerList.setBorder(BorderFactory.createTitledBorder("Layer List"));
+    layerList.setLayout(new BoxLayout(layerList, BoxLayout.X_AXIS));
+    layerList.setMinimumSize(new Dimension(200,100));
+    layerList.setPreferredSize(new Dimension(300,200));
+    infoLists.add(layerList);
 
     // fill list with the layer list names
     this.dataLayerList = new DefaultListModel<>();
@@ -79,16 +69,16 @@ public class CollageFrameView extends JFrame implements GUIView {
 
     // create the list of layers object and add it to the panel
     this.listOfLayers = new JList<>(this.dataLayerList);
-    this.layerList.add(this.listOfLayers);
+    layerList.add(this.listOfLayers);
 
     // Create a command lists
     this.commandList = new CommandListPanel(this.model);
     this.commandList.setBorder(BorderFactory.createTitledBorder("Command List"));
     this.commandList.setMinimumSize(new Dimension(200,200));
     this.commandList.setPreferredSize(new Dimension(300,300));
-    this.infoLists.add(this.commandList);
+    infoLists.add(this.commandList);
 
-    this.add(this.infoLists, BorderLayout.EAST);
+    this.add(infoLists, BorderLayout.EAST);
     this.pack();
     this.setVisible(true);
   }
@@ -131,7 +121,7 @@ public class CollageFrameView extends JFrame implements GUIView {
    */
   @Override
   public void addFeatures(CollageFeatures features) {
-    for(JButton b: this.commandList.getCommandButtons()) {
+    for (JButton b: this.commandList.getCommandButtons()) {
       b.addActionListener((evt) -> this.execute(features, evt.getActionCommand()));
     }
     this.listOfLayers.addListSelectionListener(e -> System.out.println(e.getSource()));
@@ -151,19 +141,19 @@ public class CollageFrameView extends JFrame implements GUIView {
    * @param features - the gui controller
    * @param command - the command to be executed
    */
-  private void execute(CollageFeatures features, String command){
-    switch(command) {
+  private void execute(CollageFeatures features, String command) {
+    switch (command) {
       case "Save Image":
       case "Save Project": {
         String filePath = this.showFileChooser(features);
-        if(Objects.isNull(filePath)) {
+        if (Objects.isNull(filePath)) {
           features.warn("Saving cancelled.", "Save Cancel");
         }
         features.saveFile(filePath);
       }
 
-      break;
-      case "Load Image":{
+        break;
+      case "Load Image": {
         String filePath;
         final JFileChooser fchooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -185,7 +175,7 @@ public class CollageFrameView extends JFrame implements GUIView {
         }
       }
       break;
-      case "Load Project":{
+      case "Load Project": {
         final JFileChooser fchooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Collage Project", "collage");
@@ -213,7 +203,7 @@ public class CollageFrameView extends JFrame implements GUIView {
         this.dataLayerList.addElement(layer);
       }
       break;
-      case "Set Filter":{
+      case "Set Filter": {
         String layer = JOptionPane.showInputDialog(this, "Enter the name of the layer:",
                 "Set Filter", JOptionPane.INFORMATION_MESSAGE);
         String filter = JOptionPane.showInputDialog(this, "Enter the filter name:",

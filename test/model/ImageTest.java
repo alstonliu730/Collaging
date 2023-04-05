@@ -5,6 +5,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+/**
+ * A test class to test the image class.
+ */
 public class ImageTest {
   Image img1;
   Image img2;
