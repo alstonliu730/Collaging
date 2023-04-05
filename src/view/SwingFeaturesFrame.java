@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +12,7 @@ import java.io.File;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -186,13 +188,13 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     mainPanel.add(imagePanel);
 
     String[] images = {"res/Jellyfish.jpg", "res/Koala.jpg", "res/Penguins.jpg"};
-    JLabel[] imageLabel = new JLabel[images.length+1];
-    JScrollPane[] imageScrollPane = new JScrollPane[images.length+1];
+    JLabel[] imageLabel = new JLabel[images.length + 1];
+    JScrollPane[] imageScrollPane = new JScrollPane[images.length + 1];
 
     for (int i = 0; i < imageLabel.length; i++) {
       imageLabel[i] = new JLabel();
       imageScrollPane[i] = new JScrollPane(imageLabel[i]);
-      if(i < images.length) {
+      if (i < images.length) {
         imageLabel[i].setIcon(new ImageIcon(images[i]));
       } else {
         imageLabel[i].setIcon(new ImageIcon(createImageFromScratch()));
@@ -449,8 +451,8 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
     BufferedImage image = new BufferedImage(300, 400, BufferedImage.TYPE_INT_ARGB);
 
     //Iterating so x moves to the right and y moves down
-    for(int x = 0; x < image.getWidth(); x++) {
-      for(int y = 0; y < image.getHeight(); y++) {
+    for (int x = 0; x < image.getWidth(); x++) {
+      for (int y = 0; y < image.getHeight(); y++) {
         // Making every pixel the color chosen by Section 2 of CS3500
         // in Spring 2023
         int r = 99;
@@ -460,10 +462,10 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener, ItemLi
         //Demonstrating we can change the alpha of individual pixels
         //and they will appear diffrently on the label
         int a = 255;
-        if(y * image.getWidth() + x >= 35000) {
+        if (y * image.getWidth() + x >= 35000) {
           a = 100;
         }
-        if (y * image.getWidth() +x >= 90000) {
+        if (y * image.getWidth() + x >= 90000) {
           a = 0;
         }
         if (y * image.getWidth() + x >= 110000) {

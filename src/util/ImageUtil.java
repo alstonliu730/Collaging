@@ -23,8 +23,8 @@ import model.Pixel;
 import model.Posn;
 
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method 
- *  as required.
+ * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method
+ * as required.
  */
 public class ImageUtil {
   /**
@@ -34,7 +34,7 @@ public class ImageUtil {
    * @param filename path of the file
    * @return a Readable object with the contents of the file without comments
    * @throws IllegalArgumentException - if a null arg is passed
-   * @throws FileNotFoundException - if the file is not found
+   * @throws FileNotFoundException    - if the file is not found
    */
   public static Readable removeComments(String filename)
           throws IllegalArgumentException, FileNotFoundException {
@@ -53,7 +53,7 @@ public class ImageUtil {
 
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
-      if (!s.isEmpty() && !s.isBlank() && s.charAt(0)!='#') {
+      if (!s.isEmpty() && !s.isBlank() && s.charAt(0) != '#') {
         builder.append(s + System.lineSeparator());
       }
     }
@@ -79,23 +79,23 @@ public class ImageUtil {
 
     String token = sc.next();
     if (!token.equals("P3")) {
-        System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      System.out.println("Invalid PPM file: plain RAW file should begin with P3");
     }
     int width = sc.nextInt();
     int height = sc.nextInt();
     int maxValue = sc.nextInt();
     Pixel[][] pixelList = new Pixel[height][width];
     for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            int r = sc.nextInt();
-            int g = sc.nextInt();
-            int b = sc.nextInt();
-            pixelList[i][j] = new Pixel(r,g,b,maxValue,new Posn(i,j));
-        }
+      for (int j = 0; j < width; j++) {
+        int r = sc.nextInt();
+        int g = sc.nextInt();
+        int b = sc.nextInt();
+        pixelList[i][j] = new Pixel(r, g, b, maxValue, new Posn(i, j));
+      }
     }
 
     // Create this new layer
-    IListOfPixel newImage = new Image(pixelList, new Posn(0,0));
+    IListOfPixel newImage = new Image(pixelList, new Posn(0, 0));
 
     // return the new model
     return newImage;
@@ -162,18 +162,18 @@ public class ImageUtil {
   /**
    * Writes a PPM image file given an IListOfPixel object and the file path.
    *
-   * @param img - the IListOfPixel object
+   * @param img      - the IListOfPixel object
    * @param filename - the saved location of the file
    */
   public static void writePPM(IListOfPixel img, String filename) {
-    try(FileWriter fw = new FileWriter(filename)) {
+    try (FileWriter fw = new FileWriter(filename)) {
       fw.write("P3\n");
       fw.write(img.getWidth() + " " + img.getHeight() + "\n");
       fw.write(img.getMax() + "\n");
 
-      for(int i = 0; i < img.getHeight(); i++) {
-        for(int j = 0; j < img.getWidth(); j++) {
-          fw.write(img.getPixel(new Posn(i,j)).toString() + " ");
+      for (int i = 0; i < img.getHeight(); i++) {
+        for (int j = 0; j < img.getWidth(); j++) {
+          fw.write(img.getPixel(new Posn(i, j)).toString() + " ");
         }
         fw.write("\n");
       }
@@ -187,22 +187,22 @@ public class ImageUtil {
   /**
    * Writes a project file given a model and the file path.
    *
-   * @param model - the given model
+   * @param model    - the given model
    * @param filename - the saved location of the file
    */
   public static void writeProject(CollageModel model, String filename) {
-    try(FileWriter fw = new FileWriter(filename)) {
+    try (FileWriter fw = new FileWriter(filename)) {
       // Write collage information
       fw.write("C1\n");
       fw.write(model.getWidth() + " " + model.getHeight() + "\n");
       fw.write(model.getMax() + "\n");
 
       // write layers and layer information
-      for(Layer l : model.renderLayers()) {
+      for (Layer l : model.renderLayers()) {
         fw.write(l.getName() + " " + l.getFilter().getOption() + "\n");
         for (int i = 0; i < l.getHeight(); i++) {
           for (int j = 0; j < l.getWidth(); j++) {
-            fw.write(l.getPixel(new Posn(i,j)).rgbaString() + " ");
+            fw.write(l.getPixel(new Posn(i, j)).rgbaString() + " ");
           }
           fw.write("\n");
         }

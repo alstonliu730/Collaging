@@ -1,16 +1,17 @@
 package model;
 
 import java.util.Objects;
+
 import util.PixelArrayUtil;
 import util.RepresentationConverter;
 
 /**
  * A class that represents a Pixel that contains:
- *  - (r, g, b, a) channels
- *  - max value of channels
- *  - the position
+ * - (r, g, b, a) channels
+ * - max value of channels
+ * - the position
  */
-public class Pixel implements IPixel{
+public class Pixel implements IPixel {
   private int red, green, blue, alpha;
   private int maxValue;
   private Posn pos;
@@ -24,10 +25,10 @@ public class Pixel implements IPixel{
    * @param a - alpha value of pixel
    * @param p - Position of the pixel (x,y)
    * @throws IllegalArgumentException - When given null objects OR
-   *                                    alpha value less than 0.
+   *                                  alpha value less than 0.
    */
   public Pixel(int r, int g, int b, int a, Posn p) throws IllegalArgumentException {
-    if ( r < 0|| g < 0|| b < 0 ||  a < 0 || Objects.isNull(p)) {
+    if (r < 0 || g < 0 || b < 0 || a < 0 || Objects.isNull(p)) {
       throw new IllegalArgumentException("Invalid Pixel input!");
     }
     this.red = r;
@@ -47,11 +48,11 @@ public class Pixel implements IPixel{
    * @param a - alpha value of pixel
    * @param p - Position of the pixel (x,y)
    * @throws IllegalArgumentException - When given null objects OR
-   *                                    alpha value less than 0.
+   *                                  alpha value less than 0.
    */
   public Pixel(int r, int g, int b, int a, int max, Posn p) throws IllegalArgumentException {
-    this(r,g,b,a,p);
-    if(max <= 0) {
+    this(r, g, b, a, p);
+    if (max <= 0) {
       throw new IllegalArgumentException("Invalid max value!");
     }
 
@@ -64,7 +65,7 @@ public class Pixel implements IPixel{
    * @param values - rgba array
    */
   public void setColor(int[] values) throws IllegalArgumentException {
-    if(Objects.isNull(values) || values.length != 4) {
+    if (Objects.isNull(values) || values.length != 4) {
       throw new IllegalArgumentException("Invalid color input!");
     }
     this.red = values[0];
@@ -72,6 +73,7 @@ public class Pixel implements IPixel{
     this.blue = values[2];
     this.alpha = values[3];
   }
+
   /**
    * Return the values of the color and transparency in an array.
    *
@@ -152,10 +154,10 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel brighten(IPixel prev) {
-    if(Objects.isNull(prev)) {
+    if (Objects.isNull(prev)) {
       return this;
     }
-    assert(this.pos.equals(prev.getPos()));
+    assert (this.pos.equals(prev.getPos()));
 
     // get HSL representation of the pixel
     double[] currHSL = this.getHSL(this);
@@ -180,10 +182,10 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel darken(IPixel prev) {
-    if(Objects.isNull(prev)) {
+    if (Objects.isNull(prev)) {
       return this;
     }
-    assert(this.pos.equals(prev.getPos()));
+    assert (this.pos.equals(prev.getPos()));
     // get HSL representation of the pixel
     double[] currHSL = this.getHSL(this);
     double[] prevHSL = this.getHSL(prev);
@@ -206,8 +208,8 @@ public class Pixel implements IPixel{
    */
   private double[] getHSL(IPixel p) {
     int[] pRGBA = p.getValues();
-    return RepresentationConverter.convertRGBtoHSL((double) pRGBA[0]/p.getMax(),
-            (double) pRGBA[1]/p.getMax(), (double) pRGBA[2]/p.getMax());
+    return RepresentationConverter.convertRGBtoHSL((double) pRGBA[0] / p.getMax(),
+            (double) pRGBA[1] / p.getMax(), (double) pRGBA[2] / p.getMax());
   }
 
   /**
@@ -217,10 +219,10 @@ public class Pixel implements IPixel{
    */
   @Override
   public IPixel invert(IPixel prev) {
-    if(Objects.isNull(prev)) {
+    if (Objects.isNull(prev)) {
       return this;
     }
-    assert(this.pos.equals(prev.getPos()));
+    assert (this.pos.equals(prev.getPos()));
     int[] currRGBA = this.getValues();
     int[] prevRGBA = prev.getValues();
 
@@ -240,7 +242,7 @@ public class Pixel implements IPixel{
   public IPixel applyFilter(String option) {
     IPixel pixel = new Pixel(this.red, this.green, this.blue, this.alpha, this.pos);
     int[] rgba;
-    switch(option) {
+    switch (option) {
       case "r":
         rgba = pixel.getValues();
         pixel.setColor(new int[]{rgba[0], 0, 0, rgba[3]});

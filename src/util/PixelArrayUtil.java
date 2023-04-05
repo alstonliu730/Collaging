@@ -20,9 +20,9 @@ public class PixelArrayUtil {
   public static int getMaxValue(IPixel[][] pixels) {
     int maxValue = pixels[0][0].getMax();
 
-    for(int i = 0; i < pixels.length; i++) {
-      for(int j = 0; j < pixels[0].length; j++){
-        if(pixels[i][j].getMax() > maxValue){
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < pixels[0].length; j++) {
+        if (pixels[i][j].getMax() > maxValue) {
           maxValue = pixels[i][j].getMax();
         }
       }
@@ -45,7 +45,7 @@ public class PixelArrayUtil {
     }
 
     IPixel[][] new_matrix = new Pixel[height][width];
-    for(IPixel p : pixels) {
+    for (IPixel p : pixels) {
       Posn position = p.getPos();
       new_matrix[position.getRow()][position.getCol()] = p;
     }
@@ -56,12 +56,12 @@ public class PixelArrayUtil {
   /**
    * Combines the rgb array values of the current pixel and previous pixel
    *
-   * @param curr - the current pixel's rgba array values
-   * @param prev - the previous pixel's rgba array values
+   * @param curr     - the current pixel's rgba array values
+   * @param prev     - the previous pixel's rgba array values
    * @param maxValue - the max value of the rgba values
    * @return - the combined values of the rgba values
    */
-  public static int[] combinePixel(int[] curr, int[] prev, int maxValue) throws IllegalArgumentException{
+  public static int[] combinePixel(int[] curr, int[] prev, int maxValue) throws IllegalArgumentException {
     if (Objects.isNull(curr) || Objects.isNull(prev)) {
       throw new IllegalArgumentException("Invalid rgb array input!");
     }
@@ -70,7 +70,7 @@ public class PixelArrayUtil {
     int dr = prev[0], dg = prev[1], db = prev[2], da = prev[3];
 
     double percentAlpha = (a / maxValue) +
-            ((da/maxValue) * (1- (a / maxValue)));
+            ((da / maxValue) * (1 - (a / maxValue)));
     int new_alpha = (int) Math.round(percentAlpha * maxValue);
     int new_red = (int) Math.round((convertCompWithAlpha(r, a, maxValue)
             + (convertCompWithAlpha(dr, da, maxValue) * (1 - (a / maxValue)))) * (1 / percentAlpha));

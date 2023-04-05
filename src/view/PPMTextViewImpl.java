@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 import java.util.Objects;
+
 import model.CollageModel;
 
 /**
@@ -14,12 +15,12 @@ public class PPMTextViewImpl implements TextView {
   /**
    * Creates an object view in the PPM format.
    *
-   * @param out - the Appendable object to output
+   * @param out   - the Appendable object to output
    * @param model - the model to base the view on
    * @throws IllegalArgumentException - when the given objects are null
    */
   public PPMTextViewImpl(Appendable out, CollageModel model) throws IllegalArgumentException {
-    if(Objects.isNull(out) || Objects.isNull(model)) {
+    if (Objects.isNull(out) || Objects.isNull(model)) {
       throw new IllegalArgumentException("Invalid TextView input!");
     }
 

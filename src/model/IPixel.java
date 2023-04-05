@@ -9,7 +9,7 @@ public interface IPixel {
    *
    * @param values - rgba array
    * @throws IllegalArgumentException - when the given array is null or
-   *                                    does not have enough values
+   *                                  does not have enough values
    */
   void setColor(int[] values) throws IllegalArgumentException;
 

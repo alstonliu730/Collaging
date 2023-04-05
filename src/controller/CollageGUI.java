@@ -82,6 +82,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
     } catch(FileNotFoundException e) {
       this.errorMsg("File not found!", "Unknown File");
     }
+    this.view.refresh(this.model);
   }
   /**
    * Sets the filter at the given layer.
@@ -94,6 +95,8 @@ public class CollageGUI implements CollageFeatures, CollageController {
       this.model.setFilter(layer, Filter.findByValue(filter));
     } catch (IllegalStateException e) {
       this.warn(e.getMessage(), "Unknown Layer");
+    } catch (IllegalArgumentException e) {
+      this.warn(e.getMessage(), "Unknown Filter");
     }
     this.view.refresh(this.model);
   }

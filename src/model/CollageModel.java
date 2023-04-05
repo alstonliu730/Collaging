@@ -35,6 +35,7 @@ public interface CollageModel {
    * @return - the max value of the model.
    */
   int getMax();
+
   /**
    * Returns the width of this model.
    *
@@ -51,6 +52,7 @@ public interface CollageModel {
 
   /**
    * Returns the layer from the given name
+   *
    * @param name - the name of the layer
    * @return - the Layer object
    */
@@ -68,16 +70,16 @@ public interface CollageModel {
    * Adds an image to the given layer given the image and the position.
    *
    * @param layer - the given layer
-   * @param img - the image to be added
-   * @param row - the x-coordinate of the image
-   * @param col - the y-coordinate of the image
+   * @param img   - the image to be added
+   * @param row   - the x-coordinate of the image
+   * @param col   - the y-coordinate of the image
    */
   void addImageToLayer(Layer layer, IListOfPixel img, int row, int col);
 
   /**
    * Sets the Filter of the given layer.
    *
-   * @param layer - the name of the given layer
+   * @param layer  - the name of the given layer
    * @param option - the filter type
    */
   void setFilter(String layer, Filter option);

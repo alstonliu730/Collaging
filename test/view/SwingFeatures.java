@@ -9,7 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * Please use these examples as guidelines only to see how to use them. This
  * example has not been designed very well, it is only meant to illustrate code
  * snippets.
- *
+ * <p>
  * Feel free to try out different modifications to see how the program changes
  */
 

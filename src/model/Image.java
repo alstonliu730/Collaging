@@ -10,7 +10,7 @@ import util.PixelArrayUtil;
 /**
  * A class that represents an Image.
  */
-public class Image implements IListOfPixel{
+public class Image implements IListOfPixel {
   private int height, width;
   private IPixel[][] image;
   private Posn pos;
@@ -20,8 +20,8 @@ public class Image implements IListOfPixel{
    * Creates an Image object with the given height, width, and position.
    *
    * @param height - the height of the image
-   * @param width - the width of the image
-   * @param pos - the position of the image in the layer
+   * @param width  - the width of the image
+   * @param pos    - the position of the image in the layer
    * @throws IllegalArgumentException - when the input is less than or equal to zero
    */
   public Image(int height, int width, Posn pos) throws IllegalArgumentException {
@@ -40,8 +40,8 @@ public class Image implements IListOfPixel{
    * Creates an Image object with the given height, width, max value, and position.
    *
    * @param height - the height of the image
-   * @param width - the width of the image
-   * @param pos - the position of the image in the layer
+   * @param width  - the width of the image
+   * @param pos    - the position of the image in the layer
    * @throws IllegalArgumentException - when the input is less than or equal to zero
    */
   public Image(int height, int width, int maxValue, Posn pos) throws IllegalArgumentException {
@@ -60,7 +60,7 @@ public class Image implements IListOfPixel{
    * @throws IllegalArgumentException - when the input is less than or equal to zero
    */
   public Image(IPixel[][] img, Posn pos) throws IllegalArgumentException {
-    if(Objects.isNull(img) || Objects.isNull(pos) || Arrays.asList(img).isEmpty()) {
+    if (Objects.isNull(img) || Objects.isNull(pos) || Arrays.asList(img).isEmpty()) {
       throw new IllegalArgumentException("Invalid input!");
     }
     this.height = img.length;
@@ -78,8 +78,8 @@ public class Image implements IListOfPixel{
   public List<IPixel> render() {
     List<IPixel> pixels = new ArrayList<IPixel>();
     // fill the list with pixels
-    for(IPixel[] row: this.image) {
-      for(IPixel pixel: row) {
+    for (IPixel[] row : this.image) {
+      for (IPixel pixel : row) {
         pixels.add(pixel);
       }
     }
@@ -93,14 +93,13 @@ public class Image implements IListOfPixel{
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  public IPixel getPixel(Posn pos) throws IllegalArgumentException{
+  public IPixel getPixel(Posn pos) throws IllegalArgumentException {
     int row = pos.getRow();
     int col = pos.getCol();
 
     try {
       return image[row][col];
-    }
-    catch (NullPointerException e) {
+    } catch (NullPointerException e) {
       throw new IllegalArgumentException("Image is not initialized!");
     }
   }
@@ -118,6 +117,7 @@ public class Image implements IListOfPixel{
   public void changePos(Posn p) {
     this.pos = p;
   }
+
   /**
    * Returns the height of this image
    *

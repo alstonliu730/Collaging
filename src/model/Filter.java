@@ -22,8 +22,8 @@ public enum Filter {
    * @param option - the type of filter
    * @throws IllegalArgumentException - When given no option
    */
-  Filter(String option) throws IllegalArgumentException{
-    if(Objects.isNull(option)) {
+  Filter(String option) throws IllegalArgumentException {
+    if (Objects.isNull(option)) {
       throw new IllegalArgumentException("Invalid Filter option!");
     }
 
@@ -37,10 +37,10 @@ public enum Filter {
    * @return - the pixel with the filter applied
    * @throws NullPointerException - When the given pixels were not given
    */
-  public IPixel apply(IPixel... pixels) throws NullPointerException{
+  public IPixel apply(IPixel... pixels) throws NullPointerException {
     Objects.requireNonNull(pixels);
 
-    switch(this.option) {
+    switch (this.option) {
       case "red-component":
         return pixels[0].applyFilter("r");
       case "green-component":
@@ -64,15 +64,15 @@ public enum Filter {
    * @param option - the given option
    * @return - the Filter object associated with that option
    * @throws IllegalArgumentException - when the given option is null
-   *                                    OR when the given option is not associated with a value
+   *                                  OR when the given option is not associated with a value
    */
   public static Filter findByValue(String option)
-    throws IllegalArgumentException {
-    if(Objects.isNull(option)) {
+          throws IllegalArgumentException {
+    if (Objects.isNull(option)) {
       throw new IllegalArgumentException("Given option is null!");
     }
-    for(Filter f : values()) {
-      if(f.getOption().equalsIgnoreCase(option)) {
+    for (Filter f : values()) {
+      if (f.getOption().equalsIgnoreCase(option)) {
         return f;
       }
     }

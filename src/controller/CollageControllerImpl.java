@@ -25,12 +25,12 @@ public class CollageControllerImpl implements CollageController {
    * Creates a controller object with the given model, input, and output.
    *
    * @param model - the model the controller will be based upon
-   * @param in - the input of the user
-   * @param out - the output from the controller
+   * @param in    - the input of the user
+   * @param out   - the output from the controller
    * @throws IllegalArgumentException
    */
   public CollageControllerImpl(CollageModel model, Readable in, TextView out)
-    throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (Objects.isNull(model) || Objects.isNull(in) || Objects.isNull(out)) {
       throw new IllegalArgumentException("Invalid null input for controller.");
     }
@@ -50,19 +50,19 @@ public class CollageControllerImpl implements CollageController {
     this.printMessage("Welcome to Collaging!\n");
 
     // Loop until the user quits
-    while(!quit && s.hasNext()) {
+    while (!quit && s.hasNext()) {
       this.printMessage("Please input a command:\n");
       // gather arguments from user
       String[] args = s.nextLine().split("[ \n]+");
 
       // case: user inputs nothing
-      if(args.length == 0) {
+      if (args.length == 0) {
         this.printMessage("Please input a command:\n");
       }
       // case: user inputs a command
       else {
         try {
-          if(args.length > 1) {
+          if (args.length > 1) {
             this.runCommands(args[0], Arrays.copyOfRange(args, 1, args.length));
           } else {
             this.runCommands(args[0]);
@@ -80,6 +80,7 @@ public class CollageControllerImpl implements CollageController {
 
   /**
    * Runs the given command based on the option
+   *
    * @param command - the command to execute
    */
   public void runCommands(String command, String... args) {
@@ -163,6 +164,7 @@ public class CollageControllerImpl implements CollageController {
 
   /**
    * Renders a message to the view with the given message.
+   *
    * @param message - the given message to transmit
    */
   public void printMessage(String message) {

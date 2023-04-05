@@ -51,6 +51,7 @@ public final class Posn {
 
   /**
    * The given object has the same content as this object.
+   *
    * @param o - the given object
    * @return - if the object is the same
    */
@@ -68,6 +69,7 @@ public final class Posn {
 
   /**
    * Returns this given object's new hash code.
+   *
    * @return - the hash code of this position.
    */
   @Override
