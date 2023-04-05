@@ -13,7 +13,7 @@ public interface TextView {
    *
    * @return - representation of the current Project state
    */
-  public String toString();
+  String toString();
 
   /**
    * Renders the given message into the data output of the implementation.
@@ -21,13 +21,13 @@ public interface TextView {
    * @param message - the message to be printed
    * @throws IOException - if the transmission of the message to the data output fails
    */
-  public void renderMessage(String message) throws IOException;
+  void renderMessage(String message) throws IOException;
 
   /**
    * Renders the current state of the program onto the view
    *
    * @throws IOException - if the transmission of the project to the data output fails
    */
-  public void render() throws IOException;
+  void render() throws IOException;
 
 }

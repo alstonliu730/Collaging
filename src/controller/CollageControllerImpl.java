@@ -48,10 +48,11 @@ public class CollageControllerImpl implements CollageController {
     Scanner s = new Scanner(this.in);
     // Print welcome messages
     this.printMessage("Welcome to Collaging!\n");
-
+    this.printCommands();
+    this.printMessage("Please input a command:\n");
     // Loop until the user quits
     while (!quit && s.hasNext()) {
-      this.printMessage("Please input a command:\n");
+
       // gather arguments from user
       String[] args = s.nextLine().split("[ \n]+");
 
@@ -156,6 +157,9 @@ public class CollageControllerImpl implements CollageController {
         // change the filter of the given layer name
         this.model.setFilter(layerName, Filter.findByValue(filterOption));
         break;
+      case "help":
+        this.printCommands();
+        break;
       default:
         printMessage("Unknown command. Try again.");
         break;
@@ -173,5 +177,33 @@ public class CollageControllerImpl implements CollageController {
     } catch (IOException e) {
       System.out.println("Failure in transmitting custom message!");
     }
+  }
+
+  /**
+   * Prints the all the available command line and options.
+   */
+  private void printCommands() {
+    String help_message = "";
+    help_message += "Usage: command [arg1] [arg2] ... [args]\n";
+    help_message += "new-project [width] [height]                            " +
+            "Creates a new project with the given dimensions.\n";
+    help_message += "load-project [file-path]                                " +
+            "Loads an existing project with the given file path.\n";
+    help_message += "save-project [file-path]                                " +
+            "Saves the current project to the given file path.\n";
+    help_message += "save-image [file-path]                                  " +
+            "Saves the current project as an image (Format: .ppm) to the given file path.\n";
+    help_message += "add-image-to-layer [layer-name] [file-path] [row] [col] " +
+            "Gets the given file path to the image and adds the image to the layer at " +
+            "a specific location (row, column).\n";
+    help_message += "add-layer [layer-name]                                  " +
+            "Creates a new layer with the given layer name.\n";
+    help_message += "set-filter [layer-name] [filter-name]                   " +
+            "Sets the given filter type of the layer associated with the given layer name.\n";
+    help_message += "help                                                    " +
+            "Prints out all the commands and their usage.\n";
+    help_message += "quit                                                    " +
+            "Exits the program and will not save any file if user has not saved.\n";
+    this.printMessage(help_message);
   }
 }

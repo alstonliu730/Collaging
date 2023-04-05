@@ -12,7 +12,7 @@ public interface IListOfPixel {
    *
    * @return - a list of the current Pixels
    */
-  public List<IPixel> render();
+  List<IPixel> render();
 
   /**
    * Returns the Pixel at the given coordinate.
@@ -20,26 +20,26 @@ public interface IListOfPixel {
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  public IPixel getPixel(Posn pos);
+  IPixel getPixel(Posn pos);
 
   /**
    * Returns the height of this IListOfPixel.
    *
    * @return - the height of this object
    */
-  public int getHeight();
+  int getHeight();
 
   /**
    * Returns the width of this IListOfPixel.
    *
    * @return - the width of this object
    */
-  public int getWidth();
+  int getWidth();
 
   /**
    * Returns the max value of this IListOfPixel.
    *
    * @return - the max value of each Pixel
    */
-  public int getMax();
+  int getMax();
 }
