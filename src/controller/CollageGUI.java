@@ -39,15 +39,8 @@ public class CollageGUI implements CollageFeatures, CollageController {
 
     try {
       UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-    } catch (UnsupportedLookAndFeelException e) {
-      // handle exception
-    } catch (ClassNotFoundException e) {
-      // handle exception
-    } catch (InstantiationException e) {
-      // handle exception
-    } catch (IllegalAccessException e) {
-      // handle exception
     } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
@@ -58,11 +51,6 @@ public class CollageGUI implements CollageFeatures, CollageController {
    * @param args - arguments to input
    */
   @Override
-  /**
-   * Runs the given command based on the option
-   *
-   * @param command - the command to execute
-   */
   public void runCommands(String command, String... args) {
     switch (command) {
       case "quit":

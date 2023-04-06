@@ -236,6 +236,7 @@ public class CollageFrameView extends JFrame implements GUIView {
    */
   private String showFileChooser(CollageFeatures features) {
     final JFileChooser fchooser = new JFileChooser(".");
+    fchooser.setDialogTitle("Save File");
     int retvalue = fchooser.showOpenDialog(this);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
       File f = fchooser.getSelectedFile();
