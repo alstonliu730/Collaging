@@ -1,6 +1,8 @@
 package view.gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
@@ -30,7 +32,7 @@ public class DisplayPanel extends JPanel {
    */
   public DisplayPanel(CollageModel model) throws IllegalArgumentException {
     super();
-    if(Objects.isNull(model)) {
+    if (Objects.isNull(model)) {
       throw new IllegalArgumentException("Given model is null");
     }
     this.model = model;
@@ -56,10 +58,10 @@ public class DisplayPanel extends JPanel {
    * represented is a single 32-bit number such that 8 bits of the
    * number correspond to a particular component of a 4-component
    * representation (R,G,B,A). The format of the number is below:
-   *
+   * <p>
    * AAAAAAAARRRRRRRRGGGGGGGGBBBBBBBB
    *   alpha    red    green   blue
-   *
+   *</p>
    * @return a new handcrafted image for display
    */
   private Image createImageFromScratch(IListOfPixel img) {
@@ -67,8 +69,8 @@ public class DisplayPanel extends JPanel {
             img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
     //Iterating so x moves to the right and y moves down
-    for(int x = 0; x < image.getHeight(); x++) {
-      for(int y = 0; y < image.getWidth(); y++) {
+    for (int x = 0; x < image.getHeight(); x++) {
+      for (int y = 0; y < image.getWidth(); y++) {
         IPixel p = img.getPixel(new Posn(x,y));
         int r = p.getValues()[0];
         int g = p.getValues()[1];

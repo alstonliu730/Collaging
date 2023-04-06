@@ -133,8 +133,8 @@ public class CollagePPM implements CollageModel {
    */
   public void addLayer(String layer) throws IllegalArgumentException {
     Layer newLayer = new Layer(layer, this.height, this.width, this.maxValue);
-    for(Layer l : this.layers) {
-      if(l.getName().equalsIgnoreCase(layer)) {
+    for (Layer l : this.layers) {
+      if (l.getName().equalsIgnoreCase(layer)) {
         throw new IllegalArgumentException("Layer name already exists!");
       }
     }
@@ -162,9 +162,9 @@ public class CollagePPM implements CollageModel {
    * @param option - the filter type
    * @throws IllegalStateException - when the given layer is not found
    */
-  public void setFilter(String layer, Filter option) throws IllegalStateException{
-    for(Layer l: this.layers) {
-      if(l.getName().equalsIgnoreCase(layer)) {
+  public void setFilter(String layer, Filter option) throws IllegalStateException {
+    for (Layer l: this.layers) {
+      if (l.getName().equalsIgnoreCase(layer)) {
         l.setFilter(option);
         return;
       }

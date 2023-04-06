@@ -3,7 +3,7 @@ package view;
 import java.io.IOException;
 
 /**
- * An interface that represents the view in text
+ * An interface that represents the view in text.
  */
 public interface TextView {
   /**
@@ -24,7 +24,7 @@ public interface TextView {
   void renderMessage(String message) throws IOException;
 
   /**
-   * Renders the current state of the program onto the view
+   * Renders the current state of the program onto the view.
    *
    * @throws IOException - if the transmission of the project to the data output fails
    */

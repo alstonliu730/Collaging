@@ -27,9 +27,6 @@ import util.ImageUtil;
 public class WelcomeDialog extends JDialog {
   private CollageModel model;
   private JFrame prevFrame;
-  private JButton newButton;
-  private JButton loadButton;
-  private JLabel welcomeLabel;
 
   /**
    * Creates the structure of the window.
@@ -45,24 +42,24 @@ public class WelcomeDialog extends JDialog {
     this.setSize(new Dimension(400,200));
     this.setLocation(500,500);
     this.setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
-    this.welcomeLabel = new JLabel("Welcome to Collage");
-    this.welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    this.welcomeLabel.setFont(new Font("DialogInput", Font.BOLD, 20));
-    this.add(this.welcomeLabel);
+    JLabel welcomeLabel = new JLabel("Welcome to Collage");
+    welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    welcomeLabel.setFont(new Font("DialogInput", Font.BOLD, 20));
+    this.add(welcomeLabel);
 
-    this.newButton = new JButton("New Project");
-    this.newButton.setActionCommand("New Project");
-    this.newButton.setMargin(new Insets(5,5,5,5));
-    this.newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-    this.newButton.addActionListener((evt) -> this.updateNewModel());
-    this.add(this.newButton);
+    JButton newButton = new JButton("New Project");
+    newButton.setActionCommand("New Project");
+    newButton.setMargin(new Insets(5,5,5,5));
+    newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    newButton.addActionListener((evt) -> this.updateNewModel());
+    this.add(newButton);
 
-    this.loadButton = new JButton("Load Project");
-    this.loadButton.setActionCommand("Load Project");
-    this.loadButton.setMargin(new Insets(5,5,5,5));
-    this.loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-    this.loadButton.addActionListener((evt) -> this.chooseFile());
-    this.add(this.loadButton);
+    JButton loadButton = new JButton("Load Project");
+    loadButton.setActionCommand("Load Project");
+    loadButton.setMargin(new Insets(5,5,5,5));
+    loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    loadButton.addActionListener((evt) -> this.chooseFile());
+    this.add(loadButton);
     this.setVisible(true);
   }
 
@@ -132,7 +129,7 @@ public class WelcomeDialog extends JDialog {
       File f = fchooser.getSelectedFile();
       filePath = f.getAbsolutePath();
     }
-    if(!Objects.isNull(filePath)) {
+    if (!Objects.isNull(filePath)) {
       try {
         this.model = ImageUtil.readProject(filePath);
       } catch (FileNotFoundException e) {

@@ -8,7 +8,7 @@ package util;
 public class RepresentationConverter {
 
   /**
-   * Converts an RGB representation in the range 0-1 into an HSL
+   * Converts an RGB representation in the range 0-1 into an HSL.
    * representation where
    * <ul>
    * <li> 0 &lt;= H &lt; 360</li>
@@ -27,7 +27,8 @@ public class RepresentationConverter {
     double delta = componentMax - componentMin;
 
     double lightness = (componentMax + componentMin) / 2;
-    double hue, saturation;
+    double hue;
+    double saturation;
     if (delta == 0) {
       hue = 0;
       saturation = 0;
@@ -67,7 +68,7 @@ public class RepresentationConverter {
    * <li> 0 &lt;= S &lt;= 1</li>
    * <li> 0 &lt;= L &lt;= 1</li>
    * </ul>
-   * into an RGB representation where each component is in the range 0-1
+   * into an RGB representation where each component is in the range 0-1.
    *
    * @param hue        hue of the HSL representation
    * @param saturation saturation of the HSL representation

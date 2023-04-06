@@ -14,8 +14,6 @@ import model.CollageModel;
  */
 public class CommandListPanel extends JPanel {
   private ArrayList<JButton> commandButtons;
-  private GridLayout layout;
-  private CollageModel model;
 
   /**
    * Creates a JPanel object with the given model.
@@ -24,9 +22,8 @@ public class CommandListPanel extends JPanel {
    */
   public CommandListPanel(CollageModel model) {
     super();
-    this.model = model;
 
-    this.layout = new GridLayout(4,2);
+    GridLayout layout = new GridLayout(4, 2);
     this.setLayout(layout);
 
     // Populate the list of Buttons
@@ -57,7 +54,7 @@ public class CommandListPanel extends JPanel {
    * Helper method that sets the action commands of each button.
    */
   private void setActionForButtons() {
-    for(JButton b: this.commandButtons) {
+    for (JButton b: this.commandButtons) {
       b.setActionCommand(b.getName());
     }
   }
@@ -67,13 +64,15 @@ public class CommandListPanel extends JPanel {
    */
   private void setSizeForButtons() {
     this.commandButtons.forEach((button) -> button.setPreferredSize(
-            new Dimension(this.getWidth()/2, this.getHeight()/(this.commandButtons.size()/2))));
+            new Dimension(this.getWidth() / 2, this.getHeight()
+                    / (this.commandButtons.size() / 2))));
   }
+
   /**
    * Helper method that adds the buttons to the command grid.
    */
   private void addToGrid() {
-    for(JButton b: this.commandButtons) {
+    for (JButton b: this.commandButtons) {
       this.add(b);
     }
   }

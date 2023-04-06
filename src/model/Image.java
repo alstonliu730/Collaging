@@ -11,7 +11,8 @@ import util.PixelArrayUtil;
  * A class that represents an Image.
  */
 public class Image implements IListOfPixel {
-  private int height, width;
+  private int height;
+  private int width;
   private IPixel[][] image;
   private Posn pos;
   private int maxValue;
@@ -119,7 +120,7 @@ public class Image implements IListOfPixel {
   }
 
   /**
-   * Returns the height of this image
+   * Returns the height of this image.
    *
    * @return
    */
@@ -128,7 +129,7 @@ public class Image implements IListOfPixel {
   }
 
   /**
-   * Returns the width of this image
+   * Returns the width of this image.
    *
    * @return
    */

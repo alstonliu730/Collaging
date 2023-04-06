@@ -54,26 +54,34 @@ public class PixelArrayUtil {
   }
 
   /**
-   * Combines the rgb array values of the current pixel and previous pixel
+   * Combines the rgb array values of the current pixel and previous pixel.
    *
    * @param curr     - the current pixel's rgba array values
    * @param prev     - the previous pixel's rgba array values
    * @param maxValue - the max value of the rgba values
    * @return - the combined values of the rgba values
    */
-  public static int[] combinePixel(int[] curr, int[] prev, int maxValue) throws IllegalArgumentException {
+  public static int[] combinePixel(int[] curr, int[] prev, int maxValue)
+          throws IllegalArgumentException {
     if (Objects.isNull(curr) || Objects.isNull(prev)) {
       throw new IllegalArgumentException("Invalid rgb array input!");
     }
 
-    int r = curr[0], g = curr[1], b = curr[2], a = curr[3];
-    int dr = prev[0], dg = prev[1], db = prev[2], da = prev[3];
+    int r = curr[0];
+    int g = curr[1];
+    int b = curr[2];
+    int a = curr[3];
+    int dr = prev[0];
+    int dg = prev[1];
+    int db = prev[2];
+    int da = prev[3];
 
-    double percentAlpha = (a / maxValue) +
-            ((da / maxValue) * (1 - (a / maxValue)));
+    double percentAlpha = (a / maxValue)
+            + ((da / maxValue) * (1 - (a / maxValue)));
     int new_alpha = (int) Math.round(percentAlpha * maxValue);
     int new_red = (int) Math.round((convertCompWithAlpha(r, a, maxValue)
-            + (convertCompWithAlpha(dr, da, maxValue) * (1 - (a / maxValue)))) * (1 / percentAlpha));
+            + (convertCompWithAlpha(dr, da, maxValue) * (1 - (a / maxValue))))
+            * (1 / percentAlpha));
     int new_green = (int) Math.round((convertCompWithAlpha(g, a, maxValue)
             + (convertCompWithAlpha(dg, da, maxValue)
             * (1 - (a / maxValue)))) * (1 / percentAlpha));

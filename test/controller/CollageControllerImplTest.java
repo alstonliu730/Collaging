@@ -9,9 +9,11 @@ import model.CollagePPM;
 import util.ImageUtil;
 import view.PPMTextViewImpl;
 import view.TextView;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
-
+/**
+ * A class to test the CollageControllerImpl class.
+ */
 public class CollageControllerImplTest {
   CollageModel model;
   TextView view;
@@ -19,7 +21,10 @@ public class CollageControllerImplTest {
   Appendable out;
   CollageController controller;
 
-  public void init() {
+  /**
+   * Method to initialize the test parameters.
+   */
+  private void init() {
     this.out = System.out;
     this.model = new CollagePPM();
     this.view = new PPMTextViewImpl(this.out, this.model);
@@ -32,6 +37,7 @@ public class CollageControllerImplTest {
       init();
       this.controller = new CollageControllerImpl(this.model, this.in, this.view);
       this.controller.runCollage();
+      assertEquals(300, this.model.getWidth());
 
       this.in = ImageUtil.removeComments("res/greenSunset.txt");
       init();
@@ -72,15 +78,5 @@ public class CollageControllerImplTest {
       System.out.println(e.getMessage() + "\n");
       e.printStackTrace();
     }
-  }
-
-  @Test
-  public void testRunCommands() {
-
-  }
-
-  @Test
-  public void testPrintMessage() {
-
   }
 }

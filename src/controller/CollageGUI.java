@@ -39,13 +39,21 @@ public class CollageGUI implements CollageFeatures, CollageController {
 
     try {
       UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+    } catch (UnsupportedLookAndFeelException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
   /**
-   * Runs the given command based on the option
+   * Runs the given command based on the option.
    *
    * @param command - the command to execute
    * @param args - arguments to input
@@ -137,7 +145,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
    */
   @Override
   public void saveFile(String filePath) {
-    if(filePath.contains(".ppm")) {
+    if (filePath.contains(".ppm")) {
       ImageUtil.writePPM(this.model.saveImage(), filePath);
     } else if (filePath.contains(".collage")) {
       ImageUtil.writeProject(this.model, filePath);
@@ -153,13 +161,14 @@ public class CollageGUI implements CollageFeatures, CollageController {
    */
   @Override
   public void loadProject(String filePath) {
-    try{
+    try {
       this.model = ImageUtil.readProject(filePath);
-    } catch(FileNotFoundException e) {
+    } catch (FileNotFoundException e) {
       this.errorMsg("File not found!", "Unknown File");
     }
     this.view.refresh(this.model);
   }
+
   /**
    * Sets the filter at the given layer.
    *
@@ -176,6 +185,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
     }
     this.view.refresh(this.model);
   }
+
   /**
    * Quits the entire program.
    */
@@ -199,7 +209,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
    * @param message - the displayed message
    * @param title - the title of the message
    */
-  public void display(String message, String title){
+  public void display(String message, String title) {
     this.view.echoMessage(message, title, JOptionPane.PLAIN_MESSAGE);
   }
 
@@ -209,7 +219,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
    * @param message - the displayed message
    * @param title - the title of the message
    */
-  public void errorMsg(String message, String title){
+  public void errorMsg(String message, String title) {
     this.view.echoMessage(message, title, JOptionPane.ERROR_MESSAGE);
   }
 

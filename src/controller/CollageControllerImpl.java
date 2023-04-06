@@ -27,7 +27,7 @@ public class CollageControllerImpl implements CollageController {
    * @param model - the model the controller will be based upon
    * @param in    - the input of the user
    * @param out   - the output from the controller
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if any of the given parameters are null
    */
   public CollageControllerImpl(CollageModel model, Readable in, TextView out)
           throws IllegalArgumentException {
@@ -80,7 +80,7 @@ public class CollageControllerImpl implements CollageController {
   }
 
   /**
-   * Runs the given command based on the option
+   * Runs the given command based on the option.
    *
    * @param command - the command to execute
    */
@@ -185,25 +185,25 @@ public class CollageControllerImpl implements CollageController {
   private void printCommands() {
     String help_message = "";
     help_message += "Usage: command [arg1] [arg2] ... [args]\n";
-    help_message += "new-project [width] [height]                            " +
-            "Creates a new project with the given dimensions.\n";
-    help_message += "load-project [file-path]                                " +
-            "Loads an existing project with the given file path.\n";
-    help_message += "save-project [file-path]                                " +
-            "Saves the current project to the given file path.\n";
-    help_message += "save-image [file-path]                                  " +
-            "Saves the current project as an image (Format: .ppm) to the given file path.\n";
-    help_message += "add-image-to-layer [layer-name] [file-path] [row] [col] " +
-            "Gets the given file path to the image and adds the image to the layer at " +
-            "a specific location (row, column).\n";
-    help_message += "add-layer [layer-name]                                  " +
-            "Creates a new layer with the given layer name.\n";
-    help_message += "set-filter [layer-name] [filter-name]                   " +
-            "Sets the given filter type of the layer associated with the given layer name.\n";
-    help_message += "help                                                    " +
-            "Prints out all the commands and their usage.\n";
-    help_message += "quit                                                    " +
-            "Exits the program and will not save any file if user has not saved.\n";
+    help_message += "new-project [width] [height]                            "
+            + "Creates a new project with the given dimensions.\n";
+    help_message += "load-project [file-path]                                "
+            + "Loads an existing project with the given file path.\n";
+    help_message += "save-project [file-path]                                "
+            + "Saves the current project to the given file path.\n";
+    help_message += "save-image [file-path]                                  "
+            + "Saves the current project as an image (Format: .ppm) to the given file path.\n";
+    help_message += "add-image-to-layer [layer-name] [file-path] [row] [col] "
+            + "Gets the given file path to the image and adds the image to the layer at "
+            + "a specific location (row, column).\n";
+    help_message += "add-layer [layer-name]                                  "
+            + "Creates a new layer with the given layer name.\n";
+    help_message += "set-filter [layer-name] [filter-name]                   "
+            + "Sets the given filter type of the layer associated with the given layer name.\n";
+    help_message += "help                                                    "
+            + "Prints out all the commands and their usage.\n";
+    help_message += "quit                                                    "
+            + "Exits the program and will not save any file if user has not saved.\n";
     this.printMessage(help_message);
   }
 }
