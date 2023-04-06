@@ -9,7 +9,7 @@ import view.PPMTextViewImpl;
 import view.TextView;
 
 /**
- * A mock class that runs demos for controllers
+ * A mock class that runs demos for controllers.
  */
 public class CollageControllerMock {
   CollageModel model;
@@ -52,6 +52,9 @@ public class CollageControllerMock {
     }
   }
 
+  /**
+   * A main method to execute examples.
+   */
   public static void main(String[] args) {
     CollageControllerMock mock = new CollageControllerMock();
     runScript(mock, "res/redSunset.txt");
