@@ -8,8 +8,6 @@ import util.ImageUtil;
 import view.PPMTextViewImpl;
 import view.TextView;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * A mock class that runs demos for controllers
  */

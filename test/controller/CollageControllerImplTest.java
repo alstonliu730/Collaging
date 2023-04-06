@@ -8,7 +8,6 @@ import model.CollagePPM;
 
 import view.PPMTextViewImpl;
 import view.TextView;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
