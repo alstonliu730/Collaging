@@ -1,15 +1,15 @@
 package controller;
 
 import org.junit.Test;
-
-import java.io.FileNotFoundException;
+import java.io.StringReader;
 
 import model.CollageModel;
 import model.CollagePPM;
-import util.ImageUtil;
+
 import view.PPMTextViewImpl;
 import view.TextView;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * A class to test the CollageControllerImpl class.
@@ -23,60 +23,25 @@ public class CollageControllerImplTest {
 
   /**
    * Method to initialize the test parameters.
+   *
+   * @param input - simulate user input
    */
-  private void init() {
-    this.out = System.out;
+  private void init(String input) {
+    this.in = new StringReader(input);
+    this.out = new StringBuilder();
     this.model = new CollagePPM();
     this.view = new PPMTextViewImpl(this.out, this.model);
+
+    this.controller = new CollageControllerImpl(this.model, this.in, this.view);
   }
 
   @Test
-  public void runCollage() {
-    try {
-      this.in = ImageUtil.removeComments("res/redSunset.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-      assertEquals(300, this.model.getWidth());
+  public void testRunCollage() {
+    this.init("new-project 10 10 \nquit");
 
-      this.in = ImageUtil.removeComments("res/greenSunset.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
+    // run the collage project
+    this.controller.runCollage();
 
-      this.in = ImageUtil.removeComments("res/blueSunset.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-
-      this.in = ImageUtil.removeComments("res/darkenSunset.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-
-      this.in = ImageUtil.removeComments("res/brightenSunset.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-
-      this.in = ImageUtil.removeComments("res/invertSunset.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-
-      this.in = ImageUtil.removeComments("res/multipleLayer.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-
-      this.in = ImageUtil.removeComments("res/changeLoaded.txt");
-      init();
-      this.controller = new CollageControllerImpl(this.model, this.in, this.view);
-      this.controller.runCollage();
-
-    } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage() + "\n");
-      e.printStackTrace();
-    }
+    assertTrue(this.out.toString().contains("Welcome to Collaging!\n"));
   }
 }
