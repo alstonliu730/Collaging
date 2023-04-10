@@ -8,6 +8,8 @@ import model.CollagePPM;
 
 import view.PPMTextViewImpl;
 import view.TextView;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -42,5 +44,20 @@ public class CollageControllerImplTest {
     this.controller.runCollage();
 
     assertTrue(this.out.toString().contains("Welcome to Collaging!\n"));
+  }
+
+  @Test
+  public void testRunCommands() {
+    // create a new controller
+    this.init("new-project 10 10\n");
+    this.controller.runCollage();
+    // test the command: add-layer
+    this.controller.runCommands("add-layer", "first-layer");
+    assertEquals("first-layer", this.model.getLayer("first-layer").getName());
+
+    // this the command: add-image-to-layer
+    this.controller.runCommands("add-image-to-layer",
+            "first-layer", "res/doggo.ppm", "0", "0");
+    assertEquals(1, this.model.getLayer("first-layer").getImages().size());
   }
 }

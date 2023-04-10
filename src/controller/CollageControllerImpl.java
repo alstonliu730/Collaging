@@ -95,7 +95,6 @@ public class CollageControllerImpl implements CollageController {
           int height = Integer.parseInt(args[1]);
           // Create new project with h and w
           // Model should throw IllegalArgumentException for negative ints
-          this.model = new CollagePPM();
           this.model.startModel(height, width, this.model.getMax());
         } catch (IllegalArgumentException e) {
           this.printMessage("Invalid input on creating new projects!");
