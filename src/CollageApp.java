@@ -5,7 +5,6 @@ import controller.CollageControllerImpl;
 import controller.CollageGUI;
 import model.CollageModel;
 import model.CollagePPM;
-import util.ImageUtil;
 import view.PPMTextViewImpl;
 import view.TextView;
 import view.gui.CollageFrameView;

@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import model.CollageModel;
 import model.IListOfPixel;
-import util.ImageUtil;
 
 /**
  * A JPanel solely displaying the image of the program.

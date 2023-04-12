@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.CollageModel;
-import util.ImageUtil;
 
 /**
  * A class that represents the welcoming window.

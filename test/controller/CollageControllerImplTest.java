@@ -9,7 +9,6 @@ import model.CollageModel;
 import model.CollagePPM;
 
 import model.Posn;
-import util.ImageUtil;
 import view.PPMTextViewImpl;
 import view.TextView;
 
@@ -75,7 +74,7 @@ public class CollageControllerImplTest {
 
     // test the command: save-image
     this.controller.runCommands("save-image", "res/blueDoggo.ppm");
-    assertArrayEquals(new int[]{0, 0, 55, 255}, ImageUtil.readPPM("res/blueDoggo.ppm").
+    assertArrayEquals(new int[]{0, 0, 55, 255}, this.model.readPPM("res/blueDoggo.ppm").
             getPixel(new Posn(0,0)).getValues());
 
     // test the command: save-project

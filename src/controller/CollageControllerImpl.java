@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 import model.CollageModel;
 import model.Filter;
-import util.ImageUtil;
 import view.TextView;
 
 /**
@@ -104,7 +103,7 @@ public class CollageControllerImpl implements CollageController {
         try {
           String filePath = args[0];
           // Open PPM file and pass it to model
-          this.model = ImageUtil.readProject(filePath);
+          this.model = model.readProject(filePath);
         } catch (FileNotFoundException e) {
           this.printMessage("Invalid path or file not found");
         }
@@ -112,7 +111,7 @@ public class CollageControllerImpl implements CollageController {
       case "save-project":
         String filePath = args[0];
         // Save the entire model as a project text file
-        ImageUtil.writeProject(this.model, filePath);
+        model.writeProject(this.model, filePath);
         break;
       case "add-layer":
         String layer_name = args[0];
@@ -133,7 +132,7 @@ public class CollageControllerImpl implements CollageController {
         // Check if layer name exists in project
         try {
           this.model.addImageToLayer(this.model.getLayer(layer),
-                  ImageUtil.readPPM(image), row, col);
+                  model.readPPM(image), row, col);
         } catch (FileNotFoundException e) {
           this.printMessage("Image not found!\n");
         } catch (IllegalArgumentException iae) {
@@ -146,7 +145,7 @@ public class CollageControllerImpl implements CollageController {
         boolean saved = false;
         // write a PPM file with the given file path
         try {
-          saved = ImageUtil.writeImage(this.model.saveImage(), filePath);
+          saved = model.writeImage(this.model.saveImage(), filePath);
         } catch (IOException e) {
           throw new RuntimeException(e);
         }

@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -107,4 +109,52 @@ public interface CollageModel {
    * @return - the format of the PPM model as a String
    */
   String toString();
+
+  /**
+   * Read an image file in the PPM format and return the image.
+   *
+   * @param filename the path of the file.
+   * @return - the image
+   * @throws FileNotFoundException if the given file is not found
+   */
+  IListOfPixel readPPM(String filename) throws FileNotFoundException;
+
+  /**
+   * Reads a Collage project file to be loaded in.
+   *
+   * @param filename - the location of the file
+   * @return - the model from the given project file
+   * @throws FileNotFoundException - could not find the file given the file path
+   */
+  CollageModel readProject(String filename) throws FileNotFoundException;
+
+  /**
+   * Reads an image file that are supported by Java and returns the image.
+   *
+   * @param filename - the file location of the image
+   * @return - the image
+   * @throws IOException - when there's
+   */
+  public IListOfPixel readImages(String filename) throws IOException;
+
+  /**
+   * Writes a project file given a model and the file path.
+   *
+   * @param model    - the given model
+   * @param filename - the saved location of the file
+   */
+  void writeProject(CollageModel model, String filename);
+
+  /**
+   * Writes an image file given an IListOfPixel object and the file path.
+   *
+   * @param img - the compressed image object
+   * @param filename - the saved location of the file
+   * @return - returns if the image is saved properly
+   * @throws IOException - Error in writing to an image file
+   * @throws IllegalArgumentException - When the input is null or
+   *                                    when the file extension is not supported
+   */
+  boolean writeImage(IListOfPixel img, String filename)
+          throws IOException, IllegalArgumentException;
 }
