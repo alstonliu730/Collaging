@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -157,4 +158,12 @@ public interface CollageModel {
    */
   boolean writeImage(IListOfPixel img, String filename)
           throws IOException, IllegalArgumentException;
+
+  /**
+   * Creates a rendered image object from the given IListOfPixel object.
+   *
+   * @param img - the IListOfPixel object
+   * @return - the rendered image
+   */
+  public BufferedImage createImageObject(IListOfPixel img);
 }
