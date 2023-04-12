@@ -233,7 +233,6 @@ public class CollageGUI implements CollageFeatures, CollageController {
       this.model.addLayer(layer);
     } catch (IllegalArgumentException e) {
       this.warn(e.getMessage(), "Invalid Layer");
-      e.printStackTrace();
     }
     this.view.refresh(this.model);
   }

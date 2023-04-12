@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.CollageModel;
-import model.CollagePPM;
 import util.ImageUtil;
 
 /**
@@ -67,12 +66,22 @@ public class WelcomeDialog extends JDialog {
    * A helper function to gather information about the new project.
    */
   private void updateNewModel() {
-    int height = Integer.parseInt(this.getModelHeight());
-    int width = Integer.parseInt(this.getModelWidth());
-    int max = Integer.parseInt(this.getModelMax());
+    int height = 1;
+    int width = 1;
+    int max = 1;
+    try {
+      height = Integer.parseInt(this.getModelHeight());
+      width = Integer.parseInt(this.getModelWidth());
+      max = Integer.parseInt(this.getModelMax());
+      this.model.startModel(height, width, max);
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(this.prevFrame, "Please enter a valid number input",
+              "Invalid Number Input", JOptionPane.WARNING_MESSAGE);
+    } catch (IllegalArgumentException e) {
+      JOptionPane.showMessageDialog(this.prevFrame, e.getMessage(),
+              "Invalid Model Input", JOptionPane.ERROR_MESSAGE);
+    }
 
-    this.model = new CollagePPM();
-    this.model.startModel(height, width, max);
     this.dispose();
   }
 
@@ -111,7 +120,7 @@ public class WelcomeDialog extends JDialog {
    * @return - String input of the max
    */
   private String getModelMax() {
-    return JOptionPane.showInputDialog(this, "Enter a max value:",
+    return JOptionPane.showInputDialog(this, "Enter a max value(1 - 255):",
             "New Project", JOptionPane.INFORMATION_MESSAGE);
   }
 
