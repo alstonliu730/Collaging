@@ -161,19 +161,19 @@ public class CollageFrameView extends JFrame implements GUIView {
         }
         features.saveFile(filePath);
       }
-
-        break;
+      break;
       case "Load Image": {
         String filePath;
         final JFileChooser fchooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "PPM Images", "ppm");
+                "PPM, JPEG, & PNG Images", "ppm", "jpg", "jpeg", "png");
         fchooser.setFileFilter(filter);
         int retvalue = fchooser.showOpenDialog(this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
           File f = fchooser.getSelectedFile();
           filePath = f.getAbsolutePath();
 
+          // TODO: Create a Pop-Up Window for options.
           String layer = JOptionPane.showInputDialog(this, "Enter the name of the layer:",
                   "Load Image", JOptionPane.INFORMATION_MESSAGE);
           String col = JOptionPane.showInputDialog(this, "Enter the x coordinate of the image:",

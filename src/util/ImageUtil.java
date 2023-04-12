@@ -1,6 +1,11 @@
 package util;
 
+import java.awt.*;
+import java.awt.image.RenderedImage;
+import java.awt.image.WritableRenderedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,9 +13,13 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 
 import model.CollageModel;
 import model.CollagePPM;
@@ -64,10 +73,10 @@ public class ImageUtil {
   }
 
   /**
-   * Read an image file in the PPM format and return the layer.
+   * Read an image file in the PPM format and return the image.
    *
    * @param filename the path of the file.
-   * @return - the Layer
+   * @return - the image
    * @throws FileNotFoundException if the given file is not found
    */
   public static IListOfPixel readPPM(String filename) throws FileNotFoundException {
@@ -98,6 +107,51 @@ public class ImageUtil {
 
     // return the new model
     return newImage;
+  }
+
+  /**
+   * Reads an image file that are supported by Java and returns the image.
+   *
+   * @param filename - the file location of the image
+   * @return - the image
+   * @throws IOException - when there's
+   */
+  public static IListOfPixel readImages(String filename) throws IOException {
+    // get the file extension
+    String extension = "";
+    int index = filename.lastIndexOf(".");
+    if(index > 0) {
+      extension = filename.substring(index+1);
+    }
+
+    // check extension
+    if(extension.equals("ppm")){
+      return readPPM(filename);
+    }
+
+    // file is not a ppm
+    BufferedImage input = ImageIO.read(new File(filename));
+    int width = input.getWidth();
+    int height = input.getHeight();
+
+    // Create the 2d aray of pixel
+    Pixel[][] pixelList = new Pixel[height][width];
+    for(int i = input.getMinX(); i < width; i++) {
+      for(int j = input.getMinY(); j < height; j++){
+        Color c;
+        if(extension.equals("png")) {
+          c = new Color(input.getRGB(i,j), true);
+        } else {
+          c = new Color(input.getRGB(i,j));
+        }
+        pixelList[j][i] = new Pixel(c.getRed(), c.getGreen(),
+                c.getBlue(), c.getAlpha(), new Posn(j,i));
+      }
+    }
+
+    // create IListOfPixel Object
+    IListOfPixel img = new Image(pixelList, new Posn(0,0));
+    return img;
   }
 
   /**
@@ -164,7 +218,7 @@ public class ImageUtil {
    * @param img      - the IListOfPixel object
    * @param filename - the saved location of the file
    */
-  public static void writePPM(IListOfPixel img, String filename) {
+  private static void writePPM(IListOfPixel img, String filename) {
     try (FileWriter fw = new FileWriter(filename)) {
       fw.write("P3\n");
       fw.write(img.getWidth() + " " + img.getHeight() + "\n");
@@ -181,6 +235,67 @@ public class ImageUtil {
     } catch (IOException e) {
       System.out.println("PPM file could not be written.");
     }
+  }
+
+  /**
+   * Writes an image file given an IListOfPixel object and the file path.
+   *
+   * @param img - the compressed image object
+   * @param filename - the saved location of the file
+   * @return - returns if the image is saved properly
+   * @throws IOException - Error in writing to an image file
+   * @throws IllegalArgumentException - When the input is null or
+   *                                    when the file extension is not supported
+   */
+  public static boolean writeImage(IListOfPixel img, String filename)
+          throws IOException, IllegalArgumentException {
+    if (Objects.isNull(img) || Objects.isNull(filename)) {
+      throw new IllegalArgumentException("Given input is null! Try again!");
+    }
+    // check if extension is ppm
+    if(filename.contains(".ppm")) {
+      writePPM(img, filename);
+      return true;
+    }
+    RenderedImage image = createImageObject(img);
+    if (filename.contains(".jpg") || filename.contains(".jpeg")) {
+      try {
+        return ImageIO.write(image, "jpg", new File(filename));
+      } catch (IOException e) {
+        throw new IOException("Error in writing jpg image file.");
+      }
+    } else if (filename.contains(".png")) {
+      try {
+        return ImageIO.write(image, "png", new File(filename));
+      } catch(IOException e) {
+        throw new IOException("Error in writing png image file.");
+      }
+    } else {
+      throw new IllegalArgumentException("File extension is not supported.");
+    }
+  }
+
+  /**
+   * Creates a rendered image object from the given IListOfPixel object.
+   *
+   * @param img - the IListOfPixel object
+   * @return - the rendered image
+   */
+  public static BufferedImage createImageObject(IListOfPixel img) {
+    BufferedImage image = new BufferedImage(img.getWidth(),
+            img.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+    // Iterating through the image array
+    for (int i = 0; i < image.getHeight(); i++) {
+      for(int j = 0; j < image.getWidth(); j++) {
+        IPixel p = img.getPixel(new Posn(i,j));
+        int[] rgba = p.getValues();
+        Color c = new Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+        image.setRGB(j, i, c.getRGB());
+      }
+    }
+
+    return image;
   }
 
   /**
@@ -214,4 +329,6 @@ public class ImageUtil {
     }
   }
 }
+
+
 

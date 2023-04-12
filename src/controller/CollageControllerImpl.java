@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import model.CollageModel;
-import model.CollagePPM;
 import model.Filter;
 import util.ImageUtil;
 import view.TextView;
@@ -106,8 +105,8 @@ public class CollageControllerImpl implements CollageController {
           String filePath = args[0];
           // Open PPM file and pass it to model
           this.model = ImageUtil.readProject(filePath);
-        } catch (FileNotFoundException ime) {
-          System.out.println("Invalid path or file not found");
+        } catch (FileNotFoundException e) {
+          this.printMessage("Invalid path or file not found");
         }
         break;
       case "save-project":
@@ -144,9 +143,16 @@ public class CollageControllerImpl implements CollageController {
       case "save-image":
         // get file path to image
         filePath = args[0];
-
+        boolean saved = false;
         // write a PPM file with the given file path
-        ImageUtil.writePPM(this.model.saveImage(), filePath);
+        try {
+          saved = ImageUtil.writeImage(this.model.saveImage(), filePath);
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+        if(!saved) {
+          this.printMessage("Unsuccessful save. Please try again!");
+        }
         break;
       case "set-filter":
         // get layer name and filter option from user

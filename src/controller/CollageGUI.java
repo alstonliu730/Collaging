@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -61,46 +62,37 @@ public class CollageGUI implements CollageFeatures, CollageController {
   @Override
   public void runCommands(String command, String... args) {
     switch (command) {
-      case "quit":
+      case "quit": {
         this.exitProgram();
-        break;
-      case "new-project":
-        try {
-          int width = Integer.parseInt(args[0]);
-          int height = Integer.parseInt(args[1]);
-          // Create new project with h and w
-          // Model should throw IllegalArgumentException for negative ints
-          this.model = new CollagePPM();
-          this.model.startModel(height, width, this.model.getMax());
-        } catch (IllegalArgumentException e) {
-          this.warn("Invalid input on creating new projects!", "Invalid input");
-          e.printStackTrace();
-        }
-        break;
-      case "load-project":
-        try {
-          String filePath = args[0];
-          // Open PPM file and pass it to model
-          this.model = ImageUtil.readProject(filePath);
-        } catch (FileNotFoundException ime) {
-          System.out.println("Invalid path or file not found");
-        }
-        break;
+      }
+      break;
+      case "new-project": {
+        int width = Integer.parseInt(args[0]);
+        int height = Integer.parseInt(args[1]);
+
+        this.newProject(height, width);
+      }
+      break;
+      case "load-project": {
+        String filePath = args[0];
+        // Open PPM file and pass it to model
+        this.loadProject(filePath);
+      }
+      break;
       case "save-project":
+      case "save-image": {
         String filePath = args[0];
         // Save the entire model as a project text file
-        ImageUtil.writeProject(this.model, filePath);
-        break;
-      case "add-layer":
+        this.saveFile(filePath);
+      }
+      break;
+      case "add-layer": {
         String layer_name = args[0];
         // Add layer to project
-        try {
-          this.model.addLayer(layer_name);
-        } catch (IllegalArgumentException e) {
-          this.warn("Layer already exists! Try again.", "Existing layer");
-        }
-        break;
-      case "add-image-to-layer":
+        this.addLayer(layer_name);
+      }
+      break;
+      case "add-image-to-layer": {
         // get image and layer information
         String layer = args[0];
         String image = args[1];
@@ -108,33 +100,24 @@ public class CollageGUI implements CollageFeatures, CollageController {
         int col = Integer.parseInt(args[3]);
 
         // Check if layer name exists in project
-        try {
-          this.model.addImageToLayer(this.model.getLayer(layer),
-                  ImageUtil.readPPM(image), row, col);
-        } catch (FileNotFoundException e) {
-          this.warn("Image not found!", "File Not Found");
-        } catch (IllegalArgumentException iae) {
-          this.warn(iae.getMessage(), "Unknown input");
-        }
-        break;
-      case "save-image":
-        // get file path to image
-        filePath = args[0];
-
-        // write a PPM file with the given file path
-        ImageUtil.writePPM(this.model.saveImage(), filePath);
-        break;
-      case "set-filter":
+        this.addImageToLayer(layer, image, row, col);
+      }
+      break;
+      // get file path to image
+      // write a PPM file with the given file path
+      case "set-filter": {
         // get layer name and filter option from user
         String layerName = args[0];
         String filterOption = args[1];
 
         // change the filter of the given layer name
-        this.model.setFilter(layerName, Filter.findByValue(filterOption));
-        break;
-      default:
+        this.setFilter(layerName, filterOption);
+      }
+      break;
+      default: {
         this.errorMsg("Unknown command. Try again.", "Unknown command!");
-        break;
+      }
+      break;
     }
   }
 
@@ -145,12 +128,14 @@ public class CollageGUI implements CollageFeatures, CollageController {
    */
   @Override
   public void saveFile(String filePath) {
-    if (filePath.contains(".ppm")) {
-      ImageUtil.writePPM(this.model.saveImage(), filePath);
-    } else if (filePath.contains(".collage")) {
+    if (filePath.contains(".collage")) {
       ImageUtil.writeProject(this.model, filePath);
     } else {
-      this.errorMsg("Unable to save file with this extension!", "Unknown File Extension");
+      try {
+        ImageUtil.writeImage(this.model.saveImage(), filePath);
+      } catch (IOException e) {
+        this.errorMsg(e.getMessage(), "Error in Saving Image");
+      }
     }
   }
 
@@ -265,11 +250,13 @@ public class CollageGUI implements CollageFeatures, CollageController {
   public void addImageToLayer(String layer, String filePath, int row, int col) {
     try {
       this.model.addImageToLayer(this.model.getLayer(layer),
-              ImageUtil.readPPM(filePath), row, col);
+              ImageUtil.readImages(filePath), row, col);
     } catch (FileNotFoundException e) {
       this.errorMsg("File could not be found. Try again!", "File not Found");
     } catch (IllegalArgumentException e) {
       this.warn("Inputs on adding an image to the layer are invalid.", "Invalid input");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
     this.view.refresh(this.model);
   }
