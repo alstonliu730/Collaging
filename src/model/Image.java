@@ -10,11 +10,11 @@ import util.PixelArrayUtil;
 /**
  * A class that represents an Image.
  */
-public class Image implements IListOfPixel {
+public class Image implements IImage {
   private int height;
   private int width;
   private IPixel[][] image;
-  private Posn pos;
+  private IPosn pos;
   private int maxValue;
 
   /**
@@ -94,7 +94,7 @@ public class Image implements IListOfPixel {
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  public IPixel getPixel(Posn pos) throws IllegalArgumentException {
+  public IPixel getPixel(IPosn pos) throws IllegalArgumentException {
     int row = pos.getRow();
     int col = pos.getCol();
 
@@ -108,14 +108,14 @@ public class Image implements IListOfPixel {
   /**
    * Returns the position of this image.
    */
-  public Posn getPos() {
+  public IPosn getPos() {
     return this.pos;
   }
 
   /**
    * Change the current position of this image.
    */
-  public void changePos(Posn p) {
+  public void changePos(IPosn p) {
     this.pos = p;
   }
 

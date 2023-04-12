@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 import model.IPixel;
+import model.IPosn;
 import model.Pixel;
-import model.Posn;
 
 /**
  * A utility class that helps with Pixel arrays.
@@ -46,7 +46,7 @@ public class PixelArrayUtil {
 
     IPixel[][] new_matrix = new Pixel[height][width];
     for (IPixel p : pixels) {
-      Posn position = p.getPos();
+      IPosn position = p.getPos();
       new_matrix[position.getRow()][position.getCol()] = p;
     }
 

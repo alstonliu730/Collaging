@@ -25,7 +25,7 @@ public interface CollageModel {
    *
    * @param layer - layer to be added
    */
-  void addGivenLayer(Layer layer);
+  void addGivenLayer(ILayer layer);
 
   /**
    * Removes the layer with the given name associated.
@@ -62,7 +62,7 @@ public interface CollageModel {
    * @param name - the name of the layer
    * @return - the Layer object
    */
-  Layer getLayer(String name) throws IllegalStateException;
+  ILayer getLayer(String name) throws IllegalStateException;
 
   /**
    * Adds a layer to this model given the name of the layer.
@@ -80,7 +80,7 @@ public interface CollageModel {
    * @param row   - the x-coordinate of the image
    * @param col   - the y-coordinate of the image
    */
-  void addImageToLayer(Layer layer, IListOfPixel img, int row, int col);
+  void addImageToLayer(ILayer layer, IListOfPixel img, int row, int col);
 
   /**
    * Sets the Filter of the given layer.
@@ -88,21 +88,21 @@ public interface CollageModel {
    * @param layer  - the name of the given layer
    * @param option - the filter type
    */
-  void setFilter(String layer, Filter option);
+  void setFilter(String layer, IFilter option);
 
   /**
    * Save the layers as one layer.
    *
    * @return - the combined layers
    */
-  Layer saveImage();
+  ILayer saveImage();
 
   /**
    * Return the list of Layers with the applied filter.
    *
    * @return - the list of Layers
    */
-  List<Layer> renderLayers();
+  List<ILayer> renderLayers();
 
   /**
    * Return the model in a certain format.
@@ -136,7 +136,7 @@ public interface CollageModel {
    * @return - the image
    * @throws IOException - when there's
    */
-  public IListOfPixel readImages(String filename) throws IOException;
+  IListOfPixel readImages(String filename) throws IOException;
 
   /**
    * Writes a project file given a model and the file path.
@@ -166,6 +166,7 @@ public interface CollageModel {
    * @return - the rendered image
    */
   BufferedImage createImageObject(IListOfPixel img);
+<<<<<<< HEAD
 
   /**
    * Removes the comment lines from a file. Comments start with a '#'.
@@ -178,4 +179,6 @@ public interface CollageModel {
    */
   Readable removeComments(String filename)
           throws IllegalArgumentException, FileNotFoundException;
+=======
+>>>>>>> 772009afcc12a55b7095db166b7b62d89299a3f0
 }

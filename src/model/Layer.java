@@ -7,13 +7,13 @@ import java.util.Objects;
 /**
  * A class that represents a Layer.
  */
-public class Layer implements IListOfPixel {
+public class Layer implements ILayer {
   private String name;
   private int height;
   private int width;
   private IPixel[][] matrix;
-  private Filter filter;
-  private List<Image> images;
+  private IFilter filter;
+  private List<IImage> images;
   private int maxValue;
 
   /**
@@ -35,7 +35,7 @@ public class Layer implements IListOfPixel {
     this.width = width; // column
     this.matrix = new Pixel[this.height][this.width];
     this.filter = Filter.NORMAL;
-    this.images = new ArrayList<Image>();
+    this.images = new ArrayList<IImage>();
     this.maxValue = maxValue;
 
     // creates the translucent image and set it as the background
@@ -77,7 +77,7 @@ public class Layer implements IListOfPixel {
   /**
    * Sets a new filter for the Layer.
    */
-  public void setFilter(Filter filter) {
+  public void setFilter(IFilter filter) {
     this.filter = filter;
   }
 
@@ -86,7 +86,7 @@ public class Layer implements IListOfPixel {
    *
    * @return - the filter object
    */
-  public Filter getFilter() {
+  public IFilter getFilter() {
     return this.filter;
   }
 
@@ -105,7 +105,7 @@ public class Layer implements IListOfPixel {
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  public IPixel getPixel(Posn pos) {
+  public IPixel getPixel(IPosn pos) {
     int row = pos.getRow();
     int col = pos.getCol();
 
@@ -117,7 +117,7 @@ public class Layer implements IListOfPixel {
    *
    * @param pos - the x and y position of the pixel
    */
-  public void setPixel(Posn pos, IPixel p) {
+  public void setPixel(IPosn pos, IPixel p) {
     int row = pos.getRow();
     int col = pos.getCol();
 
@@ -171,7 +171,7 @@ public class Layer implements IListOfPixel {
    * @param img - the image to be added into the layer
    * @throws IllegalArgumentException - when the given image is null or the position is wrong
    */
-  public void addImage(Image img) throws IllegalArgumentException {
+  public void addImage(IImage img) throws IllegalArgumentException {
     if (Objects.isNull(img)) {
       throw new IllegalArgumentException("No input on img!");
     }
@@ -179,7 +179,7 @@ public class Layer implements IListOfPixel {
     this.images.add(img);
 
     // Gather information of the image
-    Posn position = img.getPos();
+    IPosn position = img.getPos();
 
     for (int i = 0; i < img.getHeight(); ++i) {
       for (int j = 0; j < img.getWidth(); ++j) {
@@ -207,13 +207,13 @@ public class Layer implements IListOfPixel {
    * @return - the combined layer
    * @throws IllegalArgumentException - when the previous layer has different dimensions
    */
-  public Layer combine(Layer prev) throws IllegalArgumentException {
+  public ILayer combine(ILayer prev) throws IllegalArgumentException {
     if (this.height != prev.getHeight() || this.width != prev.getWidth()) {
       throw new IllegalArgumentException("Layer dimensions do not match!");
     }
 
     // Combined layer with the filter on it
-    Layer compressed = new Layer("combined", this.height, this.width, this.maxValue);
+    ILayer compressed = new Layer("combined", this.height, this.width, this.maxValue);
 
     // Traverse the matrix of each layer
     for (int i = 0; i < this.height; i++) {
@@ -234,11 +234,11 @@ public class Layer implements IListOfPixel {
    * @param prev - the filtered previous layer
    * @return - the Layer with the applied filter
    */
-  public Layer applyFilter(Layer prev) {
+  public ILayer applyFilter(ILayer prev) {
     if (Objects.isNull(prev)) {
       return this.applyBackgroundFilter();
     }
-    Layer filtered = new Layer(this.name, this.height, this.width, this.maxValue);
+    ILayer filtered = new Layer(this.name, this.height, this.width, this.maxValue);
     filtered.setFilter(this.filter);
 
     // apply the filter to each pixel
@@ -271,7 +271,7 @@ public class Layer implements IListOfPixel {
    *
    * @return - the list of images in this layer.
    */
-  public List<Image> getImages() {
+  public List<IImage> getImages() {
     return this.images;
   }
 }

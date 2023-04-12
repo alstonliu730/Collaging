@@ -139,7 +139,7 @@ public class WelcomeDialog extends JDialog {
     }
     if (!Objects.isNull(filePath)) {
       try {
-        this.model = model.readProject(filePath);
+        this.model = this.model.readProject(filePath);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
       }

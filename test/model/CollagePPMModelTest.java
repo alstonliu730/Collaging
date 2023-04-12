@@ -50,13 +50,13 @@ public class CollagePPMModelTest {
     assertEquals(7, this.model1.getMax());
 
     try {
-      Layer layer = this.model1.getLayer("layer-name");
+      ILayer layer = this.model1.getLayer("layer-name");
       fail("Should not be able to get a layer when list of array has only the background.");
     } catch (IllegalStateException e) {
       assertEquals("Invalid Layer name!", e.getMessage());
     }
 
-    Layer layer = this.model1.getLayer("background");
+    ILayer layer = this.model1.getLayer("background");
     assertEquals("background", layer.getName());
     assertEquals("normal", layer.getFilter().getOption());
   }
@@ -159,7 +159,7 @@ public class CollagePPMModelTest {
   @Test
   public void testSaveImage() {
     this.model1.startModel(1, 1, 255);
-    Layer l1 = this.model1.saveImage();
+    ILayer l1 = this.model1.saveImage();
 
     assertEquals("background", l1.getName());
   }

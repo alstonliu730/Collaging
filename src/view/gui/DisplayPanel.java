@@ -73,7 +73,7 @@ public class DisplayPanel extends JPanel {
    * @return - the image object
    */
   private Image createImageFromScratch(IListOfPixel img) {
-    Image image = model.createImageObject(img);
+    Image image = this.model.createImageObject(img);
     return image;
   }
 

@@ -68,7 +68,7 @@ public interface IPixel {
    *
    * @return - the Position of this Pixel
    */
-  Posn getPos();
+  IPosn getPos();
 
   /**
    * Return the representation of this Pixel in PPM Format.

@@ -20,7 +20,7 @@ public interface IListOfPixel {
    * @param pos - the x and y position of the pixel
    * @return - the Pixel at the coordinate
    */
-  IPixel getPixel(Posn pos);
+  IPixel getPixel(IPosn pos);
 
   /**
    * Returns the height of this IListOfPixel.
