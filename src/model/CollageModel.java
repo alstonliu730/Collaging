@@ -166,7 +166,6 @@ public interface CollageModel {
    * @return - the rendered image
    */
   BufferedImage createImageObject(IListOfPixel img);
-<<<<<<< HEAD
 
   /**
    * Removes the comment lines from a file. Comments start with a '#'.
@@ -179,6 +178,4 @@ public interface CollageModel {
    */
   Readable removeComments(String filename)
           throws IllegalArgumentException, FileNotFoundException;
-=======
->>>>>>> 772009afcc12a55b7095db166b7b62d89299a3f0
 }

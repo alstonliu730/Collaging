@@ -161,7 +161,7 @@ public class CollageFrameView extends JFrame implements GUIView {
         }
         features.saveFile(filePath);
       }
-      break;
+        break;
       case "Load Image": {
         String filePath;
         final JFileChooser fchooser = new JFileChooser(".");
@@ -174,7 +174,8 @@ public class CollageFrameView extends JFrame implements GUIView {
           filePath = f.getAbsolutePath();
 
           // Creates Pop-up windows for options
-          String layer = (String) JOptionPane.showInputDialog(this, "Enter the name of the layer:",
+          String layer = (String) JOptionPane.showInputDialog(this,
+                  "Enter the name of the layer:",
                   "Set Filter", JOptionPane.INFORMATION_MESSAGE,
                   null, this.dataLayerList.toArray(), this.dataLayerList.get(0));
           String col = Objects.nonNull(layer) ? JOptionPane.showInputDialog(this,
@@ -185,8 +186,9 @@ public class CollageFrameView extends JFrame implements GUIView {
                   "Load Image", JOptionPane.INFORMATION_MESSAGE) : null;
           try {
             features.addImageToLayer(layer, filePath, Integer.parseInt(row), Integer.parseInt(col));
-          } catch(NumberFormatException e) {
-            features.errorMsg("Invalid input for coordinates! Please try again!", "Invalid Input");
+          } catch (NumberFormatException e) {
+            features.errorMsg("Invalid input for coordinates! Please try again!",
+                    "Invalid Input");
           }
         }
       }
@@ -220,11 +222,13 @@ public class CollageFrameView extends JFrame implements GUIView {
       }
       break;
       case "Set Filter": {
-        String layer = (String) JOptionPane.showInputDialog(this, "Enter the name of the layer:",
+        String layer = (String) JOptionPane.showInputDialog(this,
+                "Enter the name of the layer:",
                 "Set Filter", JOptionPane.INFORMATION_MESSAGE,
                 null, this.dataLayerList.toArray(), this.dataLayerList.get(0));
-        String filter = Objects.nonNull(layer) ? JOptionPane.showInputDialog(this, "Enter the filter name:",
-                "Set Filter", JOptionPane.INFORMATION_MESSAGE): null;
+        String filter = Objects.nonNull(layer) ? JOptionPane.showInputDialog(this
+                , "Enter the filter name:",
+                "Set Filter", JOptionPane.INFORMATION_MESSAGE) : null;
         if (Objects.nonNull(filter)) {
           features.setFilter(layer, filter);
         }

@@ -84,7 +84,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
         // Save the entire model as a project text file
         this.saveFile(filePath);
       }
-      break;
+        break;
       case "add-layer": {
         String layer_name = args[0];
         // Add layer to project
