@@ -264,7 +264,7 @@ public class CollagePPM implements CollageModel {
    * @throws IllegalArgumentException - if a null arg is passed
    * @throws FileNotFoundException    - if the file is not found
    */
-  public static Readable removeComments(String filename)
+  public Readable removeComments(String filename)
           throws IllegalArgumentException, FileNotFoundException {
     if (filename == null) {
       throw new IllegalArgumentException("Cannot have null argument.");

@@ -165,5 +165,17 @@ public interface CollageModel {
    * @param img - the IListOfPixel object
    * @return - the rendered image
    */
-  public BufferedImage createImageObject(IListOfPixel img);
+  BufferedImage createImageObject(IListOfPixel img);
+
+  /**
+   * Removes the comment lines from a file. Comments start with a '#'.
+   * Returns the file without the comments.
+   *
+   * @param filename path of the file
+   * @return a Readable object with the contents of the file without comments
+   * @throws IllegalArgumentException - if a null arg is passed
+   * @throws FileNotFoundException    - if the file is not found
+   */
+  Readable removeComments(String filename)
+          throws IllegalArgumentException, FileNotFoundException;
 }

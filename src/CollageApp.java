@@ -30,7 +30,7 @@ public class CollageApp {
         TextView view = new PPMTextViewImpl(System.out, model);
         Readable input = null;
         try {
-          input = ImageUtil.removeComments(args[1]);
+          input = model.removeComments(args[1]);
           CollageController control = new CollageControllerImpl(model,
                   input, view);
           control.runCollage();
