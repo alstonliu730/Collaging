@@ -152,11 +152,42 @@ of the image in the GUI throughout the collaging process.
 - `WelcomeDialog` class: a new class that extends `JDialog` and displays the welcome message for
 our GUI, allowing users to initially either create a new project or to load an existing one.
 
-### Images and examples
+## Support for JPEG and PNG Images (A6)
+
+To implement support for JPEG and PNG images in our Collaging app, we added three new methods
+in the ImageUtilClass:
+- `readimages(String filename)`: a method that reads the given file name (acceptable file
+extensions include: .ppm, .jpeg and .png) and returns a list of pixels representing the image.
+- `writeImage(IlistOfPixel img, String filename)`: a method that takes in an image in the form of a
+list of pixels and an image file name (same file extension support as method above) and writes
+the list of pixels to the image with the given filename.
+- `createImageObject(IlistOfPixel img)`: a method that creates a rendered image from the given list
+of pixels.
+
+## Decoupling changes
+
+We decoupled our MVC as much as possible without having to completely change our design,
+only the following files are needed for the views to compile:
+- CollageFeatures.java interface: required for the GUI to communicate with the controller and make
+the required modification and method calls to the model.
+- CollageModel.java interface: required for the view to know the current state of the collaging
+project.
+- IFilter.java interface: required for the model interface to be able to set filters on the images
+being processed.
+- IListOfPixel: required for the model to manipulate layers to either remove them or add images
+to them.
+- IPixel.java interface: required for the model to manipulate the individual pixels in the images
+or layers.
+- Pixel.java class: required for the utility classes when reading and writing to image files.
+- IPosn.java interface: required for the model to position individual pixels in the images.
+- Posn.java class: required for the utility classes when making two-dimensional arrays of pixels.
+- ImageUtil.java class: 
+
+## Images and examples
 
 All example images (including a screenshot of the GUI with a loaded image) and the class diagram
 can be found in the res/ folder.
 
-#### Image Citations
+### Image Citations
 https://www.neighbourly.co.nz/public/auckland/point-chevalier/message/58623691
 https://secure.gravatar.com/avatar/d67e563d5e66ccd7170ba9f631bb5757?s=256&d=mm&r=g
