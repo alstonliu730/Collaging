@@ -43,5 +43,7 @@ public interface IFilter {
     for(int i = 0; i < IFilter.values().length; i++) {
       options[i] = IFilter.values()[i].getOption();
     }
+
+    return options;
   }
 }

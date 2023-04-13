@@ -229,7 +229,7 @@ public class CollageFrameView extends JFrame implements GUIView {
                 "Enter the name of the layer:",
                 "Set Filter", JOptionPane.INFORMATION_MESSAGE,
                 null, this.dataLayerList.toArray(), this.dataLayerList.get(0));
-        
+
         String filter = Objects.nonNull(layer) ? (String) JOptionPane.showInputDialog(this,
                 "Enter the filter name:", "Set Filter", JOptionPane.INFORMATION_MESSAGE,
                 null, IFilter.options(), IFilter.options()[0]) : null;
