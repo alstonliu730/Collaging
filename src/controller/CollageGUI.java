@@ -10,7 +10,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import model.CollageModel;
 import model.CollagePPM;
 import model.Filter;
-import util.ImageUtil;
 import view.gui.GUIView;
 
 /**
@@ -129,10 +128,10 @@ public class CollageGUI implements CollageFeatures, CollageController {
   @Override
   public void saveFile(String filePath) {
     if (filePath.contains(".collage")) {
-      ImageUtil.writeProject(this.model, filePath);
+      model.writeProject(this.model, filePath);
     } else {
       try {
-        ImageUtil.writeImage(this.model.saveImage(), filePath);
+        model.writeImage(this.model.saveImage(), filePath);
       } catch (IOException e) {
         this.errorMsg(e.getMessage(), "Error in Saving Image");
       }
@@ -147,7 +146,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
   @Override
   public void loadProject(String filePath) {
     try {
-      this.model = ImageUtil.readProject(filePath);
+      this.model = model.readProject(filePath);
     } catch (FileNotFoundException e) {
       this.errorMsg("File not found!", "Unknown File");
     }
@@ -249,7 +248,7 @@ public class CollageGUI implements CollageFeatures, CollageController {
   public void addImageToLayer(String layer, String filePath, int row, int col) {
     try {
       this.model.addImageToLayer(this.model.getLayer(layer),
-              ImageUtil.readImages(filePath), row, col);
+              model.readImages(filePath), row, col);
     } catch (FileNotFoundException e) {
       this.errorMsg("File could not be found. Try again!", "File not Found");
     } catch (IllegalArgumentException e) {

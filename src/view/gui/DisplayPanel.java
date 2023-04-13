@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import model.CollageModel;
 import model.IListOfPixel;
-import util.ImageUtil;
 
 /**
  * A JPanel solely displaying the image of the program.
@@ -74,7 +73,7 @@ public class DisplayPanel extends JPanel {
    * @return - the image object
    */
   private Image createImageFromScratch(IListOfPixel img) {
-    Image image = ImageUtil.createImageObject(img);
+    Image image = this.model.createImageObject(img);
     return image;
   }
 

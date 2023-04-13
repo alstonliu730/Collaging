@@ -67,5 +67,13 @@ public interface ILayer extends IListOfPixel {
    *
    * @return - the list of images in this layer.
    */
-  public List<IImage> getImages();
+  List<IImage> getImages();
+
+  /**
+   * Sets the matrix of this layer with the given matrix of pixels.
+   *
+   * @param pixels - the given matrix of pixels
+   * @throws IllegalArgumentException - If the matrix of pixels is not the same dimension
+   */
+  void setMatrix(IPixel[][] pixels) throws IllegalArgumentException;
 }

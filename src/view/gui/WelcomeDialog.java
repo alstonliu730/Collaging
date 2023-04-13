@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.CollageModel;
-import util.ImageUtil;
 
 /**
  * A class that represents the welcoming window.
@@ -140,7 +139,7 @@ public class WelcomeDialog extends JDialog {
     }
     if (!Objects.isNull(filePath)) {
       try {
-        this.model = ImageUtil.readProject(filePath);
+        this.model = this.model.readProject(filePath);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
       }

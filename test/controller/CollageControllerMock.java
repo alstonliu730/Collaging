@@ -1,10 +1,15 @@
 package controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 import model.CollageModel;
 import model.CollagePPM;
-import util.ImageUtil;
 import view.PPMTextViewImpl;
 import view.TextView;
 
@@ -43,13 +48,40 @@ public class CollageControllerMock {
   private static void runScript(CollageControllerMock m, String filePath) {
     try {
       m.refresh();
-      m.in = ImageUtil.removeComments(filePath);
+      m.in = m.removeComments(filePath);
       m.controller = new CollageControllerImpl(m.model, m.in, m.view);
       m.controller.runCollage();
     } catch (FileNotFoundException e) {
       System.out.println(e.getMessage() + "\n");
       e.printStackTrace();
     }
+  }
+
+  private Readable removeComments(String filePath) throws FileNotFoundException {
+    if (filePath == null) {
+      throw new IllegalArgumentException("Cannot have null argument.");
+    }
+
+    Scanner sc;
+
+    try {
+      sc = new Scanner(new FileInputStream(filePath));
+    } catch (FileNotFoundException e) {
+      throw new FileNotFoundException("File " + filePath + " not found!");
+    }
+    StringBuilder builder = new StringBuilder();
+
+    while (sc.hasNextLine()) {
+      String s = sc.nextLine();
+      if (!s.isEmpty() && !s.isBlank() && s.charAt(0) != '#') {
+        builder.append(s + System.lineSeparator());
+      }
+    }
+
+    //Set up a stream of input to export the readable
+    InputStream stream = new ByteArrayInputStream(
+            builder.toString().getBytes(StandardCharsets.UTF_8));
+    return new InputStreamReader(stream);
   }
 
   /**
