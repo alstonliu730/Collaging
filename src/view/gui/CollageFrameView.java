@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -16,8 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import controller.CollageFeatures;
 import model.CollageModel;
+import model.IFilter;
 
 /**
  * A class to represent the collaging GUI.
@@ -155,7 +158,7 @@ public class CollageFrameView extends JFrame implements GUIView {
     switch (command) {
       case "Save Image":
       case "Save Project": {
-        String filePath = this.showFileChooser(features);
+        String filePath = this.showFileChooser();
         if (Objects.isNull(filePath)) {
           features.warn("Saving cancelled.", "Save Cancel");
         }
@@ -223,8 +226,14 @@ public class CollageFrameView extends JFrame implements GUIView {
         String layer = (String) JOptionPane.showInputDialog(this, "Enter the name of the layer:",
                 "Set Filter", JOptionPane.INFORMATION_MESSAGE,
                 null, this.dataLayerList.toArray(), this.dataLayerList.get(0));
-        String filter = Objects.nonNull(layer) ? JOptionPane.showInputDialog(this, "Enter the filter name:",
-                "Set Filter", JOptionPane.INFORMATION_MESSAGE): null;
+        String[] options = new String[IFilter.values().length];
+        for(int i = 0; i < IFilter.values().length; i++) {
+          options[i] = IFilter.values()[i].getOption();
+        }
+
+        String filter = Objects.nonNull(layer) ? (String) JOptionPane.showInputDialog(this,
+                "Enter the filter name:", "Set Filter", JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]) : null;
         if (Objects.nonNull(filter)) {
           features.setFilter(layer, filter);
         }
@@ -241,9 +250,8 @@ public class CollageFrameView extends JFrame implements GUIView {
   /**
    * A helper function that displays the file chooser dialog.
    *
-   * @param features - the gui controller
    */
-  private String showFileChooser(CollageFeatures features) {
+  private String showFileChooser() {
     final JFileChooser fchooser = new JFileChooser(".");
     fchooser.setDialogTitle("Save File");
     int retvalue = fchooser.showOpenDialog(this);

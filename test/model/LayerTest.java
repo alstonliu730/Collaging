@@ -10,9 +10,9 @@ import static org.junit.Assert.assertEquals;
  * A test class to test the Layer class.
  */
 public class LayerTest {
-  Layer l1;
-  Layer l2;
-  Layer l3;
+  ILayer l1;
+  ILayer l2;
+  ILayer l3;
 
   @Test
   public void testValidConstruction() {
@@ -183,4 +183,5 @@ public class LayerTest {
     this.l1.addImage(img);
     assertEquals(1, this.l1.getImages().size());
   }
+
 }

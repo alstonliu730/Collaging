@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 /**
  * An interface that represents the methods of a Filter.
  */
@@ -19,4 +21,14 @@ public interface IFilter {
    * @return - the option of the filter
    */
   String getOption();
+
+  /**
+   * Returns an array of all the options of an IFilter.
+   *
+   * @return - All options of an IFilter
+   */
+  static IFilter[] values(){
+    IFilter[] options = Arrays.copyOf(Filter.values(), Filter.values().length);
+    return options;
+  }
 }
