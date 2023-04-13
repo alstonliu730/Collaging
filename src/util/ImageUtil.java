@@ -308,19 +308,7 @@ public class ImageUtil {
     try (FileWriter fw = new FileWriter(filename)) {
       // Write collage information
       fw.write("C1\n");
-      fw.write(model.getWidth() + " " + model.getHeight() + "\n");
-      fw.write(model.getMax() + "\n");
-
-      // write layers and layer information
-      for (Layer l : model.renderLayers()) {
-        fw.write(l.getName() + " " + l.getFilter().getOption() + "\n");
-        for (int i = 0; i < l.getHeight(); i++) {
-          for (int j = 0; j < l.getWidth(); j++) {
-            fw.write(l.getPixel(new Posn(i, j)).rgbaString() + " ");
-          }
-          fw.write("\n");
-        }
-      }
+      fw.write(model.toString());
 
       // close the stream
       fw.close();

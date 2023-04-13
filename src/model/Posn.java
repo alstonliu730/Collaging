@@ -6,7 +6,7 @@ import java.util.Objects;
  * Represents a two-dimensional Position
  * x-positions extend downward; y-positions extend rightward.
  */
-public final class Posn {
+public final class Posn implements IPosn{
   private final int row;
   private final int col;
 

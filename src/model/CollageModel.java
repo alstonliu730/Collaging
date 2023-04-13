@@ -22,7 +22,7 @@ public interface CollageModel {
    *
    * @param layer - layer to be added
    */
-  void addGivenLayer(Layer layer);
+  void addGivenLayer(ILayer layer);
 
   /**
    * Removes the layer with the given name associated.
@@ -59,7 +59,7 @@ public interface CollageModel {
    * @param name - the name of the layer
    * @return - the Layer object
    */
-  Layer getLayer(String name) throws IllegalStateException;
+  ILayer getLayer(String name) throws IllegalStateException;
 
   /**
    * Adds a layer to this model given the name of the layer.
@@ -77,7 +77,7 @@ public interface CollageModel {
    * @param row   - the x-coordinate of the image
    * @param col   - the y-coordinate of the image
    */
-  void addImageToLayer(Layer layer, IListOfPixel img, int row, int col);
+  void addImageToLayer(ILayer layer, IListOfPixel img, int row, int col);
 
   /**
    * Sets the Filter of the given layer.
@@ -85,21 +85,21 @@ public interface CollageModel {
    * @param layer  - the name of the given layer
    * @param option - the filter type
    */
-  void setFilter(String layer, Filter option);
+  void setFilter(String layer, IFilter option);
 
   /**
    * Save the layers as one layer.
    *
    * @return - the combined layers
    */
-  Layer saveImage();
+  ILayer saveImage();
 
   /**
    * Return the list of Layers with the applied filter.
    *
    * @return - the list of Layers
    */
-  List<Layer> renderLayers();
+  List<ILayer> renderLayers();
 
   /**
    * Return the model in a certain format.

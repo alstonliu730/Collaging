@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A class that represents a Filter that changes pixels.
  */
-public enum Filter {
+public enum Filter implements IFilter {
   NORMAL("normal"),
   RED("red-component"),
   GREEN("green-component"),
