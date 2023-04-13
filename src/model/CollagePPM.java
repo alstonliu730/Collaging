@@ -501,7 +501,7 @@ public class CollagePPM implements CollageModel {
    * @param img - the IListOfPixel object
    * @return - the rendered image
    */
-  public static BufferedImage createImageObject(IListOfPixel img) {
+  public BufferedImage createImageObject(IListOfPixel img) {
     BufferedImage image = new BufferedImage(img.getWidth(),
             img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
