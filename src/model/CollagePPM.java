@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
@@ -340,12 +340,12 @@ public class CollagePPM implements CollageModel {
     // get the file extension
     String extension = "";
     int index = filename.lastIndexOf(".");
-    if(index > 0) {
-      extension = filename.substring(index+1);
+    if (index > 0) {
+      extension = filename.substring(index + 1);
     }
 
     // check extension
-    if(extension.equals("ppm")){
+    if (extension.equals("ppm")) {
       return this.readPPM(filename);
     }
 
@@ -356,10 +356,10 @@ public class CollagePPM implements CollageModel {
 
     // Create the 2d aray of pixel
     Pixel[][] pixelList = new Pixel[height][width];
-    for(int i = input.getMinX(); i < width; i++) {
-      for(int j = input.getMinY(); j < height; j++){
+    for (int i = input.getMinX(); i < width; i++) {
+      for (int j = input.getMinY(); j < height; j++) {
         Color c;
-        if(extension.equals("png")) {
+        if (extension.equals("png")) {
           c = new Color(input.getRGB(i,j), true);
         } else {
           c = new Color(input.getRGB(i,j));
@@ -473,7 +473,7 @@ public class CollagePPM implements CollageModel {
       throw new IllegalArgumentException("Given input is null! Try again!");
     }
     // check if extension is ppm
-    if(filename.contains(".ppm")) {
+    if (filename.contains(".ppm")) {
       writePPM(img, filename);
       return true;
     }
@@ -487,7 +487,7 @@ public class CollagePPM implements CollageModel {
     } else if (filename.contains(".png")) {
       try {
         return ImageIO.write(image, "png", new File(filename));
-      } catch(IOException e) {
+      } catch (IOException e) {
         throw new IOException("Error in writing png image file.");
       }
     } else {
@@ -507,7 +507,7 @@ public class CollagePPM implements CollageModel {
 
     // Iterating through the image array
     for (int i = 0; i < image.getHeight(); i++) {
-      for(int j = 0; j < image.getWidth(); j++) {
+      for (int j = 0; j < image.getWidth(); j++) {
         IPixel p = img.getPixel(new Posn(i,j));
         int[] rgba = p.getValues();
         Color c = new Color(rgba[0], rgba[1], rgba[2], rgba[3]);

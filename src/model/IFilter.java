@@ -31,4 +31,17 @@ public interface IFilter {
     IFilter[] options = Arrays.copyOf(Filter.values(), Filter.values().length);
     return options;
   }
+
+  /**
+   * Returns an array of all the options of an IFilter as a String.
+   *
+   * @return - All options of an IFilter as a String
+   */
+  static String[] options() {
+    // Create array of options for
+    String[] options = new String[IFilter.values().length];
+    for(int i = 0; i < IFilter.values().length; i++) {
+      options[i] = IFilter.values()[i].getOption();
+    }
+  }
 }

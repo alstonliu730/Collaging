@@ -74,8 +74,8 @@ public class CollageControllerImplTest {
 
     // test the command: save-image
     this.controller.runCommands("save-image", "res/blueDoggo.ppm");
-    assertArrayEquals(new int[]{0, 0, 55, 255}, this.model.readPPM("res/blueDoggo.ppm").
-            getPixel(new Posn(0,0)).getValues());
+    assertArrayEquals(new int[]{0, 0, 55, 255}, this.model.readPPM("res/blueDoggo.ppm")
+            .getPixel(new Posn(0,0)).getValues());
 
     // test the command: save-project
     this.controller.runCommands("save-project", "res/blueDoggo.collage");
@@ -85,12 +85,12 @@ public class CollageControllerImplTest {
     assertEquals("second-layer", this.model.getLayer("second-layer").getName());
 
     // test load project at the same time to make sure the project was saved
-    try{
+    try {
       // load the old project
       this.controller.runCommands("load-project", "res/blueDoggo.collage");
       // asserts that there is no second layer
       assertEquals("second-layer", this.model.getLayer("second-layer").getName());
-    } catch(IllegalStateException e) {
+    } catch (IllegalStateException e) {
       // make sure it is the right exception message
       assertEquals("Invalid Layer name! Name: second-layer", e.getMessage());
     }

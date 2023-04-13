@@ -149,7 +149,7 @@ public class CollageControllerImpl implements CollageController {
         } catch (IOException e) {
           throw new RuntimeException(e);
         }
-        if(!saved) {
+        if (!saved) {
           this.printMessage("Unsuccessful save. Please try again!");
         }
         break;
